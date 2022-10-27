@@ -66,8 +66,3 @@ const App = () => {
 
 export default App
 
-/*
-      <Content course={parts[0].name} exercise={parts[0].exercises}/>
-      <Content course2={parts[1].name} exercise2={parts[1].exercises}/>
-      <Content course3={parts[2].name} exercise3={parts[2].exercises}/>
-      */
