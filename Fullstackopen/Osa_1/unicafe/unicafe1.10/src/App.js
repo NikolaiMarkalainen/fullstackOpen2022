@@ -8,8 +8,22 @@ const Header = (prop) =>{
   )
 }
 
+const Button = ({eventHandler, text}) =>(
+  <button onClick ={eventHandler}>
+   {text}
+  </button>
+)
+
+
 const Statistics = (prop)=>{
-  if(prop.all ===0){
+  const StaticLine  =({text, value, xtra}) =>{
+   return(
+    <div>
+      <p>{text} {value} {xtra}</p>
+    </div>
+   )
+  }
+  if(prop.all === 0){
     return(
       <p> No feedback given</p>
     )
@@ -18,24 +32,24 @@ const Statistics = (prop)=>{
     if(prop.good > prop.bad){
     return(
       <div>
-        <p>Good = {prop.good}</p>
-        <p>Neutral = {prop.neutral}</p>
-        <p> Bad = {prop.bad}</p>
-        <p>All clicks = {prop.all}</p>
-        <p>Average is = {(prop.good * 1 + prop.neutral * 0 + prop.bad * -1 )/ prop.all }</p>
-        <p>Positive feedback is = {(prop.good / prop.all) * 100} %</p>
+        <StaticLine text = "Good" value = {prop.good}/>
+        <StaticLine text = "Neutral" value = {prop.neutral}/>
+        <StaticLine text = "Bad" value = {prop.bad}/>
+        <StaticLine text = "All" value = {prop.all}/>
+        <StaticLine text = "Average" value = {(prop.good * 1 + prop.neutral * 0 + prop.bad * -1) / prop.all}/>
+        <StaticLine text = "Positive feedback" value = {(prop.good / prop.all) * 100} xtra=" %"/>
       </div>
     )   
     }
     else{
       return(
         <div>
-          <p>Good = {prop.good}</p>
-          <p>Neutral = {prop.neutral}</p>
-          <p> Bad = {prop.bad}</p>
-          <p>All clicks = {prop.all}</p>
-          <p>Average is = {(prop.good * 1 + prop.neutral * 0 + prop.bad * -1 )/ prop.all }</p>
-          <p>Positive feedback is = below 0%</p>
+         <StaticLine text = "Good" value = {prop.good}/>
+        <StaticLine text = "Neutral" value = {prop.neutral}/>
+        <StaticLine text = "Bad" value = {prop.bad}/>
+        <StaticLine text = "All" value = {prop.all}/>
+        <StaticLine text = "Average" value = {(prop.good * 1 + prop.neutral * 0 + prop.bad * -1) / prop.all}/>
+        <StaticLine text = "Positive feedback" value = {0} xtra=" %"/>
         </div>
       )
   }
@@ -90,9 +104,9 @@ const handleNeutral = () =>{
     <div>
       <Header text={title} />
       <div>
-        <button onClick={handleGood}>Good</button>
-        <button onClick={handleNeutral}>Neutral</button>
-        <button onClick={handleBad}>Bad</button>
+        <Button eventHandler={handleGood} text = 'Good'/>
+        <Button eventHandler={handleNeutral} text = 'Neutral'/>
+        <Button eventHandler={handleBad} text = 'Bad'/>
       </div>
       <Results result={stats}/>
       <Statistics good = {clicks.good} neutral = {clicks.neutral} bad = {clicks.bad} all ={clicks.all}/>
