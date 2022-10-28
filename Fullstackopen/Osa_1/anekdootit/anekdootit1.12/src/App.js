@@ -1,10 +1,20 @@
 import { useState } from 'react'
 
+const Button = ({eventHandler, text}) => (
+<button onClick = {eventHandler}>
+  {text}
+</button>
+)
 
+const Votes = ({array}) => {
+  return(
+  <h1>has {array} votes</h1>
+  )
+}
 
 const App = () => {
   const [selected, setSelected] = useState(0)
-
+  const [voteClicks, setAllVotes] = useState(Array(7).fill(0))
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -18,12 +28,19 @@ const App = () => {
     let random = Math.floor(Math.random()* 7)
     setSelected(random)
   }
+  const voteAnecdote = () => {
+    const newVotes = [... voteClicks]
+    newVotes[selected] += 1
+    setAllVotes(newVotes)
+  }
   console.log(selected)
   return (
     <div>
       {anecdotes[selected]}
       <br></br>
-      <button onClick={handleClick}>Click</button>
+      <Button eventHandler={handleClick} text="Next Anecdote"/>
+      <Button eventHandler={voteAnecdote} text="Vote"/>
+      <Votes array ={voteClicks[selected]}/>
     </div>
   )
 }
