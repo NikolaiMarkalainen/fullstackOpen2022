@@ -8,13 +8,15 @@ const Button = ({eventHandler, text}) => (
 
 const Votes = ({array}) => {
   return(
-  <h1>has {array} votes</h1>
+  <p>has {array} votes</p>
   )
 }
 
 const App = () => {
   const [selected, setSelected] = useState(0)
   const [voteClicks, setAllVotes] = useState(Array(7).fill(0))
+  const [highScore, setWeeklyMessage] = useState(0)
+
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -32,17 +34,26 @@ const App = () => {
     const newVotes = [... voteClicks]
     newVotes[selected] += 1
     setAllVotes(newVotes)
-  }
+    let max = Math.max(... newVotes)
+    let index = newVotes.indexOf(max)
+    setWeeklyMessage(index)
+    console.log(Math.max(... newVotes))
+    }
+
   console.log(selected)
   return (
     <div>
+      <h1>Anecdotes</h1>
       {anecdotes[selected]}
       <br></br>
       <Button eventHandler={handleClick} text="Next Anecdote"/>
       <Button eventHandler={voteAnecdote} text="Vote"/>
       <Votes array ={voteClicks[selected]}/>
+      <h1>Anecdote of the week</h1>
+      <Votes array = {voteClicks[highScore]}/>
+      <p>{anecdotes[highScore]}</p>
     </div>
   )
-}
+  }
 
 export default App
