@@ -1,12 +1,13 @@
 import { useState } from 'react'
+
 const People = (prop) => {
   console.log(prop, "In people")
   console.log(prop.name)
+
   return(
     <li>{prop.name}</li>
   )
 }
-
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -16,21 +17,29 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     console.log('Button clicked', event.target)
-    
+    console.log({persons}, "person")
     const nameObject = {
       name: newPersons,
       id: persons.length +1,
     }
+    const result  = persons.map(person => person.name)
+    console.log(result , "result")
+    if(result.includes(newPersons)){
+      alert(`${newPersons} is already added to phonebook`)
+    }
+    else{    
+    console.log({persons},"name")
     setPersons(persons.concat(nameObject))
     console.log('names: ', {persons})
     setNewPersons('')
   }
-  
-  const handlePersonChange = (event) => {
-      console.log(event.target.value)
-      setNewPersons(event.target.value)
-
   }
+
+
+  const handlePersonChange = (event) => {
+      setNewPersons(event.target.value)
+  }
+
 
   return (
     <div>
@@ -46,6 +55,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
+      
         {persons.map(people => 
         <People key = {people.id} name = {people.name}/>)}
       <div>
