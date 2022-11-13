@@ -2,8 +2,6 @@ import Details from "./Details"
 import Print from "./Print"
 
 const Checkprint = ({newArray, setNewArray, search, array}) => {
-    console.log("in Checkprint",newArray)
-    console.log("length of array", newArray.length)
       if(newArray.length < 10 && newArray.length > 1){
         return(
           <div>

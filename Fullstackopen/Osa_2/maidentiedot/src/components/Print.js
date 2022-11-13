@@ -2,12 +2,6 @@ const Print = ({countries,setNewArray, array}) => {
   
     const handleCountry = (event, index) => {
       event.preventDefault()
-      console.log("ass")
-      console.log("array",array)
-      console.log(index)
-      console.log("data",array[index])
-      setNewArray(array[index])
-
       setNewArray(array[index])
   }
   
