@@ -2,7 +2,7 @@ import { useEffect, useState} from 'react'
 import PersonHandling from './Components/PersonHandling'
 import Checking from './Components/Checking'
 import Filter from './Components/Filter'
-import axios from 'axios'
+import listService from './services/list'
 
 const App = () => {
   const[newArray, setNewArray] = useState([])
@@ -13,8 +13,8 @@ const App = () => {
   
   useEffect(() =>{
     console.log('effect')
-    axios
-    .get('http://localhost:3001/persons')
+    listService
+    .getAll()
     .then(response =>{
       console.log('Promise fulfilled')
     setPersons(response.data)

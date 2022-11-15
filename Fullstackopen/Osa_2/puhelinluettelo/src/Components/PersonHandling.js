@@ -1,3 +1,5 @@
+import listService from '../../src/services/list'
+
 const PersonHandling = ({newPersons,newNumber,setNewNumber,setNewPersons,persons, setPersons}) => {
 
 const addPerson = (event) => {
@@ -12,9 +14,12 @@ const addPerson = (event) => {
       alert(`${newPersons} is already added to phonebook`)
     }
     else{    
-      setPersons(persons.concat(nameObject))
-      setNewPersons('')
-      setNewNumber('')
+      listService
+      .create(nameObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewPersons('')
+      })
   }
   }
 

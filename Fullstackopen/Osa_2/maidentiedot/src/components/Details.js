@@ -16,6 +16,7 @@ const Details = ({country}) => {
       console.log("response",response)
     })
   }, [])
+  
 
   const Weather = (weather) => {
     if (weather.weather.length === 0){
@@ -27,6 +28,11 @@ const Details = ({country}) => {
     const icon = weatherData.weather[0].icon  
     const iconURL = 'http://openweathermap.org/img/wn/'
     const endURL = '@2x.png'
+    console.log(weatherData.weather[0])
+    console.log("weather.weather.data.weather",weather.weather.data.weather)
+    console.log("weather.weather.data.weather[0]",weather.weather.data.weather[0])
+    console.log("weather.weather.data.weather[0].icon",weather.weather.data.weather[0].icon)
+
     return(
       <div>
         Temperature: {weatherData.main.temp} C
