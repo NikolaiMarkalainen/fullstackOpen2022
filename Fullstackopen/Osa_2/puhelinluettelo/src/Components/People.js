@@ -1,32 +1,15 @@
-import listService from '../../src/services/list'
+import ShowList from './ShowList'
 
+const People = ({ newSearch,newArray, people, setPersons}) => {
 
-
-
-const People = ({ name, phoneNumber, people}) => {
-
-  const handlePersonDelete = (event) => {
-    event.preventDefault()
-    console.log("clicked")
-    console.log(people)
-    const deletingName = people.name
-    console.log(deletingName)
-  if(window.confirm('Do you want to delete ' + `${deletingName}`)){
-    listService
-    .remove(people.id)
-  }
-  }
-
-
-  console.log(people)
     return(
-      <form onSubmit ={handlePersonDelete}>
-      <li> 
-        <button type="submit" 
-        onClick={handlePersonDelete}>
-        Delete</button>
-       {name} {phoneNumber}</li>
-      </form>
+      <div>
+        <ShowList 
+        newSearch={newSearch}
+        newArray={newArray}
+        people = {people}
+        setPersons ={setPersons}/>
+      </div>
     )
   }
   export default People

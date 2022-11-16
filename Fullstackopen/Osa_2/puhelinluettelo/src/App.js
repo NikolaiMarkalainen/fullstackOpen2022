@@ -1,8 +1,9 @@
 import { useEffect, useState} from 'react'
 import PersonHandling from './Components/PersonHandling'
-import Checking from './Components/Checking'
 import Filter from './Components/Filter'
 import listService from './services/list'
+import People from './Components/People'
+
 const App = () => {
   const[newArray, setNewArray] = useState([])
   const [persons, setPersons] = useState([ ])
@@ -24,7 +25,8 @@ const App = () => {
     return (
     <div>
       <h2>Phonebook Search</h2>
-      <Filter persons = {persons} 
+      <Filter 
+      persons = {persons} 
       setNewSearch = {setNewSearch}
       setNewArray ={setNewArray}
       newSearch = {newSearch}/>
@@ -37,10 +39,11 @@ const App = () => {
       setPersons = {setPersons}
       persons = {persons}/>
       <h2>Numbers</h2>  
-     <Checking 
+     <People 
      newArray={newArray} 
-     persons={persons} 
-     newSearch={newSearch}/>
+     people={persons} 
+     newSearch={newSearch}
+     setPersons ={setPersons}/>
     </div>
   )
 }
