@@ -1,22 +1,30 @@
 import listService from "../services/list"
-const ShowList = ({newSearch,newArray,people,setPersons}) => {
+import '../style.css'
+const ShowList = ({newSearch,newArray,people,setPersons, errorMessage,setErrorMessage}) => {
 
 
-  const handlePersonDelete = (event, index) => {
+  const handlePersonDelete = (event, personButton) => {
     event.preventDefault()
-    console.log(index)
-    console.log(event.target.value)
-    const names = (people.map(person => person.name))
-    const id = (people.map(person => person.id))
-
-
-  if(window.confirm('Do you want to delete ' + `${names[index]}`)){
+  if(window.confirm('Do you want to delete ' + `${personButton.name}`)){
     listService
-    .remove(id[index])
+    .remove(personButton.id)
+    .then(response => {
+      setPersons(people.concat(response.data))
+      window.location.reload()
+      console.log("deleted")
+    })
+    .catch(e => {
+      console.log("fail")
+      setErrorMessage(<div className={"error"}> {personButton.name}: has already been deleted` </div>)
+      setTimeout(() => {
+        setErrorMessage(null)
+       }, 5000)
+    })
   }
   }
 
    if(newSearch.length === 0){
+    
     return(
       <form onSubmit ={handlePersonDelete}>
 
@@ -25,7 +33,7 @@ const ShowList = ({newSearch,newArray,people,setPersons}) => {
               <p key ={index}>
                 <button type="submit"
                 key = {index} 
-                onClick={ e => handlePersonDelete(e, index)}>Delete </button>
+                onClick={ e => handlePersonDelete(e, person)}>Delete </button>
                 {person.name} : {person.number}
               </p>
             ))}
@@ -41,7 +49,7 @@ const ShowList = ({newSearch,newArray,people,setPersons}) => {
           <p key ={index}>
              <button type="submit"
               key = {index} 
-              onClick={ (event) => handlePersonDelete(event, index)}>Delete </button>
+              onClick={ (event) => handlePersonDelete(event, filteredPerson)}>Delete </button>
             {filteredPerson.name} : {filteredPerson.number}
           </p>
         ))}

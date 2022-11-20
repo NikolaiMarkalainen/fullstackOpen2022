@@ -10,14 +10,19 @@ const create = (newObject) => {
 }
 
 const update = (id, newObject) => {
-    return axios.put(`${baseUrl}/${id}`, newObject)
-}
-const remove = (id, newObject) => {
-    return axios.delete(`${baseUrl}/${id}`)
+    const url = `${baseUrl}/${id}`
+    return axios.put(url, newObject)
 }
 
-export default {
+const remove = (id, newObject) => {
+    const url = `${baseUrl}/${id}`
+    return axios.delete(url, newObject)
+}
+
+const listService = {
     getAll: getAll,
     create: create,
     update: update,
-    remove: remove}
+    remove: remove
+}
+export default listService
