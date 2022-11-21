@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+app.use(express.json())
 const http = require("http")
 let people = [
 { 
@@ -32,7 +33,7 @@ app.get('/api/people', (request,response) => {
     response.json(people)
 })
 
-/*app.get('/api/people/:id', (request, response) => {
+app.get('/api/people/:id', (request, response) => {
     const id = Number(request.params.id)
     console.log(id)
     const person = people.find(person => person.id === id)
@@ -42,7 +43,8 @@ app.get('/api/people', (request,response) => {
     else{
         response.status(404).end()
     }
-})*/
+})
+
 app.delete('/api/people/:id', (request, response) => {
     const id = Number(request.params.id)
     console.log(id)
@@ -51,6 +53,36 @@ app.delete('/api/people/:id', (request, response) => {
 })
 app.get('/info', (request,response) => {
     response.send(`<p>Phonebook has info for ${people.length} people</p> ${Date()}`)
+})
+
+const generateId = (max) => {
+    return Math.floor(Math.random()* max)
+}
+
+app.post('/api/people', (request, response) => {
+    const body = request.body
+    console.log(request.body)
+    nameFind = people.find(person => person.name.toLowerCase() === body.name.toLowerCase())
+    numberFind = people.find(person => person.number.toLowerCase() === body.number.toLowerCase())
+
+    if(nameFind){
+        return response.status(400).json({
+            error: 'Name exsists'
+        })
+    }
+    if(numberFind){
+        return response.status(400).json({
+            error: 'Number exsists'
+        })
+    }
+    const person = {
+        id: generateId(100000),
+        name: body.name,
+        number: body.number
+    } 
+    people = people.concat(person)
+
+    response.json(person)
 })
 const PORT  = 3002
 app.listen(PORT)
