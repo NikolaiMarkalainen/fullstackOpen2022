@@ -31,7 +31,8 @@ app.get('/', (request, response) => {
 app.get('/api/people', (request,response) => {
     response.json(people)
 })
-app.get('/api/people/:id', (request, response) => {
+
+/*app.get('/api/people/:id', (request, response) => {
     const id = Number(request.params.id)
     console.log(id)
     const person = people.find(person => person.id === id)
@@ -41,6 +42,12 @@ app.get('/api/people/:id', (request, response) => {
     else{
         response.status(404).end()
     }
+})*/
+app.delete('/api/people/:id', (request, response) => {
+    const id = Number(request.params.id)
+    console.log(id)
+    people = people.filter(person => person.id !== id)
+    response.status(204).end()
 })
 app.get('/info', (request,response) => {
     response.send(`<p>Phonebook has info for ${people.length} people</p> ${Date()}`)
