@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 app.use(express.json())
+var morgan = require('morgan')
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 const http = require("http")
 let people = [
 { 
@@ -25,7 +27,7 @@ let people = [
   }
 ]
 
-app.get('/', (request, response) => {
+app.get('/',(request, response) => {
     response.send('<h1>Hello World </h1>')
 })
 
@@ -61,7 +63,6 @@ const generateId = (max) => {
 
 app.post('/api/people', (request, response) => {
     const body = request.body
-    console.log(request.body)
     nameFind = people.find(person => person.name.toLowerCase() === body.name.toLowerCase())
     numberFind = people.find(person => person.number.toLowerCase() === body.number.toLowerCase())
 
@@ -81,8 +82,8 @@ app.post('/api/people', (request, response) => {
         number: body.number
     } 
     people = people.concat(person)
-
     response.json(person)
+    morgan.token("data", (req) => JSON.stringify(req.body))
 })
 const PORT  = 3002
 app.listen(PORT)
