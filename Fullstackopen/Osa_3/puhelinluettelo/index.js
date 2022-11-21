@@ -5,7 +5,7 @@ app.use(express.json())
 var morgan = require('morgan')
 app.use(morgan('tiny'))
 app.use(cors())
-const http = require("http")
+app.use(express.static('build'))
 let people = [
 { 
     "id": 1,
@@ -87,6 +87,7 @@ app.post('/api/people', (request, response) => {
     response.json(person)
     morgan.token("data", (req) => JSON.stringify(req.body))
 })
-const PORT  = 3002
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+const PORT  = process.env.PORT || 3002
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+}) 
