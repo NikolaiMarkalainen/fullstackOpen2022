@@ -1,10 +1,6 @@
 const express = require('express')
 const app = express()
 const http = require("http")
-var today = new Date()
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
-var time = today.getHours()+ ':' + today.getMinutes()+ ':' + today.getSeconds()
-var dateTime = date+' '+time
 let people = [
 { 
     "id": 1,
@@ -35,7 +31,17 @@ app.get('/', (request, response) => {
 app.get('/api/people', (request,response) => {
     response.json(people)
 })
-
+app.get('/api/people/:id', (request, response) => {
+    const id = Number(request.params.id)
+    console.log(id)
+    const person = people.find(person => person.id === id)
+    if(person){
+    response.json(person)
+    }
+    else{
+        response.status(404).end()
+    }
+})
 app.get('/info', (request,response) => {
     response.send(`<p>Phonebook has info for ${people.length} people</p> ${Date()}`)
 })
