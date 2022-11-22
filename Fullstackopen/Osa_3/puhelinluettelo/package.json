@@ -9,15 +9,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../../Osa_2/puhelinluettelo && npm run build && cp -r build ../../Osa_3/puhelinluettelo",
     "deploy": "fly deploy",
-    "deploy:full": "npm run build:ui && npm run deploy",    
+    "deploy:full": "npm run build:ui && npm run deploy",
     "logs:prod": "fly logs"
   },
-  
   "author": "Nikolai Markalainen",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "mongoose": "^6.7.2",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
