@@ -3,11 +3,12 @@ const mongoose = require('mongoose')
 
 const password = process.argv[2]
 
-const url=`mongodb+srv://fullstackNM:${password}@peopledata.uypuqdz.mongodb.net/People?retryWrites=true&w=majority`
+    const url=`mongodb+srv://fullstackNM:${password}@peopledata.uypuqdz.mongodb.net/People?retryWrites=true&w=majority`
 
 const personSchema = new mongoose.Schema({
     name: String,
-    number: String
+    number: String,
+    id: Number
 })
 
 const Person = mongoose.model('Person', personSchema)
