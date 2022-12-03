@@ -48,6 +48,21 @@ const generateId = (max) => {
     return Math.floor(Math.random()* max)
 }
 
+
+app.put('/api/people/:id', (request, response, next) => {
+    const body = request.body
+
+    const person = {
+        name: body.name,
+        number: body.number,
+    }
+    Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then(updatedPerson => {
+        response.json(updatedPerson)
+    })
+    .catch(error => next(error))
+})
+
 app.post('/api/people', (request, response, next) => {
     const body = request.body
 
