@@ -42,8 +42,10 @@ app.delete('/api/people/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 app.get('/info', (request,response) => {
-    response.send(`<p>Phonebook has info for ${Person.length} people</p> ${Date()}`)
-})
+    Person.count({}, function( err, count){
+        response.send(`<p>Phonebook has info for ${count} people</p> ${Date()}`)
+    })
+    })
 const generateId = (max) => {
     return Math.floor(Math.random()* max)
 }
