@@ -8,6 +8,7 @@ const addPerson = (event) => {
       name: newPersons,
       number: newNumber
     }
+
     const result  = persons.map(person => person.name)
     if(result.includes(newPersons)){
       const foundId = persons.filter(obj => {
@@ -20,7 +21,7 @@ const addPerson = (event) => {
         .then(response=>{
           setPersons(persons.concat(response.data))
           setNewPersons('')
-          setNewNumber('')
+          setNewNumber(' ')
           window.location.reload()
       })
       }
@@ -33,6 +34,15 @@ const addPerson = (event) => {
         setPersons(persons.concat(response.data))
         setErrorMessage(<div className={"add"}> {newPersons}:  Has been added </div>)
         setNewPersons('')
+        setNewNumber('')
+        setTimeout(() => {
+        setErrorMessage(null)
+       }, 5000)
+      })
+      .catch(error => {
+        setErrorMessage(<div className={"error"}> {error.response.data.error}</div>)
+        setNewPersons('')
+        setNewNumber('')
         setTimeout(() => {
         setErrorMessage(null)
        }, 5000)

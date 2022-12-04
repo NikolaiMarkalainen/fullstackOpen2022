@@ -11,10 +11,8 @@ const ShowList = ({newSearch,newArray,people,setPersons, errorMessage,setErrorMe
     .then(response => {
       setPersons(people.concat(response.data))
       window.location.reload()
-      console.log("deleted")
     })
     .catch(e => {
-      console.log("fail")
       setErrorMessage(<div className={"error"}> {personButton.name}: has already been deleted` </div>)
       setTimeout(() => {
         setErrorMessage(null)

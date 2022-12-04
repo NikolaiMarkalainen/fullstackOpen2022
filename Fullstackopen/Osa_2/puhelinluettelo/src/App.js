@@ -15,7 +15,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('')
   
   useEffect(() =>{
-    console.log('effect')
     listService
     .getAll()
     .then(response =>{

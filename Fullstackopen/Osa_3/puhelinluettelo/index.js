@@ -52,13 +52,11 @@ const generateId = (max) => {
 
 
 app.put('/api/people/:id', (request, response, next) => {
-    const body = request.body
+    const { name, number} = request.body
 
-    const person = {
-        name: body.name,
-        number: body.number,
-    }
-    Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    Person.findByIdAndUpdate(request.params.id, {name, number},
+    { new: true, runValidators: true, context: 'query' }
+    )
     .then(updatedPerson => {
         response.json(updatedPerson)
     })
@@ -73,20 +71,17 @@ app.post('/api/people', (request, response, next) => {
         name: body.name,
         number: body.number
     })
-    if(!person.name || !person.number){
-        response.status(404).send(error => next(error))
-    }
-    else{
     person.save().then((savedPerson) => {
         response.json(savedPerson)
-        morgan.token("data", (req) => JSON.stringify(req.body))
+
     })
-    }
+    .catch(error => next(error))
 })
 
 const errorHandler = (error,request,response,next) => {
+    console.log(error.message)
     if(error.name === 'ValidationError'){
-        return response.status(404).send({error: 'Content missing'})
+        return response.status(404).send({error: error.message})
     }
     else if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
