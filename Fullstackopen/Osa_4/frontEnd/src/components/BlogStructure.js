@@ -33,31 +33,39 @@ const BlogStructure = ({newTitle, setNewTitle,
       }
       const handleBlogLike = (event, click) => {
         event.preventDefault()
+        click.like = click.like + 1 
+        newLike = click.like
+
         //create a function that checks if the
         //blog array has specific id so that
         //i can change that id's like value
         // to +1 once clicked
         const foundBlog = blogs.find(blog => blog.id === click.id)
         const id = foundBlog.id
+      
+        console.log("click.like",click.like)
+        setNewLike(newLike)
+        console.log(newLike)
         // to create a valid object i have to
         // update the dataset with all the needed
         //functions as i couldnt find a way to
         // update only likes so i bring in blog object
+        
         const blogObject = {
           title: foundBlog.title, 
           author: foundBlog.author,
           url: foundBlog.url,
-          like: foundBlog.like+=1
+          like: newLike
         }
+        console.log(blogObject)
         listService
         .update(id, blogObject)
         .then(response => {
           console.log(response)
-          console.log(response.data)
-          setBlogs(blogs.concat(response.data))
-          console.log(blogs)
-          window.location.reload()
+          console.log("listservice")
+          setBlogs(blogs.map(blog => blog.id !== id ? blog : response.data))
         })
+        
         
       }
       /*
@@ -137,7 +145,7 @@ const BlogStructure = ({newTitle, setNewTitle,
                   <br></br>
                   </div>
                   <div className="buttons">
-                    <button value = {parseInt(newLike)}
+                    <button value = {newLike}
                     onClick = {e => handleBlogLike(e, blog)}>Like</button>
                     :{blog.like}
                     <button type="submit"

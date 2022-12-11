@@ -2,19 +2,22 @@ import './App.css';
 import { useEffect, useState} from 'react'
 import listService from "./services/Protocols"
 import BlogStructure from './components/BlogStructure';
+
 const App = () =>{
   const [newTitle, setNewTitle] = useState([]);
-  const [newLike, setNewLike] = useState(parseInt(0));
+  const [newLike, setNewLike] = useState();
   const [newAuthor, setNewAuthor] = useState([]);
   const [newUrl, setNewUrl] = useState([]);
   const [blogs, setBlogs] = useState([])
+
+
 
 
   useEffect(() => {
     listService
     .getAll()
     .then(response=> {
-      console.log("in app.js",blogs)
+      console.log("in app.js")
 
       setBlogs(response.data)
       console.log(response.data)

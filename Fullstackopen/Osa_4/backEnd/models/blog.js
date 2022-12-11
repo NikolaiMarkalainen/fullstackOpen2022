@@ -1,5 +1,4 @@
-console.log("in blog schema")
-const config = require('../utils/config')
+console.log('in blog schema')
 
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
