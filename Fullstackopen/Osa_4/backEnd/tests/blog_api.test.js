@@ -4,6 +4,7 @@ const app = require('../app')
 const helper = require('./test_helper')
 const api = supertest(app)
 const Blog = require('../models/blog')
+const { response } = require('../app')
 
 beforeEach(async () => {
     await Blog.deleteMany({})
@@ -94,6 +95,20 @@ describe('Deleting a specific blog', () => {
     
         const contents = blogsAtEnd.map(blog => blog.title)
         expect(contents).not.toContain(blogToDelete.title)
+    })
+})
+describe('Updating like value of a blog', () => {
+    test('Likes are updated', async() => {
+        const blogsAtStart = await helper.blogsInDb()
+        const blogToUpdate = blogsAtStart[0]
+        blogToUpdate.like = 5
+        await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(blogToUpdate)
+        const blogsAtEnd = await helper.blogsInDb()
+        const contents = blogsAtEnd.map(blog => blog.like)
+        expect(contents).toContain(blogToUpdate.like)
+
     })
 })
 

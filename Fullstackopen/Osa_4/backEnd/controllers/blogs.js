@@ -47,7 +47,7 @@ blogRouter.post('/', async (request,response, next) => {
 
 blogRouter.put('/:id', (request, response, next) => {
     const { like } = request.body
-    Blog.findByIdAndUpdate(request.params.id, { like }, { context:'query' })
+    Blog.findByIdAndUpdate(request.params.id, { like }, {new:true, runValidators:true, context:'query' })
         .then(updatedBlog => {
             response.json(updatedBlog)
         })

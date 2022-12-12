@@ -5,7 +5,7 @@ const initialBlogs = [
     title: "a new blog tditle",
     author: "a Veyr badasd author",
     url: "google.csom",
-    like: 5,
+    like: 523,
     id: 123452631238
   },
   {
