@@ -49,6 +49,14 @@ describe('A blog can be added', () => {
     })
 })
 
+describe('Blog has like value', () => {
+    test('0 likes', async() => {
+        const response = await api.get('/api/blogs')
+        const contents = response.body.map(blog => blog.like)
+        expect(contents !== undefined)
+    })
+})
+
 
 afterAll(() => {
     mongoose.connection.close()
