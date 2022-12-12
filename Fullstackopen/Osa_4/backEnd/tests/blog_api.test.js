@@ -12,7 +12,16 @@ describe('Fetching Blogs', () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
     })
-
+})
+describe('Checking if id is correct', () => {
+    test('id not _id', async() => {
+        const response = await api.get('/api/blogs')
+        console.log(response.body)
+        const contents = response.body.map(blog => blog.id)
+        console.log(contents)
+        expect(contents).toBeDefined()
+        expect("id" in contents)
+    })
 })
 
 
