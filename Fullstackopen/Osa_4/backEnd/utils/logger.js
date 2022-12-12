@@ -1,4 +1,3 @@
-console.log('in logger')
 const info = (... params) => {
     console.log(... params)
 }

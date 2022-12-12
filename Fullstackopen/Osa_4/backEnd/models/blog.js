@@ -1,4 +1,3 @@
-console.log('in blog schema')
 
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)

@@ -1,7 +1,5 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
-console.log(Blog)
-console.log('in blogRouter')
 
 
 blogRouter.get('/',(request, response) => {
