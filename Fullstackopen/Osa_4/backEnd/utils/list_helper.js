@@ -1,3 +1,4 @@
+var _ = require("lodash")
 
 const dummy = (blogs) => {
     console.log(blogs)
@@ -33,10 +34,20 @@ const favoriteBlog = (blogs) => {
         return mostLikedBlog
     }
 }
-
+const mostBlogs = (blogs) => {
+    const authorWithMostBlogs = blogs.reduce((previous, current) => 
+    (previous.author === current.author) ? previous : current) 
+    const authorsBlogs = blogs.filter(blog => blog.author === authorWithMostBlogs.author)
+    return {
+     author:authorWithMostBlogs.author,
+     blogs: authorsBlogs.length
+     
+    }
+}
 module.exports = {
     dummy,
     totalLikes,
-    favoriteBlog
+    favoriteBlog,
+    mostBlogs
 }
 
