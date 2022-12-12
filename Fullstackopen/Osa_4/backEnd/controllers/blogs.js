@@ -21,7 +21,7 @@ blogRouter.get('/:id', (request,response, next) => {
         .catch(error => next(error))
 })
 
-blogRouter.post('/',(request,response, next) => {
+blogRouter.post('/', async (request,response, next) => {
     const body = request.body
     console.log(request)
     const blog = new Blog ({
@@ -31,11 +31,18 @@ blogRouter.post('/',(request,response, next) => {
         like: parseInt(0),
         id: body.id
     })
-    blog.save()
+    if(blog.title === undefined || blog.url === undefined || blog.author === undefined){
+        response.status(400).end()
+    }
+    else{
+        blog.save()
         .then(savedBlog => {
             response.status(201).json(savedBlog)
         })
-        .catch(error => next(error))
+        .catch(error => next(error)) 
+    }
+
+
 })
 
 blogRouter.put('/:id', (request, response, next) => {

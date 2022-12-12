@@ -1,10 +1,14 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
-
+const helper = require('./test_helper')
 const api = supertest(app)
 const Blog = require('../models/blog')
 
+beforeEach(async () => {
+    await Blog.deleteMany({})
+    await Blog.insertMany(helper.initialBlogs)
+})
 
 describe('Fetching Blogs', () => {
     test('blogs returned as json', async() => {
@@ -57,6 +61,24 @@ describe('Blog has like value', () => {
     })
 })
 
+describe('An invalid blog', () => {
+    test('missing variable', async() => {
+        const newBlog = {
+            title: "a new blog tditle",
+            author: "letald",
+            like: 5,
+            id: 123452678
+        }
+        await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+
+        const blogsAtEnd = await helper.blogsInDb()
+
+        expect(blogsAtEnd.length).toEqual(helper.initialBlogs.length)
+    })
+})
 
 afterAll(() => {
     mongoose.connection.close()
