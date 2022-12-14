@@ -4,7 +4,7 @@ const app = require('../app')
 const helper = require('./test_helper')
 const api = supertest(app)
 const Blog = require('../models/blog')
-const { response } = require('../app')
+
 
 beforeEach(async () => {
     await Blog.deleteMany({})

@@ -4,10 +4,11 @@ const userSchema = new mongoose.Schema({
     username:{
         type: String,
         required: true,
-        minlength: 3
+        minlength: 3,
     },
     name:String,
     passwordHash:String,
+    id:Number,
     blogs:[
         {
             type:mongoose.Schema.Types.ObjectId,
