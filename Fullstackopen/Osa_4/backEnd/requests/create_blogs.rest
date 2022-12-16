@@ -1,0 +1,11 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikxhc3RpcyIsImlkIjoiNjM5OWFhOWVjNTg4NWIxOWJlOTQyNzQzIiwiaWF0IjoxNjcxMTg5MDMwLCJleHAiOjE2NzExOTI2MzB9.yvpi89qIoYPXjq-ecwycZCSsKquIlBEAHqycelmlzI4
+
+{
+"title": "a new blasdaog tditle",
+"author": "a Veyr basdasdasadasd author",
+"url": "google.csom",
+"like": 5,
+"id": 1231312313
+}
