@@ -30,7 +30,6 @@ blogRouter.post('/', middleware.tokenExtractor, async (request,response, next) =
         return response.status(401).json({ error: 'token missing or invalid' })
     }
 
-
     const user = await User.findById(decodedToken.id)
     const blog = new Blog ({
         title: body.title,
@@ -61,15 +60,29 @@ blogRouter.put('/:id', (request, response, next) => {
 })
 
 
+blogRouter.delete('/:id', middleware.tokenExtractor, async (request,response, next) => {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)  
+    if (!request.token || !decodedToken.id) {    
+        return response.status(401).json({ error: 'token missing or invalid' })
+    }
 
-blogRouter.get('/info', (request,response) => {
-    response.send('<h1>Hello World</h1>')
-})
+    const user = await User.findById(decodedToken.id)
+    console.log("USER ", user)
+    console.log("USER ID", user.id)
+    console.log("REQUEST PARAMS",request.params)
+    const blog = await Blog.findById(request.params.id)
 
+    console.log("BLOG WITH USER",blog)
+    console.log("USER ID OF BLOG",blog.user.toString())
+    let blogUserId = blog.user.toString()
+    if( blogUserId === user.id.toString() ){
+        await Blog.findByIdAndRemove(request.params.id)
+        response.status(204).end()
+    }
+    else{
+        return response.status(401).json({ error: 'Invalid user priviledge' })
+    }
 
-blogRouter.delete('/:id', async (request,response, next) => {
-    await Blog.findByIdAndRemove(request.params.id)
-    response.status(204).end()
 })
 
 module.exports = blogRouter
