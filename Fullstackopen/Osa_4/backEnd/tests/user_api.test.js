@@ -49,31 +49,4 @@ describe('When there is initially one user at db', () => {
         expect(usersAtEnd).toHaveLength(usersAtStart.length)
         console.log(usersAtEnd)
     })
-    test('Creating blog and user at the same time', async () => {
-        const usersAtStart = await helper.usersInDb()
-        const newBlog = {
-            title: "a new blog tditle",
-            author: "a Veyr badasd author",
-            url: "google.csom",
-            like: 5,
-            id: 123452678
-        }
-        const newUser = {
-            username: 'rootdasdas',
-            name: 'Nikoladasdi Markalainen',
-            password: 'saalalalal',
-            blogs: [
-                newBlog
-            ]
-        }
-        const result = await api
-        .post('/api/users')
-        .send(newUser)
-        .expect(201)
-        .expect('Content-Type', /application\/json/)
-        const usersAtEnd = await helper.usersInDb()
-        const blogs = usersAtEnd.map(b => b.blogs)
-        expect(blogs).toContain(newUser.blogs)
-        console.log(usersAtEnd)
-    })
 })

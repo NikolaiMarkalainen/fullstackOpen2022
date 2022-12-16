@@ -57,15 +57,8 @@ blogRouter.put('/:id', (request, response, next) => {
 
 blogRouter.delete('/:id', middleware.userExtractor, async (request,response, next) => {
     const decodedToken = request.user
-    console.log("REQUEST:USER", request.user)
     const user = await User.findById(decodedToken.id)
-    console.log("USER ", user)
-    console.log("USER ID", user.id)
-    console.log("REQUEST PARAMS",request.params)
     const blog = await Blog.findById(request.params.id)
-
-    console.log("BLOG WITH USER",blog)
-    console.log("USER ID OF BLOG",blog.user.toString())
     let blogUserId = blog.user.toString()
     if( blogUserId === user.id.toString() ){
         await Blog.findByIdAndRemove(request.params.id)

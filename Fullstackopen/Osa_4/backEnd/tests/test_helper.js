@@ -6,14 +6,12 @@ const initialBlogs = [
     author: "a Veyr badasd author",
     url: "google.csom",
     like: 523,
-    id: 123452631238
   },
   {
     title: "a new blasdasdasog tditle",
     author: "a Veyr baddsadasasd author",
     url: "googldasdasdae.csom",
     like: 523,
-    id: 12345262378
   }
 ]
 
