@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
     },
     name:String,
     passwordHash:String,
-    id:Number,
     blogs:[
         {
             type:mongoose.Schema.Types.ObjectId,

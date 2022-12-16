@@ -8,6 +8,19 @@ const requestLogger = (request, response, next) => {
     next()
 }
 
+const tokenExtractor = async (request, response, next) => {
+    const authorization =  await request.get('authorization') 
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+        console.log("authorized")
+        console.log("authorization sub", authorization.substring(7))
+        request.token = authorization.substring(7)     
+    console.log(request.token)
+    }
+    next()
+}
+
+
+
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
 }
@@ -30,11 +43,14 @@ const errorHandler = (error, request, response) => {
             error: 'token expired'
         })
 }
-    logger.error(error.message)
-    next(error)
+logger.error(error.message)
+next(error)
 }
+
+
 module.exports ={
     requestLogger,
+    tokenExtractor,
     unknownEndpoint,
     errorHandler
 }

@@ -1,11 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikxhc3RpcyIsImlkIjoiNjM5OWFhOWVjNTg4NWIxOWJlOTQyNzQzIiwiaWF0IjoxNjcxMTg5MDMwLCJleHAiOjE2NzExOTI2MzB9.yvpi89qIoYPXjq-ecwycZCSsKquIlBEAHqycelmlzI4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikxhc3RpcyIsImlkIjoiNjM5OWFhOWVjNTg4NWIxOWJlOTQyNzQzIiwiaWF0IjoxNjcxMTkyOTY5LCJleHAiOjE2NzExOTY1Njl9.tqKkDmsAkpyWUmEoVc-f1Kw4WtYu8T-gfhIeMhT-7o4
 
 {
-"title": "a new blasdaog tditle",
-"author": "a Veyr basdasdasadasd author",
-"url": "google.csom",
-"like": 5,
-"id": 1231312313
+"title": "test with middlewwarssse",
+"author": "testings",
+"url": "google.csomsdasdasdas",
+"like": 52312,
+"id": 123131231331231
 }
