@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxhc3QyIiwiaWQiOiI2MzljNjYxYzIyMzI5YjViZTIxMTc3NWUiLCJpYXQiOjE2NzExOTQxNTQsImV4cCI6MTY3MTE5Nzc1NH0.fhwvvqALS2rXQd9IZ4bDaki6Vo8u7kg6cRJMfsMx9mE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikxhc3RpcyIsImlkIjoiNjM5OWFhOWVjNTg4NWIxOWJlOTQyNzQzIiwiaWF0IjoxNjcxMjA1MjgyLCJleHAiOjE2NzEyMDg4ODJ9.7dxqDcRL1r6vzNszm_YKa1CIKQHtpYHxztC03CKkdjY
 
 {
-"title": "tlast2",
-"author": "last2 blog",
+"title": "Blogs with middleware",
+"author": "created by middleware",
 "url": "a website.com",
 "like": 52312
 }
