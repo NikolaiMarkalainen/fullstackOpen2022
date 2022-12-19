@@ -2,18 +2,16 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/Notification'
+import './styles.css'
 
-
-const Notification = (message) => {
-
-}
 
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState('')
   const [showAll, setShowAll] = useState(true)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState('')
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
@@ -54,7 +52,7 @@ const App = () => {
     setUsername('')
     setPassword('')
   }catch (exception){
-    setErrorMessage("Wrong credentials")
+    setErrorMessage(<div className={"error"}>Wrong credentials</div>)
     setTimeout(() => {
       setErrorMessage(null)
     }, 5000)
@@ -83,6 +81,7 @@ const App = () => {
       .post(blogObject)
       .then(response => {
         setBlogs(blogs.concat(response.data))
+        setErrorMessage(<div className={"add"}>new blog: {newTitle} by {newAuthor} has been added</div>)
         setNewAuthor('')
         setNewTitle('')
         setNewUrl('')
@@ -158,7 +157,7 @@ const App = () => {
 
   return (
     <div>
-     <h1>BLOGS</h1>
+     <h1>BLOGS</h1> 
      <Notification message={errorMessage}/>
      {user === null ?
      loginForm() : 
