@@ -27,4 +27,13 @@ const update = (id, newBlog) => {
   return request.then(response => response.data)
 }
 
-export default { getAll,create,update,setToken }
+const post = (newBlog) => {
+  const config = {
+    headers: {Authorization: token},
+  }
+
+  return axios.post(`${baseUrl}`, newBlog, config)
+}
+
+
+export default { getAll,create,update,setToken,post }
