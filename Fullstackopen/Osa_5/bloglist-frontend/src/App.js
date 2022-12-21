@@ -48,6 +48,12 @@ const App = () => {
 
   const blogFormRef = useRef()
 
+  const filterBlogs = () => {
+    blogs.sort((a,b) => {
+      return b.like - a.like
+    })
+  }
+
   const handleBlogLike = id => {
     console.log(blogs)
     console.log("clicked", id)
@@ -61,6 +67,7 @@ const App = () => {
       setBlogs(blogs.map(blog => blog.id !== id ? blog: returnedBlog))
     })
 
+    filterBlogs()
   }
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -120,6 +127,7 @@ const App = () => {
       </Togglable>
       </div>
       <div>
+      {filterBlogs()}
       {blogs.map(blog =>(
         <Blog 
           key={blog.id} 
@@ -135,34 +143,3 @@ const App = () => {
 }
 
 export default App
-/*
-  console.log("here")
-    event.preventDefault()
-    console.log(click)
-    click.like = click.like + 1 
-    console.log(click.like)
-    const foundBlog = blogs.find(blog => blog.id === click.id)
-    console.log(foundBlog)
-    const id = foundBlog.id
-    const userid = foundBlog.user.id
-    setNewLike(click.like)
-    const blogObject = {
-      title: foundBlog.title, 
-      author: foundBlog.author,
-      url: foundBlog.url,
-      like: click.like,
-      user: foundBlog.user.id
-    }
-    console.log(id)
-    console.log(userid)
-    blogService
-    .update(id, blogObject)
-    .then(response => {
-      console.log(response)
-
-      setBlogs(blogs.map(blog => blog.id !== id ? blog : response.data))
-    })
-
-    console.log("With updated value",foundBlog)
-  }
-  */
