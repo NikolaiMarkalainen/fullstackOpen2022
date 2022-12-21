@@ -6,8 +6,6 @@ import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
-
-
 import './styles.css'
 
 
@@ -20,7 +18,6 @@ const App = () => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
-
   
 
   useEffect(() => {
@@ -38,6 +35,7 @@ const App = () => {
     }
   }, [])
 
+
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
     blogService
@@ -50,6 +48,20 @@ const App = () => {
 
   const blogFormRef = useRef()
 
+  const handleBlogLike = id => {
+    console.log(blogs)
+    console.log("clicked", id)
+    const foundBlog = blogs.find(blog => blog.id === id)
+    console.log("foundBlog",foundBlog)
+    foundBlog.like = foundBlog.like + 1
+    const changedBlog = { ...foundBlog, like: foundBlog.like, user: foundBlog.user.id}
+    blogService
+    .update(id, changedBlog)
+    .then(returnedBlog => {
+      setBlogs(blogs.map(blog => blog.id !== id ? blog: returnedBlog))
+    })
+
+  }
   const handleLogin = async (event) => {
     event.preventDefault()
   
@@ -82,13 +94,13 @@ const App = () => {
   }
   
 
-
   return (
     <div>
      <h1>BLOGS</h1> 
      <Notification message={errorMessage}/>
      {user === null ?
-     <Togglable buttonLabel='Log in'>
+      <div>
+      <Togglable buttonLabel='Log in'>
       <LoginForm 
       username = {username}
       password = {password}
@@ -97,20 +109,60 @@ const App = () => {
       handleSubmit ={handleLogin}
       /> 
      </Togglable>
+      </div>
      : 
-    <div> 
+     <div>
+      <div>
       <p>{user.name} logged in</p>
       <button type="submit" onClick={handleLogout}>log out</button>
       <Togglable buttonLabel ="create new Blog" ref={blogFormRef}>
-      <BlogForm creatBlog ={addBlog}/>
+        <BlogForm createBlog =  {addBlog}/>
       </Togglable>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-     </div>
+      </div>
+      <div>
+      {blogs.map(blog =>(
+        <Blog 
+          key={blog.id} 
+          blog={blog} 
+          addBlogLike={() => handleBlogLike(blog.id)} 
+          />
+      ))}
+        </div>
+      </div>
      }
     </div>
   )
 }
 
 export default App
+/*
+  console.log("here")
+    event.preventDefault()
+    console.log(click)
+    click.like = click.like + 1 
+    console.log(click.like)
+    const foundBlog = blogs.find(blog => blog.id === click.id)
+    console.log(foundBlog)
+    const id = foundBlog.id
+    const userid = foundBlog.user.id
+    setNewLike(click.like)
+    const blogObject = {
+      title: foundBlog.title, 
+      author: foundBlog.author,
+      url: foundBlog.url,
+      like: click.like,
+      user: foundBlog.user.id
+    }
+    console.log(id)
+    console.log(userid)
+    blogService
+    .update(id, blogObject)
+    .then(response => {
+      console.log(response)
+
+      setBlogs(blogs.map(blog => blog.id !== id ? blog : response.data))
+    })
+
+    console.log("With updated value",foundBlog)
+  }
+  */

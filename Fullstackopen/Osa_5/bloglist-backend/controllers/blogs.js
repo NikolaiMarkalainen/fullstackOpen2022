@@ -12,6 +12,20 @@ router.get('/', async (request, response) => {
   response.json(notes)
 })
 
+
+router.get('/:id', (request,response, next) => {
+  Blog.findById(request.params.id)
+      .then(blog => {
+          if(blog){
+              response.json(blog)
+          }
+          else{
+              response.status(404).end()
+          }
+      })
+      .catch(error => next(error))
+})
+
 router.post('/', async (request, response) => {
   if (!request.user) {
     return response.status(401).json({ error: 'token missing or invalid' })
@@ -47,7 +61,6 @@ router.delete('/:id', async (request, response) => {
 
 router.put('/:id', async (request, response) => {
   const blog = request.body
-
   const updatedBlog = await Blog
     .findByIdAndUpdate(
       request.params.id, 

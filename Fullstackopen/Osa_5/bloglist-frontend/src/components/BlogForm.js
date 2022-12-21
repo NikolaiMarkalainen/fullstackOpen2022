@@ -7,19 +7,19 @@ const BlogForm = ({ createBlog }) => {
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
-  const [newLike, setNewLike] = useState('')
   const [newMessage, setNewMessage] = useState('')
 
 
 const addBlog = (event) => {
     event.preventDefault()
-
+    const val = 0
     const blogObject = {
       title: newTitle,
       author: newAuthor,
       url: newUrl,
-      like: newLike
+      like: val
     }
+    console.log("blogOBJECT",blogObject)
     setNewBlog(newBlog.concat(blogObject))
     blogService
     .post(blogObject)
@@ -28,8 +28,7 @@ const addBlog = (event) => {
       setNewMessage(<div className={"add"}>new blog: {newTitle} by {newAuthor} has been added</div>)
       setNewAuthor('')
       setNewTitle('')
-      setNewUrl('')
-      setNewLike('')
+      setNewUrl('') 
     })
 }
 
@@ -45,10 +44,9 @@ const handleUrlChange = (event) => {
   event.preventDefault()
   setNewUrl(event.target.value)
 }
-const handleLikeChange = (event) => {
-  event.preventDefault()
-  setNewLike(event.target.value)
-}
+
+
+
 return(
 <form onSubmit = {addBlog}>
     <Notification message={newMessage}/>

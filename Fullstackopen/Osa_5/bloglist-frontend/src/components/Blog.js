@@ -1,7 +1,10 @@
 import Togglable from "./Togglable"
 
 
-const Blog = ({blog}) => (
+const Blog = ({blog, addBlogLike}) => {
+  
+
+return(
   <ul>
     <li>
       Title: {blog.title}
@@ -12,10 +15,12 @@ const Blog = ({blog}) => (
       <br></br>
       Url: {blog.url}
       <br></br>
-      <button>Like</button>: {blog.likes}
+      <button
+      onClick = {addBlogLike}>Like</button>
+      :{blog.like}
     </div>
 </Togglable>
   </ul>  
 )
-
+}
 export default Blog

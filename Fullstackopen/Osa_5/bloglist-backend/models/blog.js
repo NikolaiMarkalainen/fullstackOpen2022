@@ -10,7 +10,9 @@ const schema = mongoose.Schema({
     required: true
   },
   author: String,
-  likes: Number,
+  like: {
+    type: Number
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
