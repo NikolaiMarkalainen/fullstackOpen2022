@@ -13,23 +13,15 @@ const BlogForm = ({ createBlog }) => {
 const addBlog = (event) => {
     event.preventDefault()
     const val = 0
-    const blogObject = {
+    createBlog({
       title: newTitle,
       author: newAuthor,
       url: newUrl,
       like: val
-    }
-    console.log("blogOBJECT",blogObject)
-    setNewBlog(newBlog.concat(blogObject))
-    blogService
-    .post(blogObject)
-    .then(response => {
-      setNewBlog(newBlog.concat(response.data))
-      setNewMessage(<div className={"add"}>new blog: {newTitle} by {newAuthor} has been added</div>)
-      setNewAuthor('')
-      setNewTitle('')
-      setNewUrl('') 
     })
+    setNewAuthor('')
+    setNewTitle('')
+    setNewUrl('') 
 }
 
 const handleTitleChange = (event) => {

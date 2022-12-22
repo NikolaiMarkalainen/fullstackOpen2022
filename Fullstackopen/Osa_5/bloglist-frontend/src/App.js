@@ -12,8 +12,6 @@ import './styles.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState('')
-  const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
@@ -36,39 +34,12 @@ const App = () => {
   }, [])
 
 
-  const addBlog = (blogObject) => {
-    blogFormRef.current.toggleVisibility()
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        
-      })
-  }
-
-  const blogFormRef = useRef()
-
   const filterBlogs = () => {
     blogs.sort((a,b) => {
       return b.like - a.like
     })
   }
 
-  const handleBlogLike = id => {
-    console.log(blogs)
-    console.log("clicked", id)
-    const foundBlog = blogs.find(blog => blog.id === id)
-    console.log("foundBlog",foundBlog)
-    foundBlog.like = foundBlog.like + 1
-    const changedBlog = { ...foundBlog, like: foundBlog.like, user: foundBlog.user.id}
-    blogService
-    .update(id, changedBlog)
-    .then(returnedBlog => {
-      setBlogs(blogs.map(blog => blog.id !== id ? blog: returnedBlog))
-    })
-
-    filterBlogs()
-  }
   const handleLogin = async (event) => {
     event.preventDefault()
   
@@ -91,7 +62,6 @@ const App = () => {
     }, 5000)
   }
   }
-  
 
   const handleLogout = async (event) =>{
     event.preventDefault()
@@ -100,6 +70,54 @@ const App = () => {
     window.location.reload()
   }
   
+
+  const addBlog = (blogObject) => {
+    blogFormRef.current.toggleVisibility()
+    blogService
+    .post(blogObject)
+    .then(response => {
+      setBlogs((blogs) => [...blogs, response.data])
+    })
+    .then(setErrorMessage(<div className={"add"}>{blogObject.title} has been added</div>))
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+  }
+  
+  const blogFormRef = useRef()
+
+  const handleBlogDelete = id => {
+    console.log(id)
+    const foundBlog = blogs.find(blog => blog.id === id)
+    if(window.confirm(`Remove blog: ${foundBlog.title} by ${foundBlog.author}`)){
+      blogService
+      .remove(id)
+      .then(() => {
+        setBlogs((blogs) => blogs.filter((blog) => blog.id !== foundBlog.id))
+      })
+      .then(setErrorMessage(<div className={"error"}>Deleted, {foundBlog.title} by {foundBlog.author}</div>))
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+    }
+  }
+
+
+  const handleBlogLike = id => {
+    console.log(blogs)
+    console.log("clicked", id)
+    const foundBlog = blogs.find(blog => blog.id === id)
+    console.log("foundBlog",foundBlog)
+    foundBlog.like = foundBlog.like + 1
+    const changedBlog = { ...foundBlog, like: foundBlog.like, user: foundBlog.user.id}
+    blogService
+    .update(id, changedBlog)
+    .then(returnedBlog => {
+      setBlogs(blogs.map(blog => blog.id !== id ? blog: returnedBlog))
+    })
+
+    filterBlogs()
+  }
 
   return (
     <div>
@@ -127,12 +145,14 @@ const App = () => {
       </Togglable>
       </div>
       <div>
+      
       {filterBlogs()}
-      {blogs.map(blog =>(
+      {blogs.map((blog, id) =>(
         <Blog 
-          key={blog.id} 
+          key={id} 
           blog={blog} 
           addBlogLike={() => handleBlogLike(blog.id)} 
+          removeBlog = {() => handleBlogDelete(blog.id)}
           />
       ))}
         </div>

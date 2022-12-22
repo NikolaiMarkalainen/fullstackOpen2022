@@ -35,5 +35,13 @@ const post = (newBlog) => {
   return axios.post(`${baseUrl}`, newBlog, config)
 }
 
+const remove = (id) => {
+  const config = {
+    headers: {Authorization: token},
+  }
 
-export default { getAll,create,update,setToken,post}
+  const request = axios.delete(`${baseUrl}/${id}`,config)
+  return request.then(response => response.data)
+}
+
+export default { getAll,create,update,setToken,post, remove}

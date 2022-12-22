@@ -44,11 +44,16 @@ router.post('/', async (request, response) => {
 
 router.delete('/:id', async (request, response) => {
   const blogToDelete = await Blog.findById(request.params.id)
+  console.log(blogToDelete)
+  console.log(blogToDelete.user)
+
   if (!blogToDelete ) {
     return response.status(204).end()
   }
 
   if ( blogToDelete.user && blogToDelete.user.toString() !== request.user.id ) {
+    console.log(blogToDelete.user.toString())
+    console.log(request.user.id)
     return response.status(401).json({
       error: 'only the creator can delete a blog'
     })
