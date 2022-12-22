@@ -17,3 +17,17 @@ test('renders content', () => {
 
   expect(element).toBeDefined()
 })
+
+test('Clicking the button shows url and likes', async () => {
+    const blog ={
+        title: 'testing testing',
+        author: 'jestthaatdoesJEST',
+        url: 'www.website.com',
+        like: 0
+    }
+    const mockHandler = jest.fn()
+
+    render(
+        <Note note={note} Togglable = {mockHandler}
+    )
+})
