@@ -1,29 +1,29 @@
-import Togglable from "./Togglable"
+import Togglable from './Togglable'
 
 
-const Blog = ({blog, addBlogLike, removeBlog}) => {
-  
+const Blog = ({ blog, addBlogLike, removeBlog }) => {
 
-return(
-  <ul>
-    <li>
+
+  return(
+    <ul>
+      <li>
       Title: {blog.title}
-    </li>
-<Togglable buttonLabel="Show Details">
-    <div>
+      </li>
+      <Togglable buttonLabel="Show Details">
+        <div>
       Author: {blog.author}
-      <br></br>
+          <br></br>
       Url: {blog.url}
-      <br></br>
-      <button
-      onClick = {addBlogLike}>Like</button>
+          <br></br>
+          <button
+            onClick = {addBlogLike}>Like</button>
       :{blog.like}
-      <br></br>
-      <button
-      onClick = {removeBlog}>Delete</button>
-    </div>
-</Togglable>
-  </ul>  
-)
+          <br></br>
+          <button
+            onClick = {removeBlog}>Delete</button>
+        </div>
+      </Togglable>
+    </ul>
+  )
 }
 export default Blog

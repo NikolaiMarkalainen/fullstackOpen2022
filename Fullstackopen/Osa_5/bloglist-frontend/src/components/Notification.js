@@ -1,16 +1,16 @@
 import '../styles.css'
 
-const Notification = ({message}) => {
-    if(message === null){
-       
-      return null;
-    }
-    if(message.length != 0 ){
+const Notification = ({ message }) => {
+  if(message === null){
+
+    return null
+  }
+  if(message.length !== 0 ){
     return(
       <div>
-      {message}
+        {message}
       </div>
     )
   }
 }
-  export default Notification
+export default Notification
