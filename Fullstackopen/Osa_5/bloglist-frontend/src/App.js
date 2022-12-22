@@ -109,10 +109,13 @@ const App = () => {
     const foundBlog = blogs.find(blog => blog.id === id)
     console.log('foundBlog',foundBlog)
     foundBlog.like = foundBlog.like + 1
-    const changedBlog = { ...foundBlog, like: foundBlog.like, user: foundBlog.user.id }
+    let userId = foundBlog.user.id
+
+    const changedBlog = { ...foundBlog, like: foundBlog.like, user: userId }
     blogService
       .update(id, changedBlog)
       .then(returnedBlog => {
+        console.log(returnedBlog)
         setBlogs(blogs.map(blog => blog.id !== id ? blog: returnedBlog))
       })
 
@@ -151,6 +154,7 @@ const App = () => {
               <Blog
                 key={id}
                 blog={blog}
+                user={blog.user.name}
                 addBlogLike={() => handleBlogLike(blog.id)}
                 removeBlog = {() => handleBlogDelete(blog.id)}
               />

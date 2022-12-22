@@ -1,23 +1,22 @@
 import Togglable from './Togglable'
 
-
-const Blog = ({ blog, addBlogLike, removeBlog }) => {
-
+const Blog = ({ blog, addBlogLike, removeBlog, user }) => {
 
   return(
     <ul>
-      <li>
-      Title: {blog.title}
+      <li className="blog">
+        {blog.title}, {blog.author}
       </li>
       <Togglable buttonLabel="Show Details">
         <div>
-      Author: {blog.author}
-          <br></br>
       Url: {blog.url}
           <br></br>
           <button
-            onClick = {addBlogLike}>Like</button>
-      :{blog.like}
+            onClick = {addBlogLike}>LIKE</button>
+          <b>Likes:</b> {blog.like}
+          <br></br>
+          <br></br>
+          {user}
           <br></br>
           <button
             onClick = {removeBlog}>Delete</button>
