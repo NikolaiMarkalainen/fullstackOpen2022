@@ -149,7 +149,8 @@ const App = () => {
               <Blog
                 key={id}
                 blog={blog}
-                userName={user.username}
+                user={user}
+                blogUser={blog.user.username}
                 addBlogLike={() => handleBlogLike(blog.id)}
                 removeBlog = {() => handleBlogDelete(blog.id)}
               />

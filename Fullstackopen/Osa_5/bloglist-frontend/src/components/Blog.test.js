@@ -4,30 +4,66 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
-test('renders content', () => {
-  const blog = {
-    title: 'testing testing',
-    author: 'jestthaatdoesJEST'
-
+const blog = {
+  title: 'The test blog title',
+  author: 'Master yoda',
+  url: 'www.google.com',
+  like: 102,
+  user:{
+    name: 'Nikolai Markalainen',
+    username: 'Lastis',
+    password: '12345'
   }
+}
+const user = {
+  name: 'Nikolai Markalainen',
+  username: 'Lastis',
+  password: '12345'
+}
 
-  render(<Blog blog={blog} />)
+test('renders content', () => {
 
-  const element = screen.getByText('testing testing, jestthaatdoesJEST')
+  const { container } = render(
+    <Blog
+      blog={blog}
+      user={user} />
+  )
 
-  expect(element).toBeDefined()
+  const div = container.querySelector('.blog')
+  expect(div).toHaveTextContent(
+    'The test blog title, Master yoda'
+  )
 })
 
-test('Clicking the button shows url and likes', async () => {
-    const blog ={
-        title: 'testing testing',
-        author: 'jestthaatdoesJEST',
-        url: 'www.website.com',
-        like: 0
-    }
-    const mockHandler = jest.fn()
+test('looking for values', async () => {
+  const mockHandler = jest.fn()
 
-    render(
-        <Note note={note} Togglable = {mockHandler}
-    )
+  const { container } = render(
+    <Blog
+      blog={blog}
+      user={user} />
+  )
+
+  const clickedUser = userEvent.setup()
+
+  const button = screen.getByText('Show more')
+  await clickedUser.click(button)
+
+  const title = container.querySelector('.blog')
+  expect(title).toHaveTextContent(
+    'The test blog title, Master yoda'
+  )
+  const url = container.querySelector('.url-info')
+  expect(url).toHaveTextContent(
+    'www.google.com'
+  )
+  const likes = container.querySelector('.likes-data')
+  expect(likes).toHaveTextContent(
+    102
+  )
+  const creator = container.querySelector('.user-info')
+  expect(creator).toHaveTextContent(
+    'Lastis'
+  )
+
 })
