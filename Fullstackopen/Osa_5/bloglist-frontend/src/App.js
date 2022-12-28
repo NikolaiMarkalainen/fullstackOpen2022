@@ -87,7 +87,6 @@ const App = () => {
   const blogFormRef = useRef()
 
   const handleBlogDelete = id => {
-    console.log(id)
     const foundBlog = blogs.find(blog => blog.id === id)
     if(window.confirm(`Remove blog: ${foundBlog.title} by ${foundBlog.author}`)){
       blogService
@@ -109,17 +108,13 @@ const App = () => {
     const foundBlog = blogs.find(blog => blog.id === id)
     console.log('foundBlog',foundBlog)
     foundBlog.like = foundBlog.like + 1
-    let userId = foundBlog.user.id
-
-    const changedBlog = { ...foundBlog, like: foundBlog.like, user: userId }
+    const changedBlog = { ...foundBlog, like: foundBlog.like, user: foundBlog.user.id }
     blogService
       .update(id, changedBlog)
-      .then(returnedBlog => {
-        console.log(returnedBlog)
-        setBlogs(blogs.map(blog => blog.id !== id ? blog: returnedBlog))
+      .then(newBlog => {
+        console.log(newBlog)
+        setBlogs(blogs.map(blog => blog.id !== id ? blog: newBlog))
       })
-
-    filterBlogs()
   }
 
   return (
@@ -141,7 +136,7 @@ const App = () => {
         :
         <div>
           <div>
-            <p>{user.name} logged in</p>
+            <p>{user.username} logged in</p>
             <button type="submit" onClick={handleLogout}>log out</button>
             <Togglable buttonLabel ="create new Blog" ref={blogFormRef}>
               <BlogForm createBlog =  {addBlog}/>
@@ -154,7 +149,7 @@ const App = () => {
               <Blog
                 key={id}
                 blog={blog}
-                user={blog.user.name}
+                userName={user.username}
                 addBlogLike={() => handleBlogLike(blog.id)}
                 removeBlog = {() => handleBlogDelete(blog.id)}
               />
