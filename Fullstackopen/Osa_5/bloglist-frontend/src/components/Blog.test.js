@@ -36,7 +36,6 @@ test('renders content', () => {
 })
 
 test('looking for values', async () => {
-  const mockHandler = jest.fn()
 
   const { container } = render(
     <Blog
@@ -65,5 +64,31 @@ test('looking for values', async () => {
   expect(creator).toHaveTextContent(
     'Lastis'
   )
+})
+
+test('Clicking like twice and event handler works', async () => {
+  const mockHandler = jest.fn()
+
+  const { container } = render(
+    <Blog
+      blog={blog}
+      user={user} 
+      addBlogLike={mockHandler}/>
+  )
+
+  const simulatedUser = userEvent.setup()
+  const detailsButton = screen.getByText('Show more')
+
+  await simulatedUser.click(detailsButton)
+
+  const likeButton = screen.getByText('LIKE')
+
+  await simulatedUser.click(likeButton)
+  await simulatedUser.click(likeButton)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+  expect(mockHandler).toHaveBeenCalledTimes(2)
+  expect
+  likeButton.simulate
 
 })
