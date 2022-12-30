@@ -1,3 +1,5 @@
+import blogs from "../../src/services/blogs"
+
 describe('Blog app', () => {
 beforeEach(function() {
   cy.request('POST', 'http://localhost:3003/api/testing/reset')
@@ -6,6 +8,7 @@ beforeEach(function() {
     username: 'Lastis',
     password: '1234'
   }
+ 
   cy.request('POST', 'http://localhost:3003/api/users/', user)
   
   cy.visit('http://localhost:3000/')
@@ -71,5 +74,27 @@ beforeEach(function() {
       cy.get('#like-button').click()
       cy.get('.likes-data').should('contain', 1)
     })
+    it('A created blog can be deleted', function(){
+      cy.contains('Show more').click()
+      cy.get('#delete-button').click()
+      cy.get('.error').should('contain', 'Deleted, Tested title by Tested author')
+    })
+    it('Deleting someone elses blog', function(){
+      cy.newUser({
+        name:'nikolai',
+        username:'last2',
+        password:'1234'
+      })
+      cy.get('#log-out').click()
+      cy.contains('BLOG')
+      cy.contains('Login').click()
+      cy.get('#username').type('last2')
+      cy.get('#password').type('1234')
+      cy.get('#login-button').click()
+      cy.contains('last2 logged in')
+      cy.contains('Show more').click()
+      cy.contains('Creator: Lastis')
+    })
   })
+
 })

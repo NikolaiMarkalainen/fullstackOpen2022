@@ -13,7 +13,7 @@ const Blog = ({ blog, addBlogLike, removeBlog, user }) => {
   const deleteButton = () => {
     if(blog.user.username === user.username){
       return(
-        <button
+        <button id='delete-button'
           onClick = {removeBlog}>Delete</button>
       )
     }
@@ -40,9 +40,9 @@ const Blog = ({ blog, addBlogLike, removeBlog, user }) => {
             </div>
           </div>
           <div className='user-info'>
-            Creator: {user.username}
+            Creator: {blog.user.username}
           </div>
-          <div className='delete-button'>
+          <div>
             {deleteButton()}
           </div>
         </div>

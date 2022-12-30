@@ -88,7 +88,8 @@ const App = () => {
 
   const handleBlogDelete = id => {
     const foundBlog = blogs.find(blog => blog.id === id)
-    if(window.confirm(`Remove blog: ${foundBlog.title} by ${foundBlog.author}`)){
+    var popUp =(window.confirm(`Remove blog: ${foundBlog.title} by ${foundBlog.author}`))
+    if(popUp){
       blogService
         .remove(id)
         .then(() => {
@@ -137,8 +138,8 @@ const App = () => {
         <div>
           <div>
             <p>{user.username} logged in</p>
-            <button type="submit" onClick={handleLogout}>log out</button>
-            <Togglable id='toggle-create' buttonLabel ="create new Blog" ref={blogFormRef}>
+            <button id='log-out'type="submit" onClick={handleLogout}>log out</button>
+            <Togglable buttonLabel ="create new Blog" ref={blogFormRef}>
               <BlogForm createBlog =  {addBlog}/>
             </Togglable>
           </div>
