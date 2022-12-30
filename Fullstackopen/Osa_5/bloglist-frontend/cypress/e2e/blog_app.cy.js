@@ -24,14 +24,30 @@ beforeEach(function() {
     beforeEach(function(){
       cy.contains('BLOGS')
       cy.contains('Login').click()
-    })
-    it('succeeds with correct credentials', function (){
       cy.get('#username').type('Lastis')
       cy.get('#password').type('1234')
       cy.get('#login-button').click()
       cy.contains(`Lastis logged in`)
     })
-    it('fails with incorrect credentials', function() {
+    it('A blog can be created', function () {
+      cy.get('#toggle-create').click()
+      cy.get('#blog-title').type('Test Blog')
+      cy.get('#blog-author').type('Tester')
+      cy.get('#blog-url').type('TestBlogbyTester.com')
+      cy.get('#submit-button').click()
+      cy.contains('Test Blog has been added')
+      cy.contains('Test Blog')
+      cy.contains('Tester')
+      cy.contains('TestBlogbyTester.com')
+    })
+  })
+
+  describe('fails with incorrect credentials', function() {
+    beforeEach(function(){
+      cy.contains('BLOGS')
+      cy.contains('Login').click()
+    })
+    it('attempt at login', function() {
       cy.get('#username').type('lastis')
       cy.get('#password').type('12345')
       cy.get('#login-button').click()
