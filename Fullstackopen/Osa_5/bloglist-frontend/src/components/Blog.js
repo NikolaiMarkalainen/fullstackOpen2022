@@ -20,13 +20,13 @@ const Blog = ({ blog, addBlogLike, removeBlog, user }) => {
   }
 
   return(
-    <ul>
+    <ul id='blog-data'>
       <li className="blog">
         {blog.title}, {blog.author}
+        <button onClick={toggleVisibility}>
+          {buttonText}
+        </button>
       </li>
-      <button onClick={toggleVisibility}>
-        {buttonText}
-      </button>
       <div style={showWhenVisible}>
         <div>
           <div className='url-info'>

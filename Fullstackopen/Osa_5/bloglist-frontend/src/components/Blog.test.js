@@ -72,7 +72,7 @@ test('Clicking like twice and event handler works', async () => {
   const { container } = render(
     <Blog
       blog={blog}
-      user={user} 
+      user={user}
       addBlogLike={mockHandler}/>
   )
 
