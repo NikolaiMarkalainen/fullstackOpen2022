@@ -123,7 +123,7 @@ const App = () => {
       <Notification message={errorMessage}/>
       {user === null ?
         <div>
-          <Togglable buttonLabel='Log in'>
+          <Togglable buttonLabel='Login'>
             <LoginForm
               username = {username}
               password = {password}

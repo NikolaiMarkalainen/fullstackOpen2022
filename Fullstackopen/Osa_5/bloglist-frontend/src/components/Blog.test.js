@@ -90,5 +90,4 @@ test('Clicking like twice and event handler works', async () => {
   expect(mockHandler).toHaveBeenCalledTimes(2)
   expect
   likeButton.simulate
-
 })
