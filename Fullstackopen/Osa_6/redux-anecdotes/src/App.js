@@ -1,12 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
+import Notification from './components/Notification'
 const App = () => {
-  const anecdotes = useSelector(state => state)
-  const dispatch = useDispatch()
-
   return (
       <div>
+        <Notification/>
         <AnecdoteList/>
         <AnecdoteForm/>
       </div>
