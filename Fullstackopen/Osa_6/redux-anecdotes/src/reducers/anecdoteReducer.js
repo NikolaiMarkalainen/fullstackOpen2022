@@ -51,8 +51,12 @@ const reducer = (state = initialState, action) => {
         ...votedAnecdote,
         votes: votedAnecdote.votes + 1
       }
-    return state.map(anecdote =>
+      state = state.map(anecdote =>
       anecdote.id !== id ? anecdote: changedAnecdote)
+      return state.sort((b,a) => {
+        return a.votes - b.votes
+      })
+      
     default:
       console.log('state now: ', state)
       console.log('action', action)
