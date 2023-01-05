@@ -4,7 +4,6 @@ import { useSelector } from "react-redux"
 
 const Notification = () => {
   const notification = useSelector(state => state.notification)
-  const [showElement, setShowElement] = useState(true)
   console.log('IN NOTIFICATION', notification)
 
   let style = {
