@@ -6,7 +6,6 @@ const App = () => {
   return (
       <div>
         <Notification/>
-        <Filter/>
         <AnecdoteList/>
         <AnecdoteForm/>
       </div>

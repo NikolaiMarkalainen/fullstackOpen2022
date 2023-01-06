@@ -50,33 +50,16 @@ const anecdoteSlice = createSlice({
         return a.votes - b.votes
       })
     },
-    updateAnecdotes(state,action){
+    updateAnecdotes(state = [],action){
       console.log("ACTION PAYLOAD",action.payload)
-      if(state.map === undefined){
-        console.log("AAAA",current(state))
-        return{
-          ...state
-        }
+      const content = action.payload
+      if(Object.keys(action.payload).length > 0){
+       return content
       }
-      else{
-        const anecs = (state.map(n => n.content))
-        const filteredContent =anecs.filter(n =>
-           n.includes(action.payload))
-          state.map(anecdote =>
-            anecdote.content !== anecs ? anecdote : filteredContent)
-          
-        console.log(current(state = anecs.includes))
-        console.log("ANECS",anecs)
-        console.log("FILTERED",filteredContent)
-        console.log("CURRENT",current(...state))
-        const vals = state.map(anecdote => anecdote.content)
-        return{
-          ...state.includes(filteredContent),
-          content: filteredContent
-        }
+        else{
+          return initialState
       }
-
-    }
+      }
   }
 })
 

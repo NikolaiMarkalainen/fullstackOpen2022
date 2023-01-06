@@ -1,19 +1,31 @@
 import { useDispatch ,useSelector } from "react-redux";
 import { useState } from "react";
-import { filterAnecdotes } from "../reducers/filterReducer";
 import { updateAnecdotes } from "../reducers/anecdoteReducer";
 
 
-const Filter = () => {
+const Filter = (anecdotes) => {
     const [search, setSearch] = useState([])
+    const [gotAnecdotes, setAnecdotes] = useState([])
     const dispatch = useDispatch()
+    console.log("FILTER",anecdotes.anecdotes)
+    const allAnecdotes  = useSelector(state => state.anecdotes)
 
-const handleFilter = (event) => {
+
+
+    const handleFilter = (event) => {
     setSearch(event.target.value)
-
     let searchValue = event.target.value.toLowerCase()
-    dispatch(filterAnecdotes(searchValue)) &&
-    dispatch(updateAnecdotes(searchValue))
+    const quotes = allAnecdotes.map(n => n.content.toLowerCase().includes(searchValue))
+    const selectedData = allAnecdotes.filter((value,index) => quotes[index])
+    console.log(selectedData)
+    setAnecdotes(selectedData)
+    console.log("gotAnecs",gotAnecdotes)
+    console.log(Object.keys(gotAnecdotes).length)
+
+    if(Object.keys(gotAnecdotes).length > 0){
+        dispatch(updateAnecdotes(gotAnecdotes))
+    }
+
 }
 
     return(
@@ -26,11 +38,5 @@ const handleFilter = (event) => {
     )
 }
 
-/*
-    const filterApplied =filter.map(n => n.content).filter(n => {
-        return n.includes(searchValue)
-    })
-
-*/
 
 export default Filter
