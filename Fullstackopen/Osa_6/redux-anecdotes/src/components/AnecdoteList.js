@@ -20,22 +20,17 @@ const Anecdotes = () => {
     console.log("anecdotes",anecdotes)
     return (
         <div>
-        <h2>Anecdotes</h2>
-        <Filter anecdotes = {anecdotes}/> 
-        {anecdotes.map(anecdote =>
-        <Anecdote
-        key ={anecdote.id}
-        anecdote = {anecdote}
-        handleClick={() =>
-        dispatch(updateVote(anecdote)) &&
-        dispatch(voteNotification('You have voted:'+ ' ' + anecdote.content)) &&
-        setTimeout(() => {
-            dispatch(removeNotification(anecdote))
-        }, 5000)
-        }
-        
-        />
-        )}
+            <h2>Anecdotes</h2>
+            <Filter anecdotes = {anecdotes}/> 
+            {anecdotes.map(anecdote =>
+            <Anecdote
+                key ={anecdote.id}
+                anecdote = {anecdote}
+                handleClick={() =>
+                    dispatch(updateVote(anecdote)) &&
+                    dispatch(voteNotification(`You have voted '${anecdote.content}'`, 5000))
+                }
+            />)}
         </div>
     )
 }
