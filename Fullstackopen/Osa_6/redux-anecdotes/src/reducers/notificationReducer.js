@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import { createSlice } from "@reduxjs/toolkit"
-
+import { Dispatch } from "react"
 const initialState = {
     content: ''
 }
@@ -12,7 +12,7 @@ const notificationSlice = createSlice ({
     reducers:{
         showNotification(state,action){
             console.log(action.payload)
-            return(action.payload.message)
+            return(action.payload)
         },
         hideNotification(state,action){
             return initialState
@@ -20,14 +20,25 @@ const notificationSlice = createSlice ({
     }
 })
 
-export const {addNotification, showNotification, hideNotification} = notificationSlice.actions
+export const { showNotification, hideNotification} = notificationSlice.actions
 
 export const voteNotification = (message, timeout) => {
+    console.log(message, timeout)
     return  dispatch => {
-        dispatch(showNotification({message, timeout}))        
+        dispatch(showNotification(message.message))        
         setTimeout(() => {
-            dispatch(hideNotification({message, timeout}))        
+            dispatch(hideNotification())        
         }, timeout)
     } 
+}
+
+export const addNotification = (message, timeout) => {
+    console.log(message,timeout)
+    return dispatch => {
+        dispatch(showNotification(message))
+        setTimeout(()=>{
+            dispatch(hideNotification())
+        }, timeout)
+    }
 }
 export default notificationSlice.reducer

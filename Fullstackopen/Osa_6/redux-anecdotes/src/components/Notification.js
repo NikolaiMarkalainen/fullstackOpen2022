@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import { connect } from "react-redux"
 
 const Notification = (props) => {
@@ -35,7 +33,11 @@ const mapStateToProps = (state) => {
     notification: state.notification
   }
 }
+const mapDispatchToProps ={
 
-const ConnectedNotifications  = connect(mapStateToProps)(Notification)
+
+}
+
+const ConnectedNotifications  = connect(mapStateToProps, mapDispatchToProps)(Notification)
 
 export default ConnectedNotifications

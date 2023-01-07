@@ -1,15 +1,14 @@
 import { useDispatch ,useSelector } from "react-redux";
 import { useState } from "react";
 import { updateAnecdotes } from "../reducers/anecdoteReducer";
-import { all } from "axios";
+import { connect } from "react-redux";
 
-
-const Filter = (anecdotes) => {
+const Filter = (props) => {
     const [search, setSearch] = useState([])
     const [gotAnecdotes, setAnecdotes] = useState([])
     const dispatch = useDispatch()
-    console.log("FILTER",anecdotes.anecdotes)
-    const allAnecdotes  = useSelector(state => state.anecdotes)
+    console.log("FILTER",props.anecdotes)
+    const allAnecdotes  = props.anecdotes
 
 
 
@@ -24,7 +23,7 @@ const Filter = (anecdotes) => {
         console.log("ITS ZERO")
     }
     else{
-        dispatch(updateAnecdotes(gotAnecdotes))
+        props.updateAnecdotes(gotAnecdotes)
     }
 
 }
@@ -38,6 +37,19 @@ const Filter = (anecdotes) => {
         </div>
     )
 }
+const mapStateToProps = (state) => {
+    return{
+        anecdotes: state.anecdotes
+    }
+}
 
+const mapDispatchToProps = {
+    updateAnecdotes
+}
 
-export default Filter
+const ConnectedFilter = connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)(Filter)
+
+export default ConnectedFilter
