@@ -1,6 +1,7 @@
 import { useDispatch ,useSelector } from "react-redux";
 import { useState } from "react";
 import { updateAnecdotes } from "../reducers/anecdoteReducer";
+import { all } from "axios";
 
 
 const Filter = (anecdotes) => {
@@ -17,12 +18,12 @@ const Filter = (anecdotes) => {
     let searchValue = event.target.value.toLowerCase()
     const quotes = allAnecdotes.map(n => n.content.toLowerCase().includes(searchValue))
     const selectedData = allAnecdotes.filter((value,index) => quotes[index])
-    console.log(selectedData)
     setAnecdotes(selectedData)
-    console.log("gotAnecs",gotAnecdotes)
-    console.log(Object.keys(gotAnecdotes).length)
-
-    if(Object.keys(gotAnecdotes).length > 0){
+    console.log(gotAnecdotes.length === 0)
+    if(gotAnecdotes.length===0){
+        console.log("ITS ZERO")
+    }
+    else{
         dispatch(updateAnecdotes(gotAnecdotes))
     }
 

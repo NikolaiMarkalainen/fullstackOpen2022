@@ -9,9 +9,8 @@ const NewAnecdote = (props) => {
             const content = event.target.anecdote.value
             console.log(event.target.anecdote)
             event.target.anecdote.value = ''
-            const newAnecdote = await anecdoteService.createNew(content)
-            dispatch(createAnecdote(newAnecdote)) &&
-            dispatch(addNotification(newAnecdote)) &&
+            dispatch(createAnecdote(content)) &&
+            dispatch(addNotification(content)) &&
             setTimeout(() => {
                 dispatch(removeNotification(content))
             }, 5000)
