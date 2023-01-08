@@ -99,9 +99,11 @@ const CreateNew = (props) => {
   const name = useField('name')
   const author = useField('author')
   const detail = useField('detail')
+  const reset = useField('reset')
 
   const handleSubmit = (e) => {
     console.log(e, "WHAT IS HERE")
+    console.log(reset.reset)
     console.log(name.value)
     console.log(props)
     e.preventDefault()
@@ -117,7 +119,7 @@ const CreateNew = (props) => {
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div>
           content
           <input {...name}/>
@@ -125,15 +127,15 @@ const CreateNew = (props) => {
         <div>
           author
           <input {...author}/>
-
         </div>
         <div>
           url for more info
           <input {...detail}/>
-
         </div>
-        <button>create</button>
+        <button onClick={handleSubmit}>create</button>
+        <button onClick={reset}>clear</button>
       </form>
+      
     </div>
   )
 
