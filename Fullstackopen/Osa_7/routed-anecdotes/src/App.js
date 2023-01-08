@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {  useField  } from './hooks'
 
 import  {
   BrowserRouter as Router,
@@ -93,19 +94,21 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
   const navigate = useNavigate()
 
+  const name = useField('name')
+  const author = useField('author')
+  const detail = useField('detail')
+
   const handleSubmit = (e) => {
-    console.log(e)
+    console.log(e, "WHAT IS HERE")
+    console.log(name.value)
     console.log(props)
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: name.value,
+      author: author.value,
+      info: detail.value,
       votes: 0
     })
     navigate('/')
@@ -117,15 +120,17 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input {...name}/>
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input {...author}/>
+
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input {...detail}/>
+
         </div>
         <button>create</button>
       </form>
