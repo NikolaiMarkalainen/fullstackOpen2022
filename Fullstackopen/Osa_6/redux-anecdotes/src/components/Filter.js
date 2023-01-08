@@ -1,4 +1,3 @@
-import { useDispatch ,useSelector } from "react-redux";
 import { useState } from "react";
 import { updateAnecdotes } from "../reducers/anecdoteReducer";
 import { connect } from "react-redux";
@@ -6,8 +5,6 @@ import { connect } from "react-redux";
 const Filter = (props) => {
     const [search, setSearch] = useState([])
     const [gotAnecdotes, setAnecdotes] = useState([])
-    const dispatch = useDispatch()
-    console.log("FILTER",props.anecdotes)
     const allAnecdotes  = props.anecdotes
 
 
@@ -18,13 +15,11 @@ const Filter = (props) => {
     const quotes = allAnecdotes.map(n => n.content.toLowerCase().includes(searchValue))
     const selectedData = allAnecdotes.filter((value,index) => quotes[index])
     setAnecdotes(selectedData)
-    console.log(gotAnecdotes.length === 0)
     if(gotAnecdotes.length===0){
-        console.log("ITS ZERO")
     }
     else{
         props.updateAnecdotes(gotAnecdotes)
-    }
+        }
 
 }
 

@@ -1,14 +1,13 @@
 import { createAnecdote } from "../reducers/anecdoteReducer"
-import { addNotification } from "../reducers/notificationReducer"
+import { voteNotification } from "../reducers/notificationReducer"
 import { connect } from "react-redux"
 const NewAnecdote = (props) => {
     const addAnecdote = async (event) => {
             event.preventDefault()
             const content = event.target.anecdote.value
-            console.log(event.target.anecdote)
             event.target.anecdote.value = ''
             props.createAnecdote(content) &&
-            props.addNotification(`You have added: ${content}`, 5000)
+            props.voteNotification(`You have added: ${content}`, 5000)
         }
     return(
         <div>   
@@ -29,7 +28,7 @@ const mapStateToProps =(state) => {
 
 const mapDispatchToProps = {
     createAnecdote,
-    addNotification
+    voteNotification
 }
 
 const ConnectedNewAnecdotes = connect(mapStateToProps,mapDispatchToProps)(NewAnecdote)

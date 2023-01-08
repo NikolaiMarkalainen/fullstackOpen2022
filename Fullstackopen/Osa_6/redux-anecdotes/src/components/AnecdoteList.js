@@ -1,6 +1,5 @@
-import { useDispatch, useSelector} from "react-redux";
-import { updateVote, voteAnecdote } from "../reducers/anecdoteReducer";
-import { removeNotification,voteNotification } from "../reducers/notificationReducer";
+import { updateVote } from "../reducers/anecdoteReducer";
+import { voteNotification } from "../reducers/notificationReducer";
 import { connect } from "react-redux";
 import Filter from "./Filter";
 
@@ -26,7 +25,7 @@ const Anecdotes = (props) => {
                 anecdote = {anecdote}
                 handleClick={() =>
                     props.updateVote(anecdote) &&
-                    props.voteNotification(voteNotification(`You have voted '${anecdote.content}'`, 5000))
+                    props.voteNotification(`You have voted '${anecdote.content}'`, 5000)
                 }
             />)}
         </div>

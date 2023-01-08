@@ -1,14 +1,12 @@
 import { connect } from "react-redux"
 
 const Notification = (props) => {
-  console.log(props)
 let style = {
   border: 'solid',
   padding: 10,
   borderWidth: 1,
 }
 
-console.log('IN NOTIFICATION', props.notification)
 
   
 
