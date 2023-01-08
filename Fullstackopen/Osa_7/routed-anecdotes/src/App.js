@@ -2,14 +2,31 @@ import { useState } from 'react'
 
 import  {
   BrowserRouter as Router,
-  Routes, Route, Link, useMatch
+  Routes, Route, Link, useMatch, useNavigate
 } from 'react-router-dom'
 
-const Menu = ({anecdotes}) => {
+const Notification = ({message}) =>{
+  console.log(message)
+  if(message === null){
+
+    return null
+  }
+  if(message.length !== 0 ){
+      return(
+        <div>
+          <b>New anecdote: {message}, added</b>
+        </div>
+      )
+  }
+}
+
+
+const Menu = ({anecdotes, addNew, notification }) => {
   console.log("ANECDOTES", anecdotes)
   const padding = {
     paddingRight: 5
   }
+
   const match = useMatch('/anecdotes/:id')
   const anecdote = match
   ? anecdotes.find(anecdote => anecdote.id === Number(match.params.id))
@@ -21,11 +38,11 @@ const Menu = ({anecdotes}) => {
         <Link style={padding} to ="/create">Create new</Link>
         <Link style={padding} to ="/about">About</Link>
       </div>
-    
+      <Notification message={notification}/>
       <div>
         <Routes>
-          <Route path="/" element={<AnecdoteList anecdotes={anecdotes}/>}/>
-          <Route path="/create"element={<CreateNew/>}/>
+          <Route path="/" element={<AnecdoteList anecdotes={anecdotes} notification={notification}/>}/>
+          <Route path="/create"element={<CreateNew addNew={addNew}/>}/>
           <Route path="/about"element={<About/>}/>
           <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdote}/>}/>
         </Routes>
@@ -40,7 +57,7 @@ const Anecdote = ({ anecdotes }) => (
 )
 
 
-const AnecdoteList = ({ anecdotes }) => (
+const AnecdoteList = ({ anecdotes, notification }) =>  (
   <div>
     <h2>Anecdotes</h2>
     <ul>
@@ -79,9 +96,11 @@ const CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
-
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
+    console.log(e)
+    console.log(props)
     e.preventDefault()
     props.addNew({
       content,
@@ -89,6 +108,7 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    navigate('/')
   }
 
   return (
@@ -114,6 +134,8 @@ const CreateNew = (props) => {
 
 }
 
+
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -136,9 +158,18 @@ const App = () => {
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
+    console.log(anecdote.content  )
+    setNotification(anecdote.content)
     setAnecdotes(anecdotes.concat(anecdote))
+    console.log(notification)
+    setTimeout(() => {
+      setNotification(null)  
+    }, 5000)
   }
 
+
+
+  
   const anecdoteById = (id) =>
     anecdotes.find(a => a.id === id)
 
@@ -157,7 +188,10 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Router>
-        <Menu anecdotes={anecdotes}/>
+        <Menu 
+        anecdotes={anecdotes}
+        addNew={addNew}
+        notification={notification}/>
         <Footer />
       </Router>
     </div>
