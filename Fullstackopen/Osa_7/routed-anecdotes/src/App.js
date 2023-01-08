@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import {  useField  } from './hooks'
-
+import  omit from 'lodash/omit'
 import  {
   BrowserRouter as Router,
   Routes, Route, Link, useMatch, useNavigate
@@ -100,12 +100,11 @@ const CreateNew = (props) => {
   const author = useField('author')
   const detail = useField('detail')
   const reset = useField('reset')
+  name.reset = 0
+  author.reset = 0
+  detail.reset = 0
 
   const handleSubmit = (e) => {
-    console.log(e, "WHAT IS HERE")
-    console.log(reset.reset)
-    console.log(name.value)
-    console.log(props)
     e.preventDefault()
     props.addNew({
       content: name.value,
@@ -133,7 +132,7 @@ const CreateNew = (props) => {
           <input {...detail}/>
         </div>
         <button onClick={handleSubmit}>create</button>
-        <button onClick={reset}>clear</button>
+        <button onClick={reset.reset}>clear</button>
       </form>
       
     </div>
