@@ -21,17 +21,24 @@ const useField = (type) => {
 }
 
 const useCountry = (name) => {
-  const [country, setCountry] = useState('')
-
+  // catches error once it doesn't find a country with name specified
+  // so as soon as it finds it it returns the country data
+  const [country, setCountry] = useState(name)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(false)
   useEffect(() => {
-    const subscription = name.subscribe()
+    setIsLoading(true)
+    setError(false)
+
     axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
     .then(response =>{
       setCountry(response.data)
-      subscription.unsubscribe()
     })
-  })
-  console.log('THE COUNTRY', country)
+    .catch(() => {
+      setError(true)
+      setIsLoading(false)
+    })
+  }, [name])
   return country
 }
 
