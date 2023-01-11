@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { addNotification } from './reducers/notificationReducer'
+import { initializeBlogs, createBlogs, updateLike, removeBlog } from './reducers/blogReducer'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -11,14 +12,13 @@ import LoginForm from './components/LoginForm'
 import './styles.css'
 
 const App = (props) => {
-  const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-
+  const dispatch = useDispatch()
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
-  }, [])
+    dispatch(initializeBlogs())
+  }, [dispatch])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -29,11 +29,6 @@ const App = (props) => {
     }
   }, [])
 
-  const filterBlogs = () => {
-    blogs.sort((a, b) => {
-      return b.like - a.like
-    })
-  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -50,7 +45,7 @@ const App = (props) => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      props.addNotification(<div className={'error'}>Wrong credentials</div>, 5000)
+      props.addNotification('Wrong credentials',5000,'error')
     }
   }
 
@@ -62,52 +57,28 @@ const App = (props) => {
   }
 
   const addBlog = (blogObject) => {
-    blogFormRef.current.toggleVisibility()
-    blogService
-      .post(blogObject)
-      .then((response) => {
-        setBlogs((blogs) => [...blogs, response.data])
-      })
-      .then(
-        props.addNotification(<div className={'add'}>`${blogObject.title} has been added`</div>, 5000)
-      )
+    props.createBlogs(blogObject, user.token)
+    props.addNotification(`${blogObject.title} has been added`,5000,'add')
+
   }
 
   const blogFormRef = useRef()
 
   const handleBlogDelete = (id) => {
-    const foundBlog = blogs.find((blog) => blog.id === id)
+    const foundBlog = props.blogs.find((blog) => blog.id === id)
     var popUp = window.confirm(
       `Remove blog: ${foundBlog.title} by ${foundBlog.author}`
     )
     if (popUp) {
-      blogService
-        .remove(id)
-        .then(() => {
-          setBlogs((blogs) => blogs.filter((blog) => blog.id !== foundBlog.id))
-        })
-        .then(
-
-            props.addNotification(<div className={'error'}>`Deleted ${foundBlog.title} by ${foundBlog.author}`</div>, 5000)
-        )
+      props.removeBlog(foundBlog, user.token)
+      props.addNotification(`Deleted ${foundBlog.title} by ${foundBlog.author}`,5000,'error')
     }
   }
 
   const handleBlogLike = (id) => {
-    console.log(blogs)
-    console.log('clicked', id)
-    const foundBlog = blogs.find((blog) => blog.id === id)
-    console.log('foundBlog', foundBlog)
-    foundBlog.like = foundBlog.like + 1
-    const changedBlog = {
-      ...foundBlog,
-      like: foundBlog.like,
-      user: foundBlog.user.id,
-    }
-    blogService.update(id, changedBlog).then((newBlog) => {
-      console.log(newBlog)
-      setBlogs(blogs.map((blog) => (blog.id !== id ? blog : newBlog)))
-    })
+    const clickedBlog = props.blogs.find(blog => blog.id === id)
+    console.log(clickedBlog)
+    props.updateLike(clickedBlog)
   }
 
   return (
@@ -138,8 +109,7 @@ const App = (props) => {
             </Togglable>
           </div>
           <div>
-            {filterBlogs()}
-            {blogs.map((blog, id) => (
+            {props.blogs.map((blog, id) => (
               <Blog
                 key={id}
                 blog={blog}
@@ -159,12 +129,17 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return{
-    notification: state.notification
+    notification: state.notification,
+    blogs: state.blogs
   }
 }
 
 const mapDispatchToProps = {
-  addNotification
+  addNotification,
+  initializeBlogs,
+  createBlogs,
+  updateLike,
+  removeBlog
 }
 
 const ConnectedRedux = connect(
@@ -174,16 +149,3 @@ const ConnectedRedux = connect(
 
 
 export default ConnectedRedux
-
-
-/*
-
-
-      setErrorMessage(<div className={'error'}>Wrong credentials</div>)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-
-
-
-      */

@@ -48,4 +48,6 @@ const remove = (id) => {
   return request.then((response) => response.data)
 }
 
-export default { getAll, create, update, setToken, post, remove, getPost }
+const blogService = { getAll, create, update, setToken, post, remove, getPost, token }
+
+export default blogService
