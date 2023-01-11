@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useState } from 'react'
 const Blog = ({ blog, addBlogLike, removeBlog, user }) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
-  const showWhenVisible = { display: visible ? "" : "none" };
-  const [buttonText, setButtonText] = useState("Show more");
+  const showWhenVisible = { display: visible ? '' : 'none' }
+  const [buttonText, setButtonText] = useState('Show more')
 
   const toggleVisibility = () => {
-    setVisible(!visible);
-    setButtonText(buttonText === "Show more" ? "Show less" : "Show more");
-  };
+    setVisible(!visible)
+    setButtonText(buttonText === 'Show more' ? 'Show less' : 'Show more')
+  }
   const deleteButton = () => {
     if (blog.user.username === user.username) {
       return (
         <button id="delete-button" onClick={removeBlog}>
           Delete
         </button>
-      );
+      )
     }
-  };
+  }
 
   return (
     <ul id="blog-data">
@@ -39,6 +39,6 @@ const Blog = ({ blog, addBlogLike, removeBlog, user }) => {
         </div>
       </div>
     </ul>
-  );
-};
-export default Blog;
+  )
+}
+export default Blog

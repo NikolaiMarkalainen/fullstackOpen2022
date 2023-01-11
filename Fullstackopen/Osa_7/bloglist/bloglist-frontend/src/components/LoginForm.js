@@ -31,7 +31,7 @@ const LoginForm = ({
         Login
       </button>
     </form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

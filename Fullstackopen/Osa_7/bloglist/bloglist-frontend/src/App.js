@@ -1,132 +1,119 @@
-import { useState, useEffect, useRef } from "react";
-import Blog from "./components/Blog";
-import blogService from "./services/blogs";
-import loginService from "./services/login";
-import Notification from "./components/Notification";
-import BlogForm from "./components/BlogForm";
-import Togglable from "./components/Togglable";
-import LoginForm from "./components/LoginForm";
-import "./styles.css";
+import { useState, useEffect, useRef } from 'react'
+import { connect } from 'react-redux'
+import { addNotification } from './reducers/notificationReducer'
+import Blog from './components/Blog'
+import blogService from './services/blogs'
+import loginService from './services/login'
+import ConnectedNotifications from './components/Notification'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
+import LoginForm from './components/LoginForm'
+import './styles.css'
 
-const App = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, []);
+const App = (props) => {
+  const [blogs, setBlogs] = useState([])
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
+    blogService.getAll().then((blogs) => setBlogs(blogs))
+  }, [])
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      blogService.setToken(user.token);
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
     }
-  }, []);
+  }, [])
 
   const filterBlogs = () => {
     blogs.sort((a, b) => {
-      return b.like - a.like;
-    });
-  };
+      return b.like - a.like
+    })
+  }
 
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
       const user = await loginService.login({
         username,
         password,
-      });
+      })
 
-      window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
-      blogService.setToken(user.token);
-      setUser(user);
-      setUsername("");
-      setPassword("");
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      blogService.setToken(user.token)
+      setUser(user)
+      setUsername('')
+      setPassword('')
     } catch (exception) {
-      setErrorMessage(<div className={"error"}>Wrong credentials</div>);
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
+      props.addNotification(<div className={'error'}>Wrong credentials</div>, 5000)
     }
-  };
+  }
 
   const handleLogout = async (event) => {
-    event.preventDefault();
-    user.token = null;
-    window.localStorage.clear();
-    window.location.reload();
-  };
+    event.preventDefault()
+    user.token = null
+    window.localStorage.clear()
+    window.location.reload()
+  }
 
   const addBlog = (blogObject) => {
-    blogFormRef.current.toggleVisibility();
+    blogFormRef.current.toggleVisibility()
     blogService
       .post(blogObject)
       .then((response) => {
-        setBlogs((blogs) => [...blogs, response.data]);
+        setBlogs((blogs) => [...blogs, response.data])
       })
       .then(
-        setErrorMessage(
-          <div className={"add"}>{blogObject.title} has been added</div>
-        )
-      );
-    setTimeout(() => {
-      setErrorMessage(null);
-    }, 5000);
-  };
+        props.addNotification(<div className={'add'}>`${blogObject.title} has been added`</div>, 5000)
+      )
+  }
 
-  const blogFormRef = useRef();
+  const blogFormRef = useRef()
 
   const handleBlogDelete = (id) => {
-    const foundBlog = blogs.find((blog) => blog.id === id);
+    const foundBlog = blogs.find((blog) => blog.id === id)
     var popUp = window.confirm(
       `Remove blog: ${foundBlog.title} by ${foundBlog.author}`
-    );
+    )
     if (popUp) {
       blogService
         .remove(id)
         .then(() => {
-          setBlogs((blogs) => blogs.filter((blog) => blog.id !== foundBlog.id));
+          setBlogs((blogs) => blogs.filter((blog) => blog.id !== foundBlog.id))
         })
         .then(
-          setErrorMessage(
-            <div className={"error"}>
-              Deleted, {foundBlog.title} by {foundBlog.author}
-            </div>
-          )
-        );
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
+
+            props.addNotification(<div className={'error'}>`Deleted ${foundBlog.title} by ${foundBlog.author}`</div>, 5000)
+        )
     }
-  };
+  }
 
   const handleBlogLike = (id) => {
-    console.log(blogs);
-    console.log("clicked", id);
-    const foundBlog = blogs.find((blog) => blog.id === id);
-    console.log("foundBlog", foundBlog);
-    foundBlog.like = foundBlog.like + 1;
+    console.log(blogs)
+    console.log('clicked', id)
+    const foundBlog = blogs.find((blog) => blog.id === id)
+    console.log('foundBlog', foundBlog)
+    foundBlog.like = foundBlog.like + 1
     const changedBlog = {
       ...foundBlog,
       like: foundBlog.like,
       user: foundBlog.user.id,
-    };
+    }
     blogService.update(id, changedBlog).then((newBlog) => {
-      console.log(newBlog);
-      setBlogs(blogs.map((blog) => (blog.id !== id ? blog : newBlog)));
-    });
-  };
+      console.log(newBlog)
+      setBlogs(blogs.map((blog) => (blog.id !== id ? blog : newBlog)))
+    })
+  }
 
   return (
     <div>
       <h1>BLOGS</h1>
-      <Notification message={errorMessage} />
+      <ConnectedNotifications/>
       {user === null ? (
         <div>
           <Togglable buttonLabel="Login">
@@ -166,7 +153,37 @@ const App = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+
+const mapStateToProps = (state) => {
+  return{
+    notification: state.notification
+  }
+}
+
+const mapDispatchToProps = {
+  addNotification
+}
+
+const ConnectedRedux = connect(
+  mapStateToProps, mapDispatchToProps)(App)
+
+
+
+
+export default ConnectedRedux
+
+
+/*
+
+
+      setErrorMessage(<div className={'error'}>Wrong credentials</div>)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+
+
+
+      */

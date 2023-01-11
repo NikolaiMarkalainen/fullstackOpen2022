@@ -1,37 +1,37 @@
-import { useState } from "react";
-import "../styles.css";
+import { useState } from 'react'
+import '../styles.css'
 
 const BlogForm = ({ createBlog }) => {
-  const [newTitle, setNewTitle] = useState("");
-  const [newAuthor, setNewAuthor] = useState("");
-  const [newUrl, setNewUrl] = useState("");
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   const addBlog = (event) => {
-    event.preventDefault();
-    const val = 0;
+    event.preventDefault()
+    const val = 0
     createBlog({
       title: newTitle,
       author: newAuthor,
       url: newUrl,
       like: val,
-    });
-    setNewAuthor("");
-    setNewTitle("");
-    setNewUrl("");
-  };
+    })
+    setNewAuthor('')
+    setNewTitle('')
+    setNewUrl('')
+  }
 
   const handleTitleChange = (event) => {
-    event.preventDefault();
-    setNewTitle(event.target.value);
-  };
+    event.preventDefault()
+    setNewTitle(event.target.value)
+  }
   const handleAuthorChange = (event) => {
-    event.preventDefault();
-    setNewAuthor(event.target.value);
-  };
+    event.preventDefault()
+    setNewAuthor(event.target.value)
+  }
   const handleUrlChange = (event) => {
-    event.preventDefault();
-    setNewUrl(event.target.value);
-  };
+    event.preventDefault()
+    setNewUrl(event.target.value)
+  }
 
   return (
     <form onSubmit={addBlog}>
@@ -66,6 +66,6 @@ const BlogForm = ({ createBlog }) => {
         save
       </button>
     </form>
-  );
-};
-export default BlogForm;
+  )
+}
+export default BlogForm
