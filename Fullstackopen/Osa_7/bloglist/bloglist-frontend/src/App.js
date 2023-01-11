@@ -9,9 +9,16 @@ import ConnectedNotifications from './components/Notification'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
+import ConnectedUser from './components/Users'
 import './styles.css'
+import{
+  BrowserRouter as Router, Routes, Route, Link
+} from 'react-router-dom'
 
 const App = (props) => {
+  const padding = {
+    padding: 5
+  }
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -82,7 +89,8 @@ const App = (props) => {
   }
 
   return (
-    <div>
+    <Router>
+      <div>
       <h1>BLOGS</h1>
       <ConnectedNotifications/>
       {user === null ? (
@@ -107,8 +115,12 @@ const App = (props) => {
             <Togglable buttonLabel="create new Blog" ref={blogFormRef}>
               <BlogForm createBlog={addBlog} />
             </Togglable>
+            <Link style={padding} to ="/users">Users</Link>
           </div>
           <div>
+            <Routes>
+              <Route path="/users" element={<ConnectedUser />}/>
+            </Routes>
             {props.blogs.map((blog, id) => (
               <Blog
                 key={id}
@@ -123,6 +135,7 @@ const App = (props) => {
         </div>
       )}
     </div>
+    </Router>
   )
 }
 
@@ -149,3 +162,6 @@ const ConnectedRedux = connect(
 
 
 export default ConnectedRedux
+
+/*
+*/
