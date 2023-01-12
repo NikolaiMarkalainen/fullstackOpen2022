@@ -12,7 +12,6 @@ const Users = (props) => {
     return(
         <div>
             <h1>USERS</h1>
-        <br></br>
         <ul>
             {props.users.map(user =>
             <li key={user.id}>

@@ -2,15 +2,15 @@ import { useState, useEffect, useRef } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { addNotification } from './reducers/notificationReducer'
 import { initializeBlogs, createBlogs, updateLike, removeBlog } from './reducers/blogReducer'
-import Blog from './components/Blog'
+import Blogs from './components/Blogs'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import ConnectedNotifications from './components/Notification'
-import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import ConnectedUser from './components/Users'
 import User from './components/User'
+import SingleBlogView from './components/SingleBlogView'
 import './styles.css'
 import{
  Routes, Route, Link, useMatch
@@ -20,11 +20,15 @@ import{
   }
 
 const App = (props) => {
-  const match = useMatch('/users/:id')
-  const foundUser = match
-  ? props.users.find(user => user.id === match.params.id)
+  const userMatch = useMatch('/users/:id')
+  const foundUser = userMatch
+  ? props.users.find(user => user.id === userMatch.params.id)
   : null
 
+  const blogMatch = useMatch('/blogs/:id')
+  const foundBlog = blogMatch
+  ? props.blogs.find(blog => blog.id === blogMatch.params.id)
+  : null
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -114,31 +118,28 @@ const App = (props) => {
       ) : (
         <div>
           <div>
-          <Link style={padding} to ="/users/">Users</Link>
+          <p>{user.username} logged in</p>
           <Link style={padding} to ="/">Home</Link>
-          <Routes>
-          <Route path='/users/:id' element={<User user={foundUser}/>}/>
-              <Route path="/users/*" element={<ConnectedUser />}/>
-          </Routes>
-            <p>{user.username} logged in</p>
-            <button id="log-out" type="submit" onClick={handleLogout}>
+          <Link style={padding} to ="/users/">Users</Link>
+          <Link style={padding} to ="/blogs/">Blogs</Link>
+          <button id="log-out" type="submit" style={padding} onClick={handleLogout}>
               log out
             </button>
-            <Togglable buttonLabel="create new Blog" ref={blogFormRef}>
-              <BlogForm createBlog={addBlog} />
-            </Togglable>
-          </div>
-          <div>
-            {props.blogs.map((blog, id) => (
-              <Blog
-                key={id}
-                blog={blog}
-                user={user}
-                blogUser={blog.user.username}
-                addBlogLike={() => handleBlogLike(blog.id)}
-                removeBlog={() => handleBlogDelete(blog.id)}
-              />
-            ))}
+          <Routes>
+              <Route path='/users/:id' element={<User user={foundUser}/>}/>
+              <Route path='/blogs/:id' element={<SingleBlogView
+              blog = {foundBlog}
+              handleBlogLike ={handleBlogLike} />}/>
+              <Route path="/users/*" element={<ConnectedUser />}/>
+              <Route path="/blogs/*" element={<Blogs
+              addBlog = {addBlog}
+              handleBlogDelete = {handleBlogDelete}
+              blogFormRef = {blogFormRef}
+              handleBlogLike = {handleBlogLike}
+              user = {user}
+              blogs = {props.blogs}
+              />}/>
+          </Routes>
           </div>
         </div>
       )}
@@ -170,10 +171,3 @@ const ConnectedRedux = connect(
 
 
 export default ConnectedRedux
-
-           /* <Routes>
-              <Route path="/users" element={<ConnectedUser />}/>
-            </Routes>*/
-/*            //<Link style={padding} to ="/users">Users</Link>
-
-*/

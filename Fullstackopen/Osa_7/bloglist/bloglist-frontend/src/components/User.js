@@ -10,8 +10,10 @@ const User = ({ user }) => {
             <h1>{user.username}</h1>
             <h2>Added blogs</h2>
             <div>
+                <ul>
                 {blogs.map(blog =>
                     <li key={blog.id}>{blog.title}</li>)}
+                </ul>
             </div>
         </div>
     )
