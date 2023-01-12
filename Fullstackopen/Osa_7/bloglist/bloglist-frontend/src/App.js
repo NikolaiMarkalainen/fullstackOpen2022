@@ -10,15 +10,22 @@ import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import ConnectedUser from './components/Users'
+import User from './components/User'
 import './styles.css'
 import{
-  BrowserRouter as Router, Routes, Route, Link
+ Routes, Route, Link, useMatch
 } from 'react-router-dom'
-
-const App = (props) => {
   const padding = {
     padding: 5
   }
+
+const App = (props) => {
+  const match = useMatch('/users/:id')
+  const foundUser = match
+  ? props.users.find(user => user.id === match.params.id)
+  : null
+
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -89,7 +96,6 @@ const App = (props) => {
   }
 
   return (
-    <Router>
       <div>
       <h1>BLOGS</h1>
       <ConnectedNotifications/>
@@ -108,6 +114,12 @@ const App = (props) => {
       ) : (
         <div>
           <div>
+          <Link style={padding} to ="/users/">Users</Link>
+          <Link style={padding} to ="/">Home</Link>
+          <Routes>
+          <Route path='/users/:id' element={<User user={foundUser}/>}/>
+              <Route path="/users/*" element={<ConnectedUser />}/>
+          </Routes>
             <p>{user.username} logged in</p>
             <button id="log-out" type="submit" onClick={handleLogout}>
               log out
@@ -115,12 +127,8 @@ const App = (props) => {
             <Togglable buttonLabel="create new Blog" ref={blogFormRef}>
               <BlogForm createBlog={addBlog} />
             </Togglable>
-            <Link style={padding} to ="/users">Users</Link>
           </div>
           <div>
-            <Routes>
-              <Route path="/users" element={<ConnectedUser />}/>
-            </Routes>
             {props.blogs.map((blog, id) => (
               <Blog
                 key={id}
@@ -135,7 +143,6 @@ const App = (props) => {
         </div>
       )}
     </div>
-    </Router>
   )
 }
 
@@ -143,7 +150,8 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   return{
     notification: state.notification,
-    blogs: state.blogs
+    blogs: state.blogs,
+    users: state.users
   }
 }
 
@@ -163,5 +171,9 @@ const ConnectedRedux = connect(
 
 export default ConnectedRedux
 
-/*
+           /* <Routes>
+              <Route path="/users" element={<ConnectedUser />}/>
+            </Routes>*/
+/*            //<Link style={padding} to ="/users">Users</Link>
+
 */
