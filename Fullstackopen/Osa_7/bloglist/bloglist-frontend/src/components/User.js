@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const User = ({ user }) => {
     if(!user){
         return null
@@ -12,7 +14,8 @@ const User = ({ user }) => {
             <div>
                 <ul>
                 {blogs.map(blog =>
-                    <li key={blog.id}>{blog.title}</li>)}
+                <li key={blog.id}>
+                   <Link to={`/blogs/${blog.id}`}> {blog.title}</Link></li>)}
                 </ul>
             </div>
         </div>
