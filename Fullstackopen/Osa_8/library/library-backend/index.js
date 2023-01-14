@@ -102,10 +102,9 @@ const typeDefs = gql`
   type Query{
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String): [Books]!
+    allBooks(author: String genres: String!): [Books]!
     allAuthors: [Authors!]
-    findBookAuthors(author: String!): [Books]
-  }
+}
 
 
   `
@@ -115,10 +114,23 @@ const resolvers = {
     bookCount: () =>  books.length,
     authorCount: () => authors.length,
     allBooks: (root,args) => {
-        console.log("ARGUMENTS",args.author)
-        if(args.author !== undefined){
-            const filteredBooks = books.filter(book => book.author === args.author)
-            return filteredBooks
+        if(args.author !== undefined && args.genres !== undefined){
+            console.log("Authors", args.author, "Genres", args.genres)
+            const filteresApplied = books.filter(book =>{ 
+                return book.genres.some(genre => args.genres.includes(genre) && book.author === args.author)})
+            return filteresApplied.length > 0 ? filteresApplied : []
+        }
+        else if(args.author !== undefined){
+            const filteredByAuthors = books.filter(book => book.author === args.author)
+            return filteredByAuthors
+        }
+        else if(args.genres !== undefined){
+            const booak = books.map(book => book.genres)
+            console.log('Genres', [args.genres], 'Book genres', [booak] )
+            const filteredByGenres = books.filter(book => {
+                return book.genres.some(genre => args.genres.includes(genre))
+            })
+            return filteredByGenres.length > 0 ? filteredByGenres : []
         }
         else{
             console.log('HERE')
@@ -130,7 +142,6 @@ const resolvers = {
   Authors: {
     bookCount: (root, args) => {
         const found = books.filter(b => b.author === root.name)
-        console.log(found)
         return found.length
     } 
   }
@@ -146,3 +157,9 @@ const server = new ApolloServer({
 server.listen().then(({ url }) => {
   console.log(`Server ready at ${url}`)
 })
+
+/*
+{
+  "author": "Robert Martin",
+  "genres": "refactoring"
+}*/
