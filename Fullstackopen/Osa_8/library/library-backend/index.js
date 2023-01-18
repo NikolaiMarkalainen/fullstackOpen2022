@@ -180,7 +180,7 @@ const resolvers = {
         }
         console.log('FOUND AUTHOR', author)
         const updatedAuthor = {...author, born: args.born}
-        authors.map(a => a.name === args.name ? updatedAuthor : a)
+        authors = authors.map(a => a.name === args.name ? updatedAuthor : a)
         console.log(updatedAuthor)
         console.log(authors)
         return updatedAuthor

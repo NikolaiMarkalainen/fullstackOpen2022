@@ -1,9 +1,25 @@
+import { useMutation } from "@apollo/client"
+import { useState } from "react"
+import { UPDATE_BIRTH, ALL_AUTHORS, ALL_BOOKS } from "../queries"
+
 const Authors = (props) => {
+  const [name,setName] = useState('')
+  const [year,setYear]= useState('')
+  const [updateBirth] = useMutation(UPDATE_BIRTH, {
+    refetchQueries: [{ query: ALL_AUTHORS  }]
+  })
   if (!props.show) {
     return null
   }
   const authors = props.data
   console.log(props)
+
+  const submit = async (event) => {
+    event.preventDefault()
+    updateBirth({ variables: { name, born: parseInt(year) }})
+    setYear('')
+    setName('')
+  }
   return (
     <div>
       <h2>authors</h2>
@@ -23,6 +39,27 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
+      <div>
+        <h1>Set birthyear</h1>
+        <form onSubmit={submit}>
+         <div>
+          name
+          <input
+          value={name}
+          onChange={({ target }) => setName(target.value)}
+          />
+         </div>
+         <div>
+           born
+           <input
+           type="number"
+           value={year}
+           onChange={({ target }) => setYear(target.value)}
+           />
+         </div>
+         <button type="submit">update birth</button>
+        </form>
+      </div>
     </div>
   )
 }
