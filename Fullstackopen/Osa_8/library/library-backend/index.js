@@ -92,6 +92,9 @@ const resolvers = {
     }
   },
   Author: {
+    name: (root) => root.name,
+    id: (root) => root.id,
+    born: (root) => root.born,
   },
   Books: {
     title: (root) => root.title,
@@ -104,24 +107,38 @@ const resolvers = {
   },
   Mutation: {
     addBook: async (root, args) =>{
-        const author = await Author.findOne({name: args.author})
-        const book  = new Book ({...args, author: author._id})
-        if(!author) {
-          const newAuthor = new Author ({name: args.author, born: undefined})
-          await newAuthor.save()
-        }
-        else{
-          console.log(book)
-          await book.save()
-        }
+      try{
+      const author = await Author.findOne({name: args.author})
+      const book  = new Book ({...args, author: author._id})
+      if(!author) {
+        const newAuthor = new Author ({name: args.author, born: null})
+        await newAuthor.save()
+        await book.save()
+      }
+      else{
+        console.log(book)
+        await book.save()
+      }
+    } catch(error) {
+      throw new UserInputError(error.message, {
+        invalidArgs: args,
+      })
+    }
     },
-    editBirth: (root, args) => {
-      const author = Author.find({name: args.name})
+    editBirth: async (root, args) => {
+      let author = await Author.find({name: args.name})
       if(!author){
         return null
       }
+      try{
         author.born = args.born
-        return author.save()
+        console.log(author)
+        await author.save()
+      } catch(error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      }
     }
   }
 }
