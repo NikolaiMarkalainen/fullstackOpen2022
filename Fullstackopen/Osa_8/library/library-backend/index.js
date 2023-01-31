@@ -126,7 +126,7 @@ const resolvers = {
     }
     },
     editBirth: async (root, args) => {
-      let author = await Author.find({name: args.name})
+      let author = await Author.findOne({name: args.name})
       if(!author){
         return null
       }
