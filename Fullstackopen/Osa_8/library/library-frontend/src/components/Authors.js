@@ -12,6 +12,7 @@ const Authors = (props) => {
   if (!props.show) {
     return null
   }
+  console.log(props)
   const authors = props.data
   console.log(props)
   const nullBirth = authors.filter(author => author.born === null)

@@ -59,20 +59,24 @@ const typeDefs = gql`
     me: User
 }
   type Mutation{
+    
     addBook(
         title: String!
         author: String!
         published: Int!
         genres: [String!]!
     ): Books!
+    
     editBirth(
         name: String!
         born: Int!
     ): Author
+
     createUser(
       username: String!
       favoriteGenre: String!  
     ): User
+    
     login(
       username: String!
       password: String!
@@ -83,6 +87,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     me:(root, args, context) => {
+      Author.collection.remove()
       console.log(context.currentUser)
       console.log(context)
       return context.currentUser
@@ -91,6 +96,7 @@ const resolvers = {
     authorCount: () => Author.collection.countDocuments(),
     allBooks: async (root,args, context) => {
       const book = await Book.find({}).populate('author')
+      console.log(book)
       if(args.author !== undefined && args.genres !== undefined){
         (book.filter(book => {
           return book.genres.some(genre => args.genres.includes(genre))
@@ -98,6 +104,7 @@ const resolvers = {
        book.filter(book => {
           return book.genres.some(genre => args.genres.includes(genre) && book.author === args.author)
         })
+        console.log('what')
       }
       else if(args.author !== undefined){
         return book.filter(book => book.author.name === args.author)
@@ -107,6 +114,7 @@ const resolvers = {
           return book.genres.some(genre => args.genres.includes(genre))
         })
       }
+      console.log('what2')
       return book
     },
     allAuthors: async (root,args, context) => {
@@ -122,9 +130,7 @@ const resolvers = {
   Books: {
     title: (root) => root.title,
     published: (root) => root.published,
-    async author(root) {
-      return await Author.find({ name:root })
-    },
+    author: async(root) => root.author,
     id: (root) => root.id,
     genres: (root) => root.genres,
   },
@@ -134,35 +140,28 @@ const resolvers = {
       if(!currentUser){
         throw new UserInputError(' Log in to add book')
       }
-
       if(args.author.length < 4){
         throw new UserInputError (' author name too short ')
       }
-
       if( args.title.length < 2 ){
         throw new UserInputError (' title of book is too short ')
       }
-
-      console.log(currentUser)
+      let author = await Author.findOne({ name: args.author })
+      if(!author) {
+        author = new Author ({name: args.author, born: null})
+      }
+      let book = new Book ({ ...args, author: author })
       try{
-        const author = await Author.findOne({name: args.author})
-        if(!author) {
-          const newAuthor = new Author ({name: args.author, born: null})
-          await newAuthor.save()
-          const book = new Book ({ ...args, author: newAuthor._id })
-          await book.save()
-          return book
-        }
-        else{
-          const book  = new Book ({...args, author: author._id})
-          await book.save()
-          return book
-        }
+        console.log("LINE155",book)
+        await author.save()
+        await book.save()
       } catch(error) {
         throw new UserInputError(error.message, {
           invalidArgs: args,
         })
       }
+      return book
+
     },
     editBirth: async (root, args, context) => {
       const currentUser = context.currentUser
