@@ -69,7 +69,7 @@ const App = () => {
       </div>
       <Authors data = {authorsData.data.allAuthors}show={page === 'authors'} />
       <Books data = {booksData.data.allBooks} show={page === 'books'} />
-      <NewBook show={page === 'add'} />
+      <NewBook setErrorMessage = {notify} show={page === 'add'} />
     </div>
   )
 }
