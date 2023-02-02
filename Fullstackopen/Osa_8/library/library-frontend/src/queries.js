@@ -86,3 +86,13 @@ export const ALL_BOOKS_GENRES = gql`
         }
     }
 `
+
+export const ME = gql`
+    query {
+        me {
+            username
+            id
+            favoriteGenre
+        }
+    }   
+`

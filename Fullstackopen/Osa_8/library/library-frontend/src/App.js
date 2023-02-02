@@ -6,7 +6,7 @@ import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Notify from './components/Notify'
-
+import Recommended from './components/Recommended'
 import { ALL_BOOKS } from './queries'
 import { ALL_AUTHORS } from './queries'
 
@@ -62,14 +62,16 @@ const App = () => {
     <div>
       <Notify errorMessage={errorMessage} />
       <div>
-        <button onClick={() => setPage('authors')}>authors</button>
-        <button onClick={() => setPage('books') }>books</button>
-        <button onClick={() => setPage('add')}>add book</button>
-        <button onClick={() => logout()}>logout</button>
+        <button onClick={() => setPage('authors')}>Authors</button>
+        <button onClick={() => setPage('books') }>Books</button>
+        <button onClick={() => setPage('add')}>Add book</button>
+        <button onClick={() => setPage('recommended')}>Recommended</button>
+        <button onClick={() => logout()}>Logout</button>
       </div>
       <Authors data = {authorsData.data.allAuthors}show={page === 'authors'} />
       <Books data = {booksData.data.allBooks} show={page === 'books'} />
       <NewBook setErrorMessage = {notify} show={page === 'add'} />
+      <Recommended show={page === 'recommended'} />
     </div>
   )
 }

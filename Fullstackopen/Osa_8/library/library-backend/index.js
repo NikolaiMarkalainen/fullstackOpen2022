@@ -88,7 +88,6 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     me:(root, args, context) => {
-      Author.collection.remove()
       console.log(context.currentUser)
       console.log(context)
       return context.currentUser

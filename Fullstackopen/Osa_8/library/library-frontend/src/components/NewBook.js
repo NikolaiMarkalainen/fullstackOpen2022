@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
-import { ALL_AUTHORS, ALL_BOOKS, CREATE_BOOK } from '../queries'
+import { ALL_AUTHORS, ALL_BOOKS, ALL_BOOKS_GENRES, CREATE_BOOK, ME } from '../queries'
 
 const NewBook = (props) => {
   
@@ -15,7 +15,7 @@ const NewBook = (props) => {
       props.setErrorMessage((error.graphQLErrors[0].message))
     },
     update: (cache, response) => {
-      cache.updateQuery({ query: ALL_BOOKS},({ allBooks }) => {
+      cache.updateQuery({ query: ALL_BOOKS_GENRES},({ allBooks }) => {
         return{
           allBooks: allBooks.concat({
             ...response.data.addBook,
@@ -29,6 +29,14 @@ const NewBook = (props) => {
             ...response.data.addBook.author,
             born: null,
             id: null
+          })
+        }
+      })
+      cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
+        return{
+          allBooks: allBooks.concat({
+            ...response.data.addBook,
+            id:null
           })
         }
       })
