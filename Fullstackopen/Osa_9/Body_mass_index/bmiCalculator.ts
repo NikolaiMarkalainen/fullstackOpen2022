@@ -24,7 +24,7 @@ interface Calculations {
     desc: string;
 }
 
-const calculateBmi = (height: number, mass: number): Calculations => {
+export const calculateBmi = (height: number, mass: number): Calculations => {
     const BMI = (mass / height / height) * 10000;
     let description: string = '';
     if(BMI < 18.5){
