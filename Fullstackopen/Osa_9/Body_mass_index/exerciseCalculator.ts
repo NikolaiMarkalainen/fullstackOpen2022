@@ -1,3 +1,26 @@
+interface Vals {
+    target: number;
+    numberArrays: Array<number>;
+}
+
+const parseArray = (args: Array<string>): Vals => {
+    if(args.length < 4) throw new Error('Too little arguments');
+    if(isNaN(Number(args[2]))) throw new Error ('Not an integer value');
+    let numberArrays = [];
+    for(let i = 3; i < args.length; i++){
+        if(!isNaN(Number(args[i]))) {
+            numberArrays.push(Number(args[i]));
+        }
+        else {
+            throw new Error(' Provided values were not all numerical ');
+        }
+    }
+    return{
+        target: Number(args[2]),
+        numberArrays: numberArrays
+    }
+}
+
 interface Result {
     periodLength: number,
     trainingDays: number,
@@ -35,4 +58,13 @@ const calculate = (days: Array<number>, target: number): Result => {
     }
 }
 
-console.log(calculate([3, 0, 2, 4.5, 0, 3, 1], 2));
+try{
+    const{target, numberArrays}= parseArray(process.argv);
+    calculate(numberArrays, target);
+    console.log(calculate(numberArrays, target));
+}catch(error:unknown){
+    let errorMessage = 'Something bad happened. ';
+    if(error instanceof Error){
+        errorMessage += 'Error: ' + error.message;
+    }
+}
