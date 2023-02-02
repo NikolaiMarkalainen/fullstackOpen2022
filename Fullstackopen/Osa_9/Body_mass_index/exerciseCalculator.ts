@@ -63,7 +63,7 @@ try{
     calculate(numberArrays, target);
     console.log(calculate(numberArrays, target));
 }catch(error:unknown){
-    let errorMessage = 'Something bad happened. ';
+    let errorMessage = 'Something bad happened. '
     if(error instanceof Error){
         errorMessage += 'Error: ' + error.message;
     }

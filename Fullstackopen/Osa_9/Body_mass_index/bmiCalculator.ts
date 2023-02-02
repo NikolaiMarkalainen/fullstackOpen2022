@@ -26,7 +26,7 @@ interface Calculations {
 
 const calculateBmi = (height: number, mass: number): Calculations => {
     const BMI = (mass / height / height) * 10000;
-    let description: string;
+    let description: string = '';
     if(BMI < 18.5){
         description = "Underweight (Unhealthy Weight)";
     }
