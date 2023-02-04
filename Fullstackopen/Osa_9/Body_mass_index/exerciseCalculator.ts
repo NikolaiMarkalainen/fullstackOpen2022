@@ -6,7 +6,7 @@ interface Vals {
 const parseArray = (args: Array<string>): Vals => {
     if(args.length < 4) throw new Error('Too little arguments');
     if(isNaN(Number(args[2]))) throw new Error ('Not an integer value');
-    let numberArrays = [];
+    const numberArrays = [];
     for(let i = 3; i < args.length; i++){
         if(!isNaN(Number(args[i]))) {
             numberArrays.push(Number(args[i]));
@@ -18,8 +18,8 @@ const parseArray = (args: Array<string>): Vals => {
     return{
         target: Number(args[2]),
         numberArrays: numberArrays
-    }
-}
+    };
+};
 
 interface Result {
     periodLength: number,
@@ -31,11 +31,11 @@ interface Result {
     average: number
 }
 
-const calculate = (days: Array<number>, target: number): Result => {
+export const calculate = (days: Array<number>, target: number): Result => {
     const average = days.reduce((a, b) => a + b, 0) / days.length;
 
     let rating = 0;
-    let ratingDescription = ""
+    let ratingDescription = "";
 
     if(average > target){
         rating = 2;
@@ -50,21 +50,23 @@ const calculate = (days: Array<number>, target: number): Result => {
     return {
         periodLength: days.length,
         trainingDays: days.filter( x => x !== 0 ).length,
-        success: (target / average > 1),
+        success: (average > target),
         average: average,
         target: target,
         rating: rating,
         ratingDescription: ratingDescription
-    }
-}
+    };
+};
 
 try{
     const{target, numberArrays}= parseArray(process.argv);
     calculate(numberArrays, target);
     console.log(calculate(numberArrays, target));
 }catch(error:unknown){
-    let errorMessage = 'Something bad happened. '
+    let errorMessage = 'Something bad happened. ';
     if(error instanceof Error){
         errorMessage += 'Error: ' + error.message;
     }
+    console.log(errorMessage);
 }
+

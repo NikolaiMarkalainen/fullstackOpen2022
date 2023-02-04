@@ -12,12 +12,12 @@ const parseArguments = (args: Array<string>): Values => {
         return{
             num1: Number(args[2]),
             num2: Number(args[3])
-        }
+        };
     }
     else{
         throw new Error('Provided values are not numbers');
     }
-}
+};
 
 interface Calculations {
     bmi: number;
@@ -26,7 +26,7 @@ interface Calculations {
 
 export const calculateBmi = (height: number, mass: number): Calculations => {
     const BMI = (mass / height / height) * 10000;
-    let description: string = '';
+    let description = '';
     if(BMI < 18.5){
         description = "Underweight (Unhealthy Weight)";
     }
@@ -42,14 +42,14 @@ export const calculateBmi = (height: number, mass: number): Calculations => {
     return {
         bmi: BMI,
         desc: description 
-    }
-}
+    };
+};
 try{
     const{num1,num2} = parseArguments(process.argv);
     calculateBmi(num1, num2);
     console.log(calculateBmi(num1,num2));
 }catch(error:unknown){
-    let errorMessage = 'Something bad happened.'
+    let errorMessage = 'Something bad happened.';
     if(error instanceof Error){
         errorMessage += ' Error: ' + error.message;
     }
