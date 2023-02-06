@@ -11,10 +11,11 @@ import { useStateValue } from "../state";
 import { TableCell } from "@material-ui/core";
 import { TableRow } from "@material-ui/core";
 import { TableBody } from "@material-ui/core";
-
+import SinglePatient from "../components/SinglePatient";
+import { Link, Routes, useMatch, Route } from "react-router-dom";
 const PatientListPage = () => {
-  const [{ patients }, dispatch] = useStateValue();
 
+  const [{ patients }, dispatch] = useStateValue();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
 
@@ -24,6 +25,11 @@ const PatientListPage = () => {
     setModalOpen(false);
     setError(undefined);
   };
+
+  const patientMatch = useMatch('/patients/:id');
+  const foundPatient = patientMatch
+  ? Object.values(patients).find(patient => patient.id === patientMatch.params.id)
+  : null;
 
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
@@ -46,6 +52,9 @@ const PatientListPage = () => {
 
   return (
     <div className="App">
+      <Routes>
+        <Route path="/patients/:id" element={<SinglePatient patient={foundPatient} />}/> 
+      </Routes>
       <Box>
         <Typography align="center" variant="h6">
           Patient list
@@ -58,6 +67,7 @@ const PatientListPage = () => {
             <TableCell>Gender</TableCell>
             <TableCell>Occupation</TableCell>
             <TableCell>Health Rating</TableCell>
+            <TableCell>Details</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -68,6 +78,9 @@ const PatientListPage = () => {
               <TableCell>{patient.occupation}</TableCell>
               <TableCell>
                 <HealthRatingBar showText={false} rating={1} />
+              </TableCell>
+              <TableCell>
+              <Link to ={`patients/${patient.id}`}>Further details</Link>
               </TableCell>
             </TableRow>
           ))}
