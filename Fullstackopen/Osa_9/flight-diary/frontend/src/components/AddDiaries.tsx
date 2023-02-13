@@ -1,27 +1,41 @@
-import { Diaries,newDiaries } from "../types";
+import { Diaries,Notification } from "../types";
 import { useState } from "react";
 import { createDiary } from "../services/DiaryService";
+import axios, {AxiosError} from "axios";
 
-const AddDiaries = (props: {data: React.Dispatch<React.SetStateAction<Diaries[]>>, diarylist: Diaries[]}) => {
+const AddDiaries = (props: {data: React.Dispatch<React.SetStateAction<Diaries[]>>, diarylist: Diaries[], setError: React.Dispatch<React.SetStateAction<Notification>> }) => {
     const [date, setDate] = useState('');
-    const [weather, setWeather]= useState('');
+    const [weather, setWeather]= useState(''); 
     const [visibility, setVisibility] = useState('');
     const [comment, setComment] = useState('');
-    console.log(props.data)
-    const diaryCreation = (event: React.SyntheticEvent) => {
-        event.preventDefault();
-        const diaryObject = {
-            date: date,
-            weather: weather,
-            visibility: visibility,
-            comment: comment
-        }
-        console.log(diaryObject);
-        createDiary( diaryObject ).then(data => {
-            console.log(data);
-            props.data(props.diarylist.concat(data));
-        })
+    const setDiary = props.data;
+    const diaries = props.diarylist;
 
+    const diaryCreation = async (event: React.SyntheticEvent) => {
+        try{
+            event.preventDefault();
+            const diaryObject = {
+                date: date,
+                weather: weather,
+                visibility: visibility,
+                comment: comment
+            }
+            console.log(diaryObject);
+            await createDiary( diaryObject ).then(data => {
+                console.log(data);
+                setDiary(diaries.concat(data));
+            })
+        } catch (error: any){
+            console.log('here')
+            console.log(error);
+            if(axios.isAxiosError(error)) {
+                console.log(error.status);
+                props.setError(error.response?.data);
+                console.log(error.response);
+            } else{
+                console.error(error);
+            }
+        }
     }
     return(
         <div>
