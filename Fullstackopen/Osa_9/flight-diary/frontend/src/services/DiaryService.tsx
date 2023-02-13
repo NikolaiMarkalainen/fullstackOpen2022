@@ -4,15 +4,15 @@ import { Diaries, newDiaries } from '../types';
 
 const baseUrl = 'http://localhost:3001/api';
 
-export const getAllNotes = () => {
+export const getAllDiaries = () => {
     return axios
     .get<Diaries[]>(`${baseUrl}/diaries`)
     .then(response => response.data)
 };
 
 
-export const createNote = (object: newDiaries) => {
+export const createDiary = (object: newDiaries) => {
     return axios
-    .post<Diaries[]>(`${baseUrl}/diaries`)
+    .post<Diaries[]>(`${baseUrl}/diaries`, object)
     .then(response => response.data)
 };

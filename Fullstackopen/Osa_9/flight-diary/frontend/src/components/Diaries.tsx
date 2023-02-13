@@ -1,5 +1,6 @@
 import {Diaries} from '../types'
-const Note = (props: {part: Diaries[] }) => {
+const Diary = (props: {part: Diaries[] }) => {
+    
     console.log(props.part)
     return(
         <div>
@@ -12,6 +13,7 @@ const Note = (props: {part: Diaries[] }) => {
                 {n.weather}
                 <br></br>
                 {n.visibility}
+                <br></br>
             </li>)}
             </ul>
         </div>
@@ -19,4 +21,4 @@ const Note = (props: {part: Diaries[] }) => {
 
 }
 
-export default Note
+export default Diary
