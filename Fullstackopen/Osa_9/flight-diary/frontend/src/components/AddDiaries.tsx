@@ -2,6 +2,7 @@ import { Diaries,Notification } from "../types";
 import { useState } from "react";
 import { createDiary } from "../services/DiaryService";
 import axios, {AxiosError} from "axios";
+import { Weather, Visibility } from "../types";
 
 const AddDiaries = (props: {data: React.Dispatch<React.SetStateAction<Diaries[]>>, diarylist: Diaries[], setError: React.Dispatch<React.SetStateAction<Notification>> }) => {
     const [date, setDate] = useState('');
@@ -10,7 +11,8 @@ const AddDiaries = (props: {data: React.Dispatch<React.SetStateAction<Diaries[]>
     const [comment, setComment] = useState('');
     const setDiary = props.data;
     const diaries = props.diarylist;
-
+    const weatherOptions = Object.values(Weather);    
+    const visibilityOptions = Object.values(Visibility);
     const diaryCreation = async (event: React.SyntheticEvent) => {
         try{
             event.preventDefault();
@@ -42,13 +44,38 @@ const AddDiaries = (props: {data: React.Dispatch<React.SetStateAction<Diaries[]>
             <h1>Add a Diary entry</h1>
             <form onSubmit={diaryCreation}>
                 Date:
-                <input value={date} onChange={(event) => setDate(event.target.value)}/>
+                <input
+                type="date"
+                value={date} 
+                onChange={(event) => setDate(event.target.value)}/>
                 <br></br>
                 Weather:
-                <input value={weather} onChange={(event) => setWeather(event.target.value)}/>
+                {weatherOptions.map((option, index) => (
+                    <label key={index}>
+                    <input 
+                        type="radio"
+                        name="weather"
+                        value={option} 
+                        checked={weather === option}
+                        onChange={(event) => setWeather(event.target.value)}
+                        />
+                        {option}
+                    </label>
+                ))}
                 <br></br>
                 Visibility:
-                <input value={visibility} onChange={(event) => setVisibility(event.target.value)}/>
+                {visibilityOptions.map((option, index) => (
+                    <label key={index}>
+                        <input 
+                        type="radio"
+                        name="visibility"
+                        value={option}
+                        checked={visibility === option}
+                        onChange={(event) => setVisibility(event.target.value)}
+                        />
+                        {option}
+                    </label>
+                ))}
                 <br></br>
                 Comment:
                 <input value={comment} onChange={(event) => setComment(event.target.value)}/>
