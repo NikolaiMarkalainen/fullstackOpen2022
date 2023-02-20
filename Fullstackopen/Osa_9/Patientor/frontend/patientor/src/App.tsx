@@ -3,14 +3,16 @@ import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Routes, useMatch } from "react-router-dom";
 import { Button, Divider, Container } from "@material-ui/core";
 import { apiBaseUrl } from "./constants";
-import { useStateValue } from "./state";
+import { useStateValue, usePatientList} from "./state";
 import { Patient } from "./types";
-import PatientListPage from "./PatientListPage";
+import PatientListPage from "./PatientListPage/PatientList";
 import { Typography } from "@material-ui/core";
 import SinglePatient from "./components/SinglePatient";
 
 const App = () => {
   const [{ patients }, dispatch] = useStateValue();
+  const {setPatientList} = usePatientList();
+
   const patientMatch = useMatch('/patients/:id');
   const foundPatient = patientMatch
   ? Object.values(patients).find(patient => patient.id === patientMatch.params.id)
@@ -22,7 +24,7 @@ const App = () => {
         const { data: patientListFromApi } = await axios.get<Patient[]>(
           `${apiBaseUrl}/patients`
         );
-        dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+        dispatch(setPatientList(patientListFromApi));
       } catch (e) {
         console.error(e);
       }

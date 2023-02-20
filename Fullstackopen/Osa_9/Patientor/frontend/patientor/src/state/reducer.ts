@@ -14,7 +14,11 @@ export type Action =
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "SET_PATIENT_LIST":
-      return {
+      console.log(state);
+      console.log(action);
+      console.log(action.payload.reduce((memo,patient) => ({...memo, [patient.id]: patient})));
+      console.log(state.patients);
+        return {
         ...state,
         patients: {
           ...action.payload.reduce(

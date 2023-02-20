@@ -3,7 +3,7 @@ import axios from "axios";
 import { Box, Table, Button, TableHead, Typography } from "@material-ui/core";
 
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
-import AddPatientModal from "../AddPatientModal";
+import AddPatientModal from "../AddPatientModal/AddPatientModal";
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
@@ -11,8 +11,7 @@ import { useStateValue } from "../state";
 import { TableCell } from "@material-ui/core";
 import { TableRow } from "@material-ui/core";
 import { TableBody } from "@material-ui/core";
-import SinglePatient from "../components/SinglePatient";
-import { Link, Routes, useMatch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 const PatientListPage = () => {
 
   const [{ patients }, dispatch] = useStateValue();
@@ -26,10 +25,6 @@ const PatientListPage = () => {
     setError(undefined);
   };
 
-  const patientMatch = useMatch('/patients/:id');
-  const foundPatient = patientMatch
-  ? Object.values(patients).find(patient => patient.id === patientMatch.params.id)
-  : null;
 
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
@@ -49,12 +44,9 @@ const PatientListPage = () => {
       }
     }
   };
-
+  console.log(Object.values(patients));
   return (
     <div className="App">
-      <Routes>
-        <Route path="/patients/:id" element={<SinglePatient patient={foundPatient} />}/> 
-      </Routes>
       <Box>
         <Typography align="center" variant="h6">
           Patient list
