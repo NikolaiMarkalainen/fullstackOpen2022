@@ -8,7 +8,7 @@ let visits = 0
 /* GET index data. */
 router.get('/', async (req, res) => {
   visits++
-
+  console.log('hhh');
   res.send({
     ...configs,
     visits
