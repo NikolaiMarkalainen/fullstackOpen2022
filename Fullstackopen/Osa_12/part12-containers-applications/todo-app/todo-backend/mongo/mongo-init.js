@@ -1,3 +1,5 @@
+console.log('WE ARE CREATING USER');
+
 db.createUser({
   user: 'the_username',
   pwd: 'the_password',
