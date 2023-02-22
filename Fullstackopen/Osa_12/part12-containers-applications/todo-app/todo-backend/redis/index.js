@@ -23,7 +23,6 @@ if (!REDIS_URL) {
   setAsync = promisify(client.set).bind(client)
   incrAsync = promisify(client.incr).bind(client)    
 
-  setAsync('dataCount', 0);
 }
 
 module.exports = {

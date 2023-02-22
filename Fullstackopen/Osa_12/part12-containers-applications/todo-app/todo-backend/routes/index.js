@@ -10,7 +10,6 @@ console.log(redis.getAsync);
 router.get('/', async (req, res) => {
   visits++
   const additions = await redis.getAsync('dataCount')
-  await redis.setAsync('dataCount', additions)
   res.send({
     ...configs,
     visits,
