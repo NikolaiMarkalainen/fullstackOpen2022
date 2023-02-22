@@ -1,8 +1,9 @@
-const redis = require('redis')
+const redis = require('../redis')
 const { promisify } = require('util')
 const { REDIS_URL } = require('../util/config')
 
 console.log(REDIS_URL);
+console.log('ye?');
 let getAsync
 let setAsync
 
