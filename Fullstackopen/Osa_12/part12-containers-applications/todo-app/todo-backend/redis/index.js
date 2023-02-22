@@ -1,9 +1,9 @@
-const redis = require('../redis')
+const redis = require('redis')
 const { promisify } = require('util')
 const { REDIS_URL } = require('../util/config')
 
 console.log(REDIS_URL);
-console.log('ye?');
+
 let getAsync
 let setAsync
 
@@ -18,12 +18,16 @@ if (!REDIS_URL) {
   const client = redis.createClient({
     url: REDIS_URL
   })
-    
+  
   getAsync = promisify(client.get).bind(client)
-  setAsync = promisify(client.set).bind(client)    
+  setAsync = promisify(client.set).bind(client)
+  incrAsync = promisify(client.incr).bind(client)    
+
+  setAsync('dataCount', 0);
 }
 
 module.exports = {
   getAsync,
-  setAsync
+  setAsync,
+  incrAsync
 }

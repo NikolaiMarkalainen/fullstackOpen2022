@@ -1,8 +1,7 @@
-PUT http://localhost:3000/todos/63f50dfecc16836f827a2f92
+POST http://localhost:3000/todos/
 Content-Type: application/json
 
 {
-    "text": "I FIXED THIS",
-    "done": false,
-    "_id": "63f50dfecc16836f827a2f92"
+    "text": "I FIXED THISss",
+    "done": false
 }
