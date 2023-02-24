@@ -1,25 +1,52 @@
 version: '3.8'
 
 services:
+  server:
+    restart: always
+    build: 
+      context: .
+      dockerfile: dev.Dockerfile
+    ports:
+     - "4500:4500"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - MONGO_URL=mongodb://root:example@localhost:27017/the_database
+    volumes:
+      - ./:/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - todo-network
   mongo:
     image: mongo
-    ports:
-      - 3456:27017
+    container_name: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
       MONGO_INITDB_DATABASE: the_database
     volumes:       
-      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-      - ./mongo_data:/data/db
+      - ./:/mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - todo-network
   redis:
     image: redis
     command: ['redis-server', '--appendonly', 'yes']
-    ports:
-      - 6379:6379
+    container_name: redis
     volumes:
-      - ./redis_data:/data
+      - ./:/redis_data:/data
+    networks:
+      - todo-network
+  debug-helper:
+    image: busybox
+networks:
+  todo-network:
+    driver: bridge
 
 
-#REDIS_URL=redis://localhost:6379 MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev
+
+#REDIS_URL=redis://localhost:6379 
+#MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev
     
