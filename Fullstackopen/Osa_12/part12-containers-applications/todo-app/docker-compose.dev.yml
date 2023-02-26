@@ -1,5 +1,5 @@
 services:
-  todo-app:
+  todo-app-front:
     container_name: frontend
     build:
       context: .
@@ -8,6 +8,18 @@ services:
       - ./todo-frontend:/usr/src/app
     ports:
       - 3000:3000
+
+  todo-app-back:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: ./todo-backend/dev.Dockerfile
+    volumes:
+      - ./todo-backend:/usr/src/app
+
+    ports:
+      - 4500:4500
+
   nginx:
     image: nginx:1.20.1
     volumes:
@@ -16,4 +28,5 @@ services:
       - 8080:80
     container_name: reverse-proxy
     depends_on:
-      - todo-app
+      - todo-app-front
+      - todo-app-back
