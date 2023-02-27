@@ -8,14 +8,14 @@ const blogLookUp = async ( req, res, next) => {
 }
 
 
-router.get('/api/blogs', async (req,res) => {
+router.get('/', async (req,res) => {
     const blogs = await Blog.findAll()
     console.log(blogs.map(b=>b.toJSON()))
     console.log(JSON.stringify(blogs, null, 2))
     res.json(blogs)
 })
 
-router.post('/api/blogs', async (req,res) => {
+router.post('/', async (req,res) => {
     try{
         console.log(req.body)
         const blog = await Blog.create(req.body)
@@ -25,7 +25,7 @@ router.post('/api/blogs', async (req,res) => {
     }
 })
 
-router.get('/api/blogs/:id', blogLookUp, async (req, res) => {
+router.get('/:id', blogLookUp, async (req, res) => {
     if (req.blog) {
         res.json(req.blog)
         console.log(req.blog.toJSON())
@@ -34,12 +34,23 @@ router.get('/api/blogs/:id', blogLookUp, async (req, res) => {
     }
 })
 
-router.delete('/api/blogs/:id', blogLookUp, async (req, res) => {
+router.delete('/:id', blogLookUp, async (req, res) => {
     if(req.blog) {
-        req.blog.destroy()
+        await req.blog.destroy()
         console.log('Blog deleted')
-    } else{
-        res.status(400).end()
+    } 
+        res.status(204).end()
+})
+
+router.put('/:id', blogLookUp, async (req, res) => {
+    if(req.blog) {
+        req.blog.likes = req.body.likes
+        console.log('REQBLOGLIKES', req.blog.likes)
+        console.log('REQBODYLIKES', req.body.likes)
+        await req.blog.save()
+        res.json(req.blog)
+    } else {
+        res.status(404).end()
     }
 })
 

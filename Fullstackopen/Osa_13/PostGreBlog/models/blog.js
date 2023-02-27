@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 
-const sequelize = require('../util/db')
+const { sequelize } = require('../util/db')
 
 class Blog extends Model {}
     Blog.init({
@@ -31,4 +31,4 @@ class Blog extends Model {}
         modelName: 'blog'
     })
     
-    module.exports = Blog
+module.exports = Blog
