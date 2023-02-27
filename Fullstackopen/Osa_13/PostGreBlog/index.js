@@ -43,6 +43,8 @@ class Blog extends Model {}
 
 app.get('/api/blogs', async (req,res) => {
     const blogs = await Blog.findAll()
+    console.log(blogs.map(b=>b.toJSON()))
+    console.log(JSON.stringify(blogs, null, 2))
     res.json(blogs)
 })
 
@@ -53,6 +55,27 @@ app.post('/api/blogs', async (req,res) => {
         res.json(blog)
     } catch(error){
         return res.status(400).json({ error })
+    }
+})
+
+app.get('/api/blogs/:id', async (req, res) => {
+    const blog = await Blog.findByPk(req.params.id)
+    if (blog) {
+        res.json(blog)
+        console.log(blog.toJSON())
+    } else{
+        res.status(400).end()
+    }
+})
+
+app.delete('/api/blogs/:id', async (req, res) => {
+    const blog = await Blog.findByPk(req.params.id)
+    console.log(blog)
+    if(blog) {
+        blog.destroy()
+        console.log('Blog deleted')
+    } else{
+        res.status(400).end()
     }
 })
 const PORT = process.env.PORT || 3001
