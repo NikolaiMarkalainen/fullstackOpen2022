@@ -1,5 +1,8 @@
+const jwt = require('jsonwebtoken')
+
 
 const errorHandler = (error, req, res, next) => {
+    console.log(error)
     console.log(error.message)
     switch(error.message){
         case 'No data':
@@ -14,6 +17,20 @@ const errorHandler = (error, req, res, next) => {
             return res.status(500).send({ message: 'something went wrong'})
     }
 }
+const tokenExtractor = (req, res, next) => {
+    const authorization = req.get('authorization')
+    if(authorization && authorization.toLowerCase().startsWith('bearer ')){
+        try{
+            req.decodedToken = jwt.verify(authorization.subString(7), SECRET)
+        }catch{
+            return res.status(401).json({ error: 'Token invalid'})
+        }
+    } else{
+        return res.status(400).json({ error: 'token missing '})
+    }
+    next()
+}
 module.exports = {
-    errorHandler
+    errorHandler,
+    tokenExtractor
 }

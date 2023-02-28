@@ -6,11 +6,15 @@ const { PORT } = require('./util/config')
 const { connectToDatabase } = require('./util/db')
 const middleware = require('./util/middleware')
 const blogRouter = require('./controllers/blogRouter')
+const usersRouter = require('./controllers/userRouter')
+const loginRouter = require('./controllers/loginRouter')
 
 app.use(express.json())
 
 
-app.use('/api/blogs', (blogRouter))
+app.use('/api/blogs', blogRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.use(middleware.errorHandler)
 
