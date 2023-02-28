@@ -19,8 +19,10 @@ router.get('/', async (req,res) => {
     else throw Error('No data')
 })
 
-router.post('/', tokenExtractor ,async (req, res) => {
+router.post('/', tokenExtractor, async (req, res) => {
+    console.log(req.token)
     const user =  await User.findByPk(req.decodedToken.id)
+    console.log(user)
     const blog = await Blog.create({...req.body, userId: user.id})
     res.json(blog)
     if(!blog || !user ) throw Error ('Bad data')
@@ -31,7 +33,7 @@ router.get('/:id', blogLookUp, async (req, res) => {
     else throw Error('Not Found')
 })
 
-router.delete('/:id', blogLookUp, async (req, res) => {
+router.delete('/:id', tokenExtractor ,blogLookUp, async (req, res) => {
     if(req.blog) await req.blog.destroy()
     else throw Error('No Content')
 })
