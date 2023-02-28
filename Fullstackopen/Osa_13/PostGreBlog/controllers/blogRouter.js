@@ -1,5 +1,5 @@
 const router = require('express').Router()
-
+const { Op } = require('sequelize')
 const { Blog, User } = require('../models')
 const {tokenExtractor} = require('../util/middleware')
 const blogLookUp = async ( req, res, next) => {
@@ -8,12 +8,21 @@ const blogLookUp = async ( req, res, next) => {
 }
 
 router.get('/', async (req,res) => {
+    const where = {}
+
+    if(req.query.search){
+        where.title = {
+            [Op.substring]: req.query.search
+        }
+    }
+
     const blogs = await Blog.findAll({
         attributes: {exclude: ['userId'] },
         include: {
             model: User,
             attributes: ['name']
-        }
+        },
+        where
     })
     if(blogs) res.json(blogs)
     else throw Error('No data')
