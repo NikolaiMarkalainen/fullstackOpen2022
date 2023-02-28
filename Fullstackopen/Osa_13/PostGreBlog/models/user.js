@@ -22,21 +22,22 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+  admin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
-  }
+  disabled: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
 }, {
   sequelize,
   underscored: true,
-  timestamps: false,
-  modelName: 'user',
+  timestamps: true,
   createdAt: 'created_at',
-  updatedAt: 'updated_at'
+  updatedAt: 'updated_at',
+  modelName: 'user',
+
 })
 
 module.exports = User

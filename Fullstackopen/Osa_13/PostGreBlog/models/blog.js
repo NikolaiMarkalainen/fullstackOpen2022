@@ -23,7 +23,14 @@ class Blog extends Model {}
     likes:{
         type: DataTypes.INTEGER,
         defaultValue: 0
-    }
+    },
+    year:{
+        type: DataTypes.INTEGER,
+        validate: {
+          min: 1991
+        },
+        allowNull: false
+    },
     }, {
         sequelize,
         timestamps: false,
