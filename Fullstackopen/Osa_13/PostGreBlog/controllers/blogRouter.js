@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const { Op } = require('sequelize')
 const { Blog, User } = require('../models')
+const { sequelize } = require('../util/db')
 const {tokenExtractor} = require('../util/middleware')
 const blogLookUp = async ( req, res, next) => {
     req.blog = await Blog.findByPk(req.params.id)
@@ -24,7 +25,11 @@ router.get('/', async (req,res) => {
             model: User,
             attributes: ['name']
         },
-        where
+        where,
+        group: ['blog.id', 'user.id', 'user.name'],
+        order:[ 
+            [sequelize.fn('max', sequelize.col('likes')), 'DESC']
+        ]
     })
     if(blogs) res.json(blogs)
     else throw Error('No data')
