@@ -7,52 +7,34 @@ const blogLookUp = async ( req, res, next) => {
     next()
 }
 
-
 router.get('/', async (req,res) => {
     const blogs = await Blog.findAll()
-    console.log(blogs.map(b=>b.toJSON()))
-    console.log(JSON.stringify(blogs, null, 2))
-    res.json(blogs)
+    if(blogs) res.json(blogs)
+    else throw Error('No data')
 })
 
-router.post('/', async (req,res) => {
-    try{
-        console.log(req.body)
-        const blog = await Blog.create(req.body)
-        res.json(blog)
-    } catch(error){
-        return res.status(400).json({ error })
-    }
+router.post('/', async (req, res) => {
+    const blog = await Blog.create(req.body)
+    res.json(blog)
+    if(!blog) throw Error ('Bad data')
 })
 
 router.get('/:id', blogLookUp, async (req, res) => {
-    if (req.blog) {
-        res.json(req.blog)
-        console.log(req.blog.toJSON())
-    } else{ 
-        res.status(400).end()
-    }
+    if(req.blog) await res.json(req.blog)
+    else throw Error('Not Found')
 })
 
 router.delete('/:id', blogLookUp, async (req, res) => {
-    if(req.blog) {
-        await req.blog.destroy()
-        console.log('Blog deleted')
-    } 
-        res.status(204).end()
+    if(req.blog) await req.blog.destroy()
+    else throw Error('No Content')
 })
 
 router.put('/:id', blogLookUp, async (req, res) => {
-    if(req.blog) {
+    if(req.blog){
         req.blog.likes = req.body.likes
-        console.log('REQBLOGLIKES', req.blog.likes)
-        console.log('REQBODYLIKES', req.body.likes)
         await req.blog.save()
         res.json(req.blog)
-    } else {
-        res.status(404).end()
-    }
+    } else throw Error('Not Found')
 })
-
 
 module.exports = router
