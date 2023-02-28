@@ -13,6 +13,8 @@ const errorHandler = (error, req, res, next) => {
             return res.status(404).send({ message: 'Null endpoint'})   
         case 'Bad data':
             return res.status(400).send({ message: 'Data is malformatted enter data in correct format!'})
+        case 'Validation error: Validation isEmail on username failed':
+            return res.status(404).send({ message: 'Username has to be in email format !'})
         default:
             return res.status(500).send({ message: 'something went wrong'})
     }
