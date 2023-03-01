@@ -4,32 +4,33 @@ module.exports = {
   up: async ({ context: queryInterface }) => {
     await queryInterface.createTable('blogs', {
         id:{
-                type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
+              type: DataTypes.INTEGER,
+              primaryKey: true,
+              autoIncrement: true
         },
         url:{
-                type: DataTypes.TEXT,
-                allowNull: false
+              type: DataTypes.TEXT,
+              allowNull: false
         },
         author:{
-                type: DataTypes.TEXT
+              type: DataTypes.TEXT,
+              defaultValue: null
         },
         title:{
-                type: DataTypes.TEXT,
-                allowNull: false
+              type: DataTypes.TEXT,
+              allowNull: false
         },
         likes:{
-                type: DataTypes.INTEGER,
-                defaultValue: 0
+              type: DataTypes.INTEGER,
+              defaultValue: 0
         },
         year:{
-                type: DataTypes.INTEGER,
-                validate: {
-                  min: 1991
-                },
-                allowNull: false
-        },
+              type: DataTypes.INTEGER,
+              validate: {
+                min: 1991
+              },
+              allowNull: false
+        },  
     })
     await queryInterface.createTable('users', {
         id: {
@@ -49,14 +50,14 @@ module.exports = {
             type: DataTypes.STRING,
             allowNull: false
           },
-          admin: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
+          created_at: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
           },
-          disabled: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
-          },  
+          updated_at: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
+          },
     })
     await queryInterface.addColumn('blogs', 'user_id', {
       type: DataTypes.INTEGER,

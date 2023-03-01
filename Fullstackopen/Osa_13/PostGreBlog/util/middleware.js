@@ -15,6 +15,8 @@ const errorHandler = (error, req, res, next) => {
             return res.status(400).send({ message: 'Data is malformatted enter data in correct format!'})
         case 'Validation error: Validation isEmail on username failed':
             return res.status(404).send({ message: 'Username has to be in email format !'})
+        case 'Validation error: Validation min on year failed':
+            return res.status(400).send({ message: 'Minimum year is 1991 !'})
         default:
             return res.status(500).send({ message: 'something went wrong'})
     }

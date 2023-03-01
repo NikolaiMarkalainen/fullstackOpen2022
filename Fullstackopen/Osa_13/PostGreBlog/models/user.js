@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize')
+const { Model, DataTypes, Sequelize } = require('sequelize')
 
 const { sequelize } = require('../util/db')
 
@@ -30,13 +30,21 @@ User.init({
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
 }, {
   sequelize,
   underscored: true,
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: 'updated_at',
-  modelName: 'user',
+  modelName: 'users',
 
 })
 
