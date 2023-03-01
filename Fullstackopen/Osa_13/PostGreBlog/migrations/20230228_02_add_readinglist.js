@@ -12,12 +12,12 @@ module.exports = {
           type: DataTypes.BOOLEAN,
           default: false,
       },
-      userId:{
+      user_id:{
           type: DataTypes.INTEGER,
           allowNull: false,
           references: { model: 'users', key: 'id'},
       },
-      blogId: {
+      blog_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: { model: 'blogs', key: 'id'},

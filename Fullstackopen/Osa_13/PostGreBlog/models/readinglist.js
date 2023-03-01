@@ -32,4 +32,4 @@ Readinglists.init({
     modelName: 'readinglist'
 })
 
-module.exports = Membership
+module.exports = Readinglists
