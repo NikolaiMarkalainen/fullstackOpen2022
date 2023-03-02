@@ -3,6 +3,7 @@ const { Op } = require('sequelize')
 const { Blog, User } = require('../models')
 const { sequelize } = require('../util/db')
 const { tokenExtractor } = require('../util/middleware')
+
 const blogLookUp = async ( req, res, next) => {
     req.blog = await Blog.findByPk(req.params.id)
     next()
@@ -30,7 +31,18 @@ router.get('/', async (req,res) => {
         order:[ 
             [sequelize.fn('max', sequelize.col('likes')), 'DESC']
         ]
-    })
+        },
+        {
+         include: {
+            model: User,
+            as: 'readings',
+            attributes: {exclude: ['userId']},
+            through: {
+                attributes: []
+            }
+         }
+        })
+
     if(blogs) res.json(blogs)
     else throw Error('No data')
 })

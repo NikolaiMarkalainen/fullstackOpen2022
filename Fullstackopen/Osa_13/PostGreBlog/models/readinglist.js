@@ -13,7 +13,7 @@ Readinglists.init({
     },
     read:{
         type: DataTypes.BOOLEAN,
-        default: false,
+        defaultValue: false,
     },
     userId:{
         type: DataTypes.INTEGER,
@@ -29,7 +29,7 @@ Readinglists.init({
     sequelize,
     underscored: true,
     timestamps: false,
-    modelName: 'readinglist'
+    modelName: 'readinglists'
 })
 
 module.exports = Readinglists

@@ -1,18 +1,13 @@
 const router = require('express').Router()
 
-const { User, Blog } = require('../models')
-
-const userLookUp = async (req, res, next) => {
-    req.user = await User.findByPk(req.params.id)
-    next()
-}
+const { User, Blog} = require('../models')
 
 router.get('/', async (req, res) => {
   const users = await User.findAll({
     include:{
         model: Blog,
         attributes: {exclude: ['userId']}
-    }
+    },
   })
   if(users) res.json(users)
   else throw Error('No data')
@@ -24,8 +19,20 @@ router.post('/', async (req, res) => {
     else throw Error('Bad data')
 })
 
-router.get('/:id', userLookUp, async (req, res) => {
-  if (req.user) res.json(req.user)
+router.get('/:id', async (req, res) => {
+  const user = await User.findByPk(req.params.id, {
+    attributes: {exclude: ['']} ,
+    include:[{
+      model: Blog,
+      as: 'readings',
+      attributes: {exclude: ['userId']},
+      through: {
+        attributes: []
+      }
+    }
+  ]
+  })
+  if (user) res.json(user)
   else throw Error('Not Found')
 })
 
