@@ -31,16 +31,6 @@ router.get('/', async (req,res) => {
         order:[ 
             [sequelize.fn('max', sequelize.col('likes')), 'DESC']
         ]
-        },
-        {
-         include: {
-            model: User,
-            as: 'readings',
-            attributes: {exclude: ['userId']},
-            through: {
-                attributes: []
-            }
-         }
         })
 
     if(blogs) res.json(blogs)
