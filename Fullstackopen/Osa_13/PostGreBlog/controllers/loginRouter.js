@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const router = require('express').Router()
 
 const { SECRET } = require('../util/config')
-const User = require('../models/user')
+const {User, Session} = require('../models')
 const { isAdmin, tokenExtractor } = require('../util/middleware')
 
 
@@ -39,7 +39,7 @@ router.post('/', async (request, response) => {
     })
   }
   if(user.disabled){
-    return response.sstatus(400).json({
+    return response.status(400).json({
       error: 'account disabled, please contact admin' 
     })
   }
@@ -49,11 +49,31 @@ router.post('/', async (request, response) => {
     id: user.id,
   }
 
-  const token = jwt.sign(userForToken, SECRET)
+  const token = jwt.sign(
+    userForToken, 
+    SECRET
+    )
+
+    await Session.create({
+      userId: user.id,
+      token: token,
+    })
+  
 
   response
     .status(200)
     .send({ token, username: user.username, name: user.name })
 })
 
+router.delete('/', tokenExtractor, async ( request, response ) => {
+    const token = request.token
+    console.log(token)
+    const session = await Session.findOne({ where: { token }})
+
+    if(!session) return response.status(400).json({ error: 'Session not found' })
+
+    await session.destroy()
+
+    response.status(204).end()
+  })
 module.exports = router

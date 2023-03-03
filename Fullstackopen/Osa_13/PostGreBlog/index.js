@@ -1,6 +1,5 @@
 const express = require('express')
 require('express-async-errors');
-const app = express()
 
 const { PORT } = require('./util/config')
 const { connectToDatabase } = require('./util/db')
@@ -10,8 +9,13 @@ const usersRouter = require('./controllers/userRouter')
 const loginRouter = require('./controllers/loginRouter')
 const authorRouter = require('./controllers/authorRouter')
 const readingListRouter = require('./controllers/readinglistRouter')
+
+const app = express()
+
 app.use(express.json())
 
+
+app.use
 
 app.use('/api/blogs', blogRouter)
 app.use('/api/users', usersRouter)
