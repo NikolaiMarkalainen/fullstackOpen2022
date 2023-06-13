@@ -1,0 +1,18 @@
+POST http://localhost:3003/api/users
+Content-Type: application/json
+Authorization: "bearer 123"
+ 
+{
+    "username": "ASDADdddasdasdASDddASDAS",
+    "name": "aghhh oohhh",
+    "password": "gfdgksfdklg",
+    "blogs":[
+            {           
+                "title": "a new blog tditle",
+                "author": "a Veyr badasd author",
+                "url": "google.csom",
+                "like": 5,
+                "id": 123452678
+            }  
+            ]
+}
