@@ -1,7 +1,0 @@
-POST http://localhost:3000/calculate
-content-type: application/json
-
-{
-  "days": [1, 0, 2, 0, 3, 0, 2.5],
-  "target": "asdf"
-}

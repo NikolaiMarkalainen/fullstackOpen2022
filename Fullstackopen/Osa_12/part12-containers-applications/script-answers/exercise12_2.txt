@@ -1,35 +1,0 @@
-Script started on 2023-02-21 15:58:59+02:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="95" LINES="42"]
-[1m[7m%[27m[1m[0m                                                                                               ]2;nikolai@zen:~/Documents/ReactJS/Fullstackopen/Osa_12/part12-containers-applications/script-answers]1;..cript-answers[0m[27m[24m[J[38;5;126mgit[38;5;149m:[38;5;149m([38;5;162mmaster[38;5;149m)[39m 
-[38;5;215mnikolai[33;4m@[38;5;209mzen[0m:[38;5;203mpts/2[38;5;240m->[33;4m/home/nikolai/Documents/ReactJS/Fullstackopen/Osa_12/part12-containers-applications/script-answers [0m([38;5;137m0[0m) [38;5;126mgit[38;5;149m:[38;5;149m([38;5;162mmaster[38;5;149m)[39m [00m
-> [K[?1h=[?2004hddocker run -it ubuntu bash[?1l>[?2004l
-]2;docker run -it ubuntu bash]1;dockerUnable to find image 'ubuntu:latest' locally
-latest: Pulling from library/ubuntu
-
-[1A[2K677076032cca: Pulling fs layer [1B[1A[2K677076032cca: Downloading  311.3kB/29.53MB[1B[1A[2K677076032cca: Downloading  622.6kB/29.53MB[1B[1A[2K677076032cca: Downloading  1.547MB/29.53MB[1B[1A[2K677076032cca: Downloading   2.48MB/29.53MB[1B[1A[2K677076032cca: Downloading  3.402MB/29.53MB[1B[1A[2K677076032cca: Downloading  4.324MB/29.53MB[1B[1A[2K677076032cca: Downloading  5.253MB/29.53MB[1B[1A[2K677076032cca: Downloading  6.187MB/29.53MB[1B[1A[2K677076032cca: Downloading   6.81MB/29.53MB[1B[1A[2K677076032cca: Downloading  7.424MB/29.53MB[1B[1A[2K677076032cca: Downloading  8.358MB/29.53MB[1B[1A[2K677076032cca: Downloading  9.288MB/29.53MB[1B[1A[2K677076032cca: Downloading  10.22MB/29.53MB[1B[1A[2K677076032cca: Downloading  11.15MB/29.53MB[1B[1A[2K677076032cca: Downloading  12.08MB/29.53MB[1B[1A[2K677076032cca: Downloading  13.01MB/29.53MB[1B[1A[2K677076032cca: Downloading  13.94MB/29.53MB[1B[1A[2K677076032cca: Downloading  14.86MB/29.53MB[1B[1A[2K677076032cca: Downloading  15.48MB/29.53MB[1B[1A[2K677076032cca: Downloading  16.42MB/29.53MB[1B[1A[2K677076032cca: Downloading  17.33MB/29.53MB[1B[1A[2K677076032cca: Downloading  18.27MB/29.53MB[1B[1A[2K677076032cca: Downloading  19.19MB/29.53MB[1B[1A[2K677076032cca: Downloading  20.11MB/29.53MB[1B[1A[2K677076032cca: Downloading  21.05MB/29.53MB[1B[1A[2K677076032cca: Downloading  21.98MB/29.53MB[1B[1A[2K677076032cca: Downloading  22.91MB/29.53MB[1B[1A[2K677076032cca: Downloading  23.85MB/29.53MB[1B[1A[2K677076032cca: Downloading  24.77MB/29.53MB[1B[1A[2K677076032cca: Downloading  25.69MB/29.53MB[1B[1A[2K677076032cca: Downloading  26.63MB/29.53MB[1B[1A[2K677076032cca: Downloading  27.56MB/29.53MB[1B[1A[2K677076032cca: Downloading  28.48MB/29.53MB[1B[1A[2K677076032cca: Downloading   29.1MB/29.53MB[1B[1A[2K677076032cca: Verifying Checksum [1B[1A[2K677076032cca: Download complete [1B[1A[2K677076032cca: Extracting  327.7kB/29.53MB[1B[1A[2K677076032cca: Extracting  7.537MB/29.53MB[1B[1A[2K677076032cca: Extracting  13.43MB/29.53MB[1B[1A[2K677076032cca: Extracting  21.95MB/29.53MB[1B[1A[2K677076032cca: Extracting  25.89MB/29.53MB[1B[1A[2K677076032cca: Extracting  29.53MB/29.53MB[1B[1A[2K677076032cca: Pull complete [1BDigest: sha256:9a0bdde4188b896a372804be2384015e90e3f84906b750c1a53539b585fbbe7f
-Status: Downloaded newer image for ubuntu:latest
-[?2004h]0;root@80e6bc2bbcbe: /root@80e6bc2bbcbe:/# [K]0;root@80e6bc2bbcbe: /root@80e6bc2bbcbe:/# mkdir usr/ 
-[?2004lmkdir: cannot create directory 'usr': File exists
-[?2004h]0;root@80e6bc2bbcbe: /root@80e6bc2bbcbe:/# ls
-[?2004l[0m[01;36mbin[0m   [01;34mdev[0m  [01;34mhome[0m  [01;36mlib32[0m  [01;36mlibx32[0m  [01;34mmnt[0m  [01;34mproc[0m  [01;34mrun[0m   [01;34msrv[0m  [30;42mtmp[0m  [01;34mvar[0m
-[01;34mboot[0m  [01;34metc[0m  [01;36mlib[0m   [01;36mlib64[0m  [01;34mmedia[0m   [01;34mopt[0m  [01;34mroot[0m  [01;36msbin[0m  [01;34msys[0m  [01;34musr[0m
-[?2004h]0;root@80e6bc2bbcbe: /root@80e6bc2bbcbe:/# cd usr/
-[?2004l[?2004h]0;root@80e6bc2bbcbe: /usrroot@80e6bc2bbcbe:/usr# ls
-[?2004l[0m[01;34mbin[0m  [01;34mgames[0m  [01;34minclude[0m  [01;34mlib[0m  [01;34mlib32[0m  [01;34mlib64[0m  [01;34mlibexec[0m  [01;34mlibx32[0m  [01;34mlocal[0m  [01;34msbin[0m  [01;34mshare[0m  [01;34msrc[0m
-[?2004h]0;root@80e6bc2bbcbe: /usrroot@80e6bc2bbcbe:/usr# cd src/
-[?2004l[?2004h]0;root@80e6bc2bbcbe: /usr/srcroot@80e6bc2bbcbe:/usr/src# ls
-[?2004l[?2004h]0;root@80e6bc2bbcbe: /usr/srcroot@80e6bc2bbcbe:/usr/src# ls -a
-[?2004l[0m[01;34m.[0m  [01;34m..[0m
-[?2004h]0;root@80e6bc2bbcbe: /usr/srcroot@80e6bc2bbcbe:/usr/src# mkdir app
-[?2004l[?2004h]0;root@80e6bc2bbcbe: /usr/srcroot@80e6bc2bbcbe:/usr/src# ls
-[?2004l[0m[01;34mapp[0m
-[?2004h]0;root@80e6bc2bbcbe: /usr/srcroot@80e6bc2bbcbe:/usr/src# cd app/
-[?2004l[?2004h]0;root@80e6bc2bbcbe: /usr/src/approot@80e6bc2bbcbe:/usr/src/app# tou   toc uch index.js
-[?2004l[?2004h]0;root@80e6bc2bbcbe: /usr/src/approot@80e6bc2bbcbe:/usr/src/app# ls -a
-[?2004l[0m[01;34m.[0m  [01;34m..[0m  index.js
-[?2004h]0;root@80e6bc2bbcbe: /usr/src/approot@80e6bc2bbcbe:/usr/src/app# exit
-[?2004lexit
-[1m[7m%[27m[1m[0m                                                                                               ]2;nikolai@zen:~/Documents/ReactJS/Fullstackopen/Osa_12/part12-containers-applications/script-answers]1;..cript-answers[0m[27m[24m[J[38;5;126mgit[38;5;149m:[38;5;149m([38;5;162mmaster[38;5;149m)[39m 
-[38;5;215mnikolai[33;4m@[38;5;209mzen[0m:[38;5;203mpts/2[38;5;240m->[33;4m/home/nikolai/Documents/ReactJS/Fullstackopen/Osa_12/part12-containers-applications/script-answers [0m([38;5;137m0[0m) [38;5;126mgit[38;5;149m:[38;5;149m([38;5;162mmaster[38;5;149m)[39m [00m
-> [K[?1h=[?2004h[?2004l
-
-Script done on 2023-02-21 16:00:40+02:00 [COMMAND_EXIT_CODE="0"]

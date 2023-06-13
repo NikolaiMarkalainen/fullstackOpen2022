@@ -1,7 +1,0 @@
-POST http://localhost:4500/todos/
-Content-Type: application/json
-
-{
-    "text": "I FIXED THISss",
-    "done": false
-}
