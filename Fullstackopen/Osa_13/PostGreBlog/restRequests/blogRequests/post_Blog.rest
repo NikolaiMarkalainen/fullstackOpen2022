@@ -1,11 +1,11 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pY2hhbGVqYWNrc29uQGV4YW1wbGUuY29tIiwiaWQiOjMsImlhdCI6MTY3Nzg1NDAxNH0.P2dLd3IFlBY7IGaV2by0UQpaG8jfnYkcHuJQbJrlKxc
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RpbmdAZ29vZ2xlLmNvbSIsImlkIjoxLCJpYXQiOjE2Nzc2ODMxMjZ9.t2tuq9NfjGYmkfhdyIlwfIS-i__gMUQkiCxlTpuF9c8
 
 {
     "url": "facebook.com",
     "author": "Makr zuckerbergers",
     "title": "Meta verse is the new big thing",
-    "year": 1994
+    "year": 1990
 }
 
