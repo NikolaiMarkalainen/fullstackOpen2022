@@ -2,26 +2,56 @@ import { View, Pressable, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import Text from './Text';
 import theme from '../theme';
+import { useNavigate } from 'react-router-native';
+
 
 const styles = StyleSheet.create({
-  flexContainer: {
+  container: {
     display: 'flex',
+    flexDirection: 'row',
     paddingTop: Constants.statusBarHeight,
     backgroundColor: theme.colors.backgroundColor,
-    paddingBottom: 50
   },
   pressable: {
-    flexGrow: 1,
-    justifycontent: 'center',
-    paddingHorizontal: 16
-  }
+    paddingTop: 25,
+    paddingBottom: 25,
+    justifyContent: 'flex-start',
+    marginLeft: 20,
+
+  },
 });
 
+
+
 const AppBar = () => {
+  
+  const navigate = useNavigate();
+
+  const handleViewChange = (view) => {
+    switch(view){
+      case 'login':
+        navigate('/sign');
+        break;
+      case 'main':
+        navigate('/');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <View style={styles.flexContainer}>
-        <Pressable style={styles.pressable}>
-            <Text color='textSecondary' fontSize='subheading' fontWeight='bold' style={{paddingTop: 10}}>
+    <View style={styles.container}>
+        <Pressable style={styles.pressable} onPress={() => {handleViewChange('login')}}>
+            <Text color='textSecondary' fontSize='subheading' fontWeight='bold'>
+                Sign in
+            </Text>
+        </Pressable>
+        <Pressable style={styles.pressable} 
+          onPress={() =>{
+           handleViewChange('main')
+           }}>
+            <Text color='textSecondary' fontSize='subheading' fontWeight='bold'>
                 Repositories
             </Text>
         </Pressable>
