@@ -3,8 +3,10 @@ const theme = {
     colors: {
         textPrimary: '#24292e',
         textSecondary: '#FFFFFF',
-        primary: '#0366d6',
+        primary: '#575757',
         backgroundColor: '#24292e',
+        applicationBackgroundColor: '#e1e4e8',
+        textBold: 'black'
     },
     fontSizes: {
         body: 14,

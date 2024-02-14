@@ -57,7 +57,8 @@ const repositories = [
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const renderItem = ({ item }) => (
-    <RepositoryItems 
+  <View style={{marginTop: 15, marginBottom: 15}}>
+    <RepositoryItems
         id={item.id}
         fullName={item.fullName}
         description={item.description}
@@ -68,17 +69,17 @@ const renderItem = ({ item }) => (
         reviewCount={item.reviewCount}
         ownerAvatarUrl={item.ownerAvatarUrl}
     />
+  </View>
 );
 
 
 const RepositoryList = () => {
   return (
-    <FlatList
-      data={repositories}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}/>
-
+      <FlatList
+        data={repositories}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}/>
   );
 };
 
