@@ -7,7 +7,8 @@ const theme = {
         backgroundColor: '#24292e',
         buttonPrimaryColor: '#24a0ed',
         applicationBackgroundColor: '#e1e4e8',
-        textBold: 'black'
+        textBold: 'black',
+        errorText: '#d73a4a',
     },
     fontSizes: {
         body: 14,
