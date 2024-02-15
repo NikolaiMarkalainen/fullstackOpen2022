@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, Pressable, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import Text from './Text';
 import theme from '../theme';
@@ -12,12 +12,14 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     backgroundColor: theme.colors.backgroundColor,
   },
+  scrollView:{
+    marginTop: 25,
+    marginBottom: 25,
+    flex: 1,
+  },
   pressable: {
-    paddingTop: 25,
-    paddingBottom: 25,
-    justifyContent: 'flex-start',
-    marginLeft: 20,
-
+    flex: 1,
+    paddingLeft: 25,
   },
 });
 
@@ -42,12 +44,16 @@ const AppBar = () => {
 
   return (
     <View style={styles.container}>
-        <Pressable style={styles.pressable} onPress={() => {handleViewChange('login')}}>
+      <ScrollView horizontal style={styles.scrollView}>
+        <Pressable style={styles.pressable}
+          onPress={() => 
+          {handleViewChange('login')
+          }}>
             <Text color='textSecondary' fontSize='subheading' fontWeight='bold'>
                 Sign in
             </Text>
         </Pressable>
-        <Pressable style={styles.pressable} 
+        <Pressable style={ styles.pressable}
           onPress={() =>{
            handleViewChange('main')
            }}>
@@ -55,6 +61,7 @@ const AppBar = () => {
                 Repositories
             </Text>
         </Pressable>
+      </ScrollView>
     </View>
   );
 };
