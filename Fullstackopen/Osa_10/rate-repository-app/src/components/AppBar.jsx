@@ -30,6 +30,7 @@ const AppBar = () => {
   const navigate = useNavigate();
 
   const handleViewChange = (view) => {
+    console.log("click ? ");
     switch(view){
       case 'login':
         navigate('/sign');

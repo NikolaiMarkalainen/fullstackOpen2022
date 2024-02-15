@@ -5,12 +5,14 @@ const theme = {
         textSecondary: '#FFFFFF',
         primary: '#575757',
         backgroundColor: '#24292e',
+        buttonPrimaryColor: '#24a0ed',
         applicationBackgroundColor: '#e1e4e8',
         textBold: 'black'
     },
     fontSizes: {
         body: 14,
-        subheading: 16
+        subheading: 16,
+        button: 18,
     },
     fonts: {
         main: 'System'
