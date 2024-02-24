@@ -3,6 +3,9 @@ import Constants from 'expo-constants';
 import Text from './Text';
 import theme from '../theme';
 import { useNavigate } from 'react-router-native';
+import { useApolloClient, useQuery } from '@apollo/client';
+import { GET_USER_DATA } from '../graphql/queries';
+import useAuthStorage from '../hooks/useAuthStorage';
 
 
 const styles = StyleSheet.create({
@@ -26,14 +29,25 @@ const styles = StyleSheet.create({
 
 
 const AppBar = () => {
-  
+  const {loading, error, data} = useQuery(GET_USER_DATA);
   const navigate = useNavigate();
+  const apolloClient = useApolloClient();
+  const authStorage = useAuthStorage();
 
-  const handleViewChange = (view) => {
+  if (loading) return <Text>Loading ...</Text>;
+
+  if (error) return <Text>Error!</Text>;
+
+  const signText = data.me ? "Sign out" : "Sign in";
+  const handleViewChange = async (view) => {
     console.log("click ? ");
     switch(view){
-      case 'login':
+      case 'Sign in':
         navigate('/sign');
+        break;
+      case 'Sign out':
+        await authStorage.removeAccessToken() ;
+        apolloClient.resetStore();
         break;
       case 'main':
         navigate('/');
@@ -48,13 +62,12 @@ const AppBar = () => {
       <ScrollView horizontal style={styles.scrollView}>
         <Pressable style={styles.pressable}
           onPress={() => 
-          {handleViewChange('login')
-          }}>
+          {handleViewChange(signText)}}>
             <Text color='textSecondary' fontSize='subheading' fontWeight='bold'>
-                Sign in
+                {signText}
             </Text>
         </Pressable>
-        <Pressable style={ styles.pressable}
+        <Pressable style={styles.pressable}
           onPress={() =>{
            handleViewChange('main')
            }}>

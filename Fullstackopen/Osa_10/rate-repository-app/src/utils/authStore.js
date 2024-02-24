@@ -5,10 +5,10 @@
             this.namespace = namespace
         }
 
-    async getAccessToken() {
+        async getAccessToken() {
             const accessToken = await AsyncStorage.getItem(`${this.namespace}:auth`);
             console.log("ACCESSTOKEN:", accessToken);
-            return accessToken;
+            return JSON.parse(accessToken);
         }
         
         async setAccessToken(accessToken) {

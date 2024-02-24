@@ -7,10 +7,12 @@ const httpLink = createHttpLink({
   uri: Constants.manifest.extra.ApolloURI,
 });
 
+
 const createApolloClient = ( authStorage ) => {
   const authLink = setContext(async (_, { headers }) => {
     try {
       const accessToken = await authStorage.getAccessToken();
+      console.log(`Bearer ${accessToken}`);
       return {
         headers: {
             ...headers,
@@ -25,6 +27,7 @@ const createApolloClient = ( authStorage ) => {
       };
     }
   });
+  console.log(authLink);
   return new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
