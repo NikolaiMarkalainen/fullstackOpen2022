@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
 });
 
 const UserSignInForm = ({ onSubmit }) => {
-  console.log(validationSchema);
   return (
   <View style={styles.container}>
     <FormikTextInput name='username' placeholder='Enter your username'
@@ -65,11 +64,8 @@ const SignIn = () => {
   }
   
   const onSubmit = async (values) => {
-    const {username, password} = values;
-    console.log("Here");
     try {
-      const { data } = await signIn({ username: username, password: password });
-      console.log(data);
+      await signIn(values);
     } catch (e) {
       console.log(e);
     };
