@@ -3,11 +3,12 @@ import Main from "./src/components/Main";
 import { StatusBar } from "expo-status-bar";
 import { ApolloProvider } from '@apollo/client';
 import createApolloClient from './src/utils/apolloClient';
+import Constants from 'expo-constants';
 
 const apolloClient = createApolloClient();
 
 const App = () => {
-
+  console.log(Constants.manifest);
   return (
     <>
     <NativeRouter>
