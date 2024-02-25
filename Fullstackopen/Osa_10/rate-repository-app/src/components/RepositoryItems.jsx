@@ -1,6 +1,8 @@
-import { View, StyleSheet, Image, Pressable } from "react-native";
+import { View, StyleSheet, Image, FlatList } from "react-native";
 import Text from "./Text";
-import * as Linking from 'expo-linking';
+import { RepositoryReview } from "./RepositoryReview";
+import { RepositoryInfo } from "./RepositoryInfo";
+import theme from "../theme";
 
 const styles = StyleSheet.create({
     container:{
@@ -9,7 +11,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         flexShrink: 1,
         borderBottomWidth: 1,
-        height: 240,
         backgroundColor: 'white',
     },
     image: {
@@ -52,25 +53,20 @@ const styles = StyleSheet.create({
         flex: 0.5,
         borderRadius: 5,
         padding: 10,
-        backgroundColor: 'blue',
+        backgroundColor: theme.colors.buttonPrimaryColor,
         justifyContent: 'center',
         alignItems: 'center',
         color: 'white'
     },
-    LinkButton: {
-        flex: 0.5,
-        backgroundColor: 'blue',
-        margin: 15,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+    seperator: {
+        height: 10,
+    }
 });
 
 
 const RepositoryItems = ({props, singleView}) => {
-    const handleLinkClick = async () => {
-        await Linking.openURL(props.url);
-    }
+
+    console.log('data:',props);
     return (
         <View style={styles.container}>
             <View style={styles.basicInfoContainer}>
@@ -96,11 +92,9 @@ const RepositoryItems = ({props, singleView}) => {
                 <Text>Forks</Text>
             </View>
             {singleView && (
-                <Pressable style={styles.LinkButton} onPress={() => handleLinkClick()}>
-                    <Text color='textSecondary' fontSize='button'>
-                    Open in Github
-                    </Text>
-                </Pressable>
+                <View>
+                    <RepositoryInfo props={props} />
+                </View>
             )}
         </View>
 

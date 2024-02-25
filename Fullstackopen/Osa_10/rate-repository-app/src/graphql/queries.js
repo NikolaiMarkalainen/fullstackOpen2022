@@ -35,7 +35,7 @@ query {
 `
 
 export const USER_BY_ID = gql`
-query ($repositoryId: ID!) {
+query Query($repositoryId: ID!) {
   repository(id: $repositoryId) {
     name
     fullName
@@ -51,6 +51,21 @@ query ($repositoryId: ID!) {
     description
     language
     id
+    reviews {
+      edges {
+        node {
+          id
+          text
+          createdAt
+          rating
+          repositoryId
+          userId
+          user {
+            username
+          }
+        }
+      }
+    }
   }
 }
 `

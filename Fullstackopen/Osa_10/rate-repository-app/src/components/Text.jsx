@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     fontSizeSubheading: {
         fontSize: theme.fontSizes.subheading,
     },
+    colorButtonPrimary: {
+        color: theme.colors.buttonPrimaryColor
+    },
     fontSizeButton: {
         fontSize: theme.fontSizes.button,
     },
@@ -39,6 +42,7 @@ const Text = ({ color, fontSize, fontWeight, style, text, ...props}) => {
         color === 'textSecondary' && styles.colorTextSecondary,
         color === 'primary' && styles.colorPrimary,
         color === 'textThird' && styles.colorThirdinary,
+        color === 'button' && styles.colorButtonPrimary,
         fontSize === 'subheading' && styles.fontSizeSubheading,
         fontSize === 'button' && styles.fontSizeButton,
         text === 'default' && styles.text,
