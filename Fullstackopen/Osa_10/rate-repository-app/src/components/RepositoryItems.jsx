@@ -1,5 +1,7 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Pressable } from "react-native";
 import Text from "./Text";
+import * as Linking from 'expo-linking';
+
 const styles = StyleSheet.create({
     container:{
         display: 'flex',
@@ -34,11 +36,11 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         flex: 0.2,
-        paddingTop: 10,
+        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'flex-end',
-        paddingBottom: 5,
+        marginBottom: 5,
     },
     bottomInfo: {
         flex: 0.2,
@@ -49,32 +51,43 @@ const styles = StyleSheet.create({
     roundTextButton: {
         flex: 0.5,
         borderRadius: 5,
+        padding: 10,
         backgroundColor: 'blue',
         justifyContent: 'center',
         alignItems: 'center',
         color: 'white'
-    }
+    },
+    LinkButton: {
+        flex: 0.5,
+        backgroundColor: 'blue',
+        margin: 15,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
 });
 
 
-const RepositoryItems = ({id, fullName, description, language, forksCount, stargazersCount, ratingAverage, reviewCount, ownerAvatarUrl}) => {    
+const RepositoryItems = ({props, singleView}) => {
+    const handleLinkClick = async () => {
+        await Linking.openURL(props.url);
+    }
     return (
         <View style={styles.container}>
             <View style={styles.basicInfoContainer}>
-                <Image source={{uri: ownerAvatarUrl}} style={styles.image}/>
+                <Image source={{uri: props.ownerAvatarUrl}} style={styles.image}/>
                 <View style={styles.topTextContainer}>
-                    <Text color='textThird' fontWeight='bold' style={styles.textPadding}>{fullName}</Text>
-                    <Text color='primary' style={styles.textPadding}>{description}</Text>
+                    <Text color='textThird' fontWeight='bold' style={styles.textPadding}>{props.fullName}</Text>
+                    <Text color='primary' style={styles.textPadding}>{props.description}</Text>
                     <View style={styles.roundTextButton}>
-                        <Text color='textSecondary'>{language}</Text>
+                        <Text color='textSecondary'>{props.language}</Text>
                     </View>
                 </View>
             </View>
             <View style={styles.bottomContainer}>
-                <Text>{stargazersCount}</Text>
-                <Text>{ratingAverage}</Text>
-                <Text>{reviewCount}</Text>
-                <Text>{forksCount}</Text>
+                <Text>{props.stargazersCount}</Text>
+                <Text>{props.ratingAverage}</Text>
+                <Text>{props.reviewCount}</Text>
+                <Text>{props.forksCount}</Text>
             </View>
             <View style={styles.bottomInfo}>
                 <Text>Stargazers</Text>
@@ -82,6 +95,13 @@ const RepositoryItems = ({id, fullName, description, language, forksCount, starg
                 <Text>Reviews</Text>
                 <Text>Forks</Text>
             </View>
+            {singleView && (
+                <Pressable style={styles.LinkButton} onPress={() => handleLinkClick()}>
+                    <Text color='textSecondary' fontSize='button'>
+                    Open in Github
+                    </Text>
+                </Pressable>
+            )}
         </View>
 
     );

@@ -33,3 +33,24 @@ query {
     }
   }
 `
+
+export const USER_BY_ID = gql`
+query ($repositoryId: ID!) {
+  repository(id: $repositoryId) {
+    name
+    fullName
+    ownerName
+    ratingAverage
+    reviewCount
+    stargazersCount
+    watchersCount
+    forksCount
+    openIssuesCount
+    url
+    ownerAvatarUrl
+    description
+    language
+    id
+  }
+}
+`

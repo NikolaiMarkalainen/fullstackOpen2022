@@ -1,6 +1,7 @@
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, TouchableOpacity } from 'react-native';
 import RepositoryItems from './RepositoryItems';
 import useRepositories from '../hooks/useRepositories';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
   separator: {
@@ -12,24 +13,13 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const renderItem = ({ item }) => (
-  <View style={{marginTop: 15, marginBottom: 15}}>
-    <RepositoryItems
-        id={item.id}
-        fullName={item.fullName}
-        description={item.description}
-        language={item.language}
-        forksCount={item.forksCount}
-        stargazersCount={item.stargazersCount}
-        ratingAverage={item.ratingAverage}
-        reviewCount={item.reviewCount}
-        ownerAvatarUrl={item.ownerAvatarUrl}
-    />
-  </View>
-);
-
-
 const RepositoryList = () => {
+
+  const handleViewChange = (id) => {
+    console.log("VIEW CHANGE ID", id)
+    navigate(id);
+  }
+  const navigate = useNavigate();
 
   const { repositories } = useRepositories();
 
@@ -41,7 +31,13 @@ const RepositoryList = () => {
       <FlatList
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <View style={{ marginBottom: 15 }}>
+            <TouchableOpacity onPress={() => handleViewChange(item.id)}>
+              <RepositoryItems props={item}/>
+            </TouchableOpacity>
+          </View>
+          )}
         keyExtractor={(item) => item.id}/>
   );
 };

@@ -16,6 +16,15 @@ const styles = StyleSheet.create({
     marginRight: 15,
     padding: 15,
   },
+  inputBox:{
+      height: 50,
+      margin: 15,
+      padding:15,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItem: 'center',
+      borderWidth: 1,
+  },
   pressable: {
     height:50, 
     flexDirection: 'row',
@@ -30,10 +39,10 @@ const styles = StyleSheet.create({
 const UserSignInForm = ({ onSubmit }) => {
   return (
   <View style={styles.container}>
-    <FormikTextInput name='username' placeholder='Enter your username'
+    <FormikTextInput style={styles.inputBox} name='username' placeholder='Enter your username'
     placeholderTextColor={theme.colors.applicationBackgroundColor}/>
     
-    <FormikTextInput name='password' placeholder='Enter your password' secureTextEntry
+    <FormikTextInput style={styles.inputBox} name='password' placeholder='Enter your password' secureTextEntry
     placeholderTextColor={theme.colors.applicationBackgroundColor}/>
 
     <Pressable style={styles.pressable} onPress={ onSubmit }>
