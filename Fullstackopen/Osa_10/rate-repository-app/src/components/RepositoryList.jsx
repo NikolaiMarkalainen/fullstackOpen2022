@@ -16,7 +16,7 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryList = () => {
 
   const handleViewChange = (id) => {
-    console.log("VIEW CHANGE ID", id)
+    console.log(id);
     navigate(id);
   }
   const navigate = useNavigate();

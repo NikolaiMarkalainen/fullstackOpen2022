@@ -40,7 +40,7 @@ const AppBar = () => {
 
   const signText = data.me ? "Sign out" : "Sign in";
   const handleViewChange = async (view) => {
-    console.log("click ? ");
+    console.log("VIEW", view)
     switch(view){
       case 'Sign in':
         navigate('/sign');
@@ -52,6 +52,8 @@ const AppBar = () => {
       case 'main':
         navigate('/');
         break;
+      case 'review':
+        navigate('/review');
       default:
         break;
     }
@@ -75,6 +77,16 @@ const AppBar = () => {
                 Repositories
             </Text>
         </Pressable>
+        {data.me && (
+          <Pressable style={styles.pressable}
+          onPress={() =>{
+          handleViewChange('review')
+          }}>
+            <Text color='textSecondary' fontSize='subheading' fontWeight='bold'>
+                Create a review
+            </Text>
+          </Pressable>
+        )}
       </ScrollView>
     </View>
   );

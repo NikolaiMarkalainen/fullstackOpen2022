@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
-import { format } from 'date-fns';
+//import { format } from 'date-fns';
 
 const styles = StyleSheet.create({
     container: {
@@ -30,10 +30,9 @@ const styles = StyleSheet.create({
 })
 
 export const RepositoryReview = ({ props }) => {
-    console.log("REVIEW", props)
-    const date = new Date(props.createdAt);
+    //const date = new Date(props.createdAt);
     
-    const formattedDate = format(date, "MM d, yyyy"); 
+    //const formattedDate = format(date, "MM d, yyyy"); 
     
     return(
     <View style={styles.container}>
@@ -42,7 +41,7 @@ export const RepositoryReview = ({ props }) => {
             </View>
             <View style={styles.textContainer}>
                 <Text style={{paddingTop: 15}} fontWeight='bold'>{props.user.username}</Text>
-                <Text style={{fontStyle: 'italic', paddingTop: 5}}>{formattedDate}</Text>
+                <Text style={{fontStyle: 'italic', paddingTop: 5}}>{props.createdAt}</Text>
                 <Text>{props.text}</Text>
             </View>
     </View>

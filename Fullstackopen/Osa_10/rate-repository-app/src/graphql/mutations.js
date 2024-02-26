@@ -8,23 +8,12 @@ export const LOGIN_MUTATION = gql`
   }
 `;
 
-export const USER_BY_ID = gql`
-query ($repositoryId: ID!) {
-  repository(id: $repositoryId) {
-    name
-    fullName
-    ownerName
-    ratingAverage
-    reviewCount
-    stargazersCount
-    watchersCount
-    forksCount
-    openIssuesCount
-    url
-    ownerAvatarUrl
-    description
-    language
-    id
+export const REVIEW_POST_MUTATION = gql`
+mutation ReviewPostMutation($text: String!, $rating: Int!, $ownerName: String!, $repositoryName: String!) {
+  createReview(review: {text: $text, rating: $rating, ownerName: $ownerName, repositoryName: $repositoryName}) {
+    repository {
+      id
+    }
   }
 }
 `
