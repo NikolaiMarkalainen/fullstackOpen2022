@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
         borderRadius: 5,
         padding: 10,
-        backgroundColor: theme.colors.buttonPrimaryColor,
+        backgroundColor: theme.colors.buttonPrimaryColor ,
         justifyContent: 'center',
         alignItems: 'center',
         color: 'white'
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
 
 const RepositoryItems = ({props, singleView}) => {
 
-    console.log('data:',props);
     return (
         <View style={styles.container}>
             <View style={styles.basicInfoContainer}>

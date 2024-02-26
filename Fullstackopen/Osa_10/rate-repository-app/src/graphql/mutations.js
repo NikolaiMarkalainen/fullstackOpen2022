@@ -17,3 +17,9 @@ mutation ReviewPostMutation($text: String!, $rating: Int!, $ownerName: String!, 
   }
 }
 `
+export const NEW_USER_MUTATION = gql`
+mutation newUser($username: String!, $password: String!) {
+  createUser(user: {username: $username, password: $password}) {
+    username
+  }
+}`

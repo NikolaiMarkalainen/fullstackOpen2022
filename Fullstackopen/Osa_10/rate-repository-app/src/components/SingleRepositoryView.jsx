@@ -7,7 +7,6 @@ import { RepositoryReview } from "./RepositoryReview";
 export const SingleRepositoryView = () => {
     const { id } = useParams();
     const result = useRepository(id);
-    console.log(result.data);
     
     const ItemSeperator = () => <View style={styles.seperator} />;
 

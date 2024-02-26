@@ -40,14 +40,17 @@ const AppBar = () => {
 
   const signText = data.me ? "Sign out" : "Sign in";
   const handleViewChange = async (view) => {
-    console.log("VIEW", view)
     switch(view){
+      case 'Sign up': 
+        navigate('/signup');
+        break;
       case 'Sign in':
         navigate('/sign');
         break;
       case 'Sign out':
         await authStorage.removeAccessToken() ;
         apolloClient.resetStore();
+        navigate('/');
         break;
       case 'main':
         navigate('/');
@@ -86,6 +89,16 @@ const AppBar = () => {
                 Create a review
             </Text>
           </Pressable>
+        )} 
+        {!data.me && (
+          <Pressable style={styles.pressable}
+          onPress={() =>{
+          handleViewChange('Sign up')
+          }}>
+            <Text color='textSecondary' fontSize='subheading' fontWeight='bold'>
+                Sign up
+            </Text>
+          </Pressable>          
         )}
       </ScrollView>
     </View>

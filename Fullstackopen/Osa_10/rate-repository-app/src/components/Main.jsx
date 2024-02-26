@@ -6,6 +6,7 @@ import { Route, Routes, Navigate } from 'react-router-native';
 import SignIn from './SignIn';
 import { SingleRepositoryView } from './SingleRepositoryView';
 import { ReviewForm } from './ReviewForm';
+import SignUp from './SignUp';
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -26,6 +27,7 @@ const Main = () => {
         <Route path="*" element={ <Navigate to="/"  replace />} />
         <Route path=":id" element={ <SingleRepositoryView/>}/>
         <Route path="/review" element={ <ReviewForm/>}/>
+        <Route path="/signup" element={ <SignUp/>}/>
       </Routes>
     </View>
   );
