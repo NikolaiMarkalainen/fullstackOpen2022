@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
 
 
 const RepositoryItems = ({props, singleView}) => {
-
     return (
         <View style={styles.container}>
             <View style={styles.basicInfoContainer}>

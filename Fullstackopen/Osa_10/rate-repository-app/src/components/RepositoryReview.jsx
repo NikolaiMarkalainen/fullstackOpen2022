@@ -59,7 +59,6 @@ export const RepositoryReview = ({ props }) => {
     const navigate = useNavigate();
     //const date = new Date(props.createdAt);
     const moveToReviewParent = (id) => {
-        console.log("ID", id)
         navigate(`/${id}`);
     };
     const deletePopUp = async (id) => {
@@ -84,7 +83,7 @@ export const RepositoryReview = ({ props }) => {
         console.log("ID", id);
     }
     //const formattedDate = format(date, "MM d, yyyy"); 
-    console.log("repositoryreview", props)
+    console.log("ALL PROPS HERE", props)
     return(
         <View>
         <View style={styles.container}>

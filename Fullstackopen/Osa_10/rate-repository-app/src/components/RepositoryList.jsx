@@ -23,7 +23,6 @@ const HeaderFilter = ({setOrderBy, setOrderDirection, orderBy, orderDirection}) 
 
 // CREATED_AT RATING_AVERAGE
 
-console.log("PROPS", setOrderBy, setOrderDirection)
 const [visible, setVisible] = useState(false);
 const [text, setText] = useState("Latest Repositories")
 const openMenu = () => setVisible(true);
@@ -99,7 +98,8 @@ const RepositoryList = ({userId}) => {
   const [orderBy, setOrderBy] = useState('CREATED_AT');
   const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
 
-  const { repositories } = useRepositories({
+  const { repositories, fetchMore } = useRepositories({
+    first: 10,
     orderBy,
     orderDirection,
     searchKeyword: debouncedSearchText
@@ -118,9 +118,13 @@ const RepositoryList = ({userId}) => {
   const searchTextAdjustment = (query) => {
     setSearchText(query);
   };
+
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
+    const onEndReach = () => {
+        fetchMore();
+    };
 
     return (
     <PaperProvider>
@@ -132,6 +136,8 @@ const RepositoryList = ({userId}) => {
       <FlatList
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
+        onEndReached={onEndReach}
+        onEndReachedThreshHold={0.5}
         renderItem={({ item }) => (
           <View style={{ marginBottom: 15, flex:1 }}>
             <TouchableOpacity onPress={() => handleViewChange(item.id)}>

@@ -6,27 +6,35 @@ import { RepositoryReview } from "./RepositoryReview";
 
 export const SingleRepositoryView = () => {
     const { id } = useParams();
-    const result = useRepository(id);
+    
+    const {repository, fetchMore} = useRepository({
+        first: 3,
+        id: id
+    });
     
     const ItemSeperator = () => <View style={styles.seperator} />;
 
-    const userReviews = () => {
-        const repositoryNodes = result.data.reviews.edges
-        ? result.data.reviews.edges.map(edge => edge.node)
+    const repositoryNodes = repository
+        ? repository.reviews.edges.map(edge => edge.node)
         : [];
-        return repositoryNodes;
-    };
+    
+    const onEndReach= () => {
+        console.log("End reached");
+        fetchMore();
+    }
 
     return(
         <View style={{flex: 1}}>
-            {result.data && (
+            {repository ? (
                 <FlatList
-                data={userReviews()}
+                data={repositoryNodes}
+                onEndReached={onEndReach}
+                onEndReachedThreshHold={0.5}
                 ItemSeperatorComponent={ItemSeperator}
                 renderItem={({ item }) => <RepositoryReview props={item}/>}
                 keyExtractor={(item) => item.id}
-                ListHeaderComponent={() => <RepositoryItems props={result.data} singleView={true} />}/>
-            ) || (
+                ListHeaderComponent={() => <RepositoryItems props={repository} singleView={true} />}/>
+            ) : (
                 <Text>
                     Loading
                 </Text>

@@ -1,9 +1,17 @@
 import { gql, useQuery } from "@apollo/client";
 
 export const GET_REPOSITORIES = gql `
-  query Query($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String!){
-      repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword) {
+  query Query($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String!,
+              $first: Int, $after: String){
+      repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword,
+                  first: $first, after: $after) {
+            pageInfo{
+              endCursor
+              hasNextPage
+              startCursor
+            }
             edges {
+              cursor
               node {
                 createdAt
                 description
@@ -50,7 +58,7 @@ query getCurrentUser($includeReviews: Boolean = false) {
 `
 
 export const USER_BY_ID = gql`
-query Query($repositoryId: ID!) {
+query Query($repositoryId: ID!, $first: Int, $after: String) {
   repository(id: $repositoryId) {
     name
     fullName
@@ -66,8 +74,13 @@ query Query($repositoryId: ID!) {
     description
     language
     id
-    reviews {
+    reviews(after: $after, first: $first) {
+      pageInfo {
+      hasNextPage
+      endCursor
+      }
       edges {
+        cursor
         node {
           id
           text
