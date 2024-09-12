@@ -6,7 +6,7 @@ import { Route, Routes, Navigate } from 'react-router-native';
 import SignIn from './SignIn';
 import { SingleRepositoryView } from './SingleRepositoryView';
 import { ReviewForm } from './ReviewForm';
-import { Reviews } from './Reviews';
+import Reviews  from './Reviews';
 import SignUp from './SignUp';
 const styles = StyleSheet.create({
   container: {

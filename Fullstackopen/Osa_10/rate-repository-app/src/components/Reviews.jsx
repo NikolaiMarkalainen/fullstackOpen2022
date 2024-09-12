@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native-web"
+import { FlatList, View } from "react-native"
 import { RepositoryReview } from "./RepositoryReview"
 import { useQuery } from "@apollo/client";
 import { GET_USER_DATA } from "../graphql/queries";
@@ -6,7 +6,7 @@ import { useState ,useEffect } from "react";
 
 
 
-export const Reviews = () => {
+const Reviews = () => {
     const [reviewData, setReviewData] = useState([]);
     const ItemSeperator = () => <View style={styles.seperator} />;
 
@@ -18,15 +18,15 @@ export const Reviews = () => {
 
     useEffect(() => {
         if(data && data.me && data.me.reviews && data.me.reviews && data.me.reviews.edges && data.me.reviews.edges){
-            setReviewData(data.me.reviews.edges);
+            setReviewData(data.me.reviews.edges.map(m => ({
+                ...m.node,
+                userReviews: true,
+            })));
         }
     }, [data])
 
     const userOwnReviews = () => {
-        const repositoryNodes = reviewData 
-        ? reviewData.map(edge => edge.node)
-        : [];
-        return repositoryNodes
+        return reviewData || []
     }
 
     return(
@@ -42,3 +42,4 @@ export const Reviews = () => {
         </View>
     )
 }
+export default Reviews
