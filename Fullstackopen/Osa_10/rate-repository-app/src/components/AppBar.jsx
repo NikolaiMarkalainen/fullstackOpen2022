@@ -57,6 +57,10 @@ const AppBar = () => {
         break;
       case 'review':
         navigate('/review');
+        break;
+      case 'reviews':
+        navigate('/reviews');
+        break;
       default:
         break;
     }
@@ -81,6 +85,7 @@ const AppBar = () => {
             </Text>
         </Pressable>
         {data.me && (
+          <>
           <Pressable style={styles.pressable}
           onPress={() =>{
           handleViewChange('review')
@@ -89,6 +94,15 @@ const AppBar = () => {
                 Create a review
             </Text>
           </Pressable>
+         <Pressable style={styles.pressable}
+          onPress={() =>{
+          handleViewChange('reviews')
+          }}>
+            <Text color='textSecondary' fontSize='subheading' fontWeight='bold'>
+                My Reviews
+            </Text>
+          </Pressable>
+        </>
         )} 
         {!data.me && (
           <Pressable style={styles.pressable}

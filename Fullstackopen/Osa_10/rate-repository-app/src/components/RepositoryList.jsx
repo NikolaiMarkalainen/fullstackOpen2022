@@ -85,7 +85,7 @@ const closeMenu = () => setVisible(false);
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryList = () => {
+const RepositoryList = ({userId}) => {
 
   const [searchText, setSearchText] = useState('');
 
