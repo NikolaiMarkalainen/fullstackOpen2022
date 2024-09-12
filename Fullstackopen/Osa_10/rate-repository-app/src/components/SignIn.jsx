@@ -80,8 +80,8 @@ const SignIn = () => {
       if(result) {
         navigate('/');
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     };
   }
 

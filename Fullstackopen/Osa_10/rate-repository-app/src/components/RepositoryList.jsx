@@ -4,7 +4,7 @@ import RepositoryItems from './RepositoryItems';
 import useRepositories from '../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
 import { useEffect, useState } from 'react';
-import { Button, Menu, PaperProvider, Icon } from 'react-native-paper';
+import { Button, Menu, PaperProvider, Icon, Searchbar } from 'react-native-paper';
 import theme from '../theme';
 
 const styles = StyleSheet.create({
@@ -87,21 +87,48 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
 
+  const [searchText, setSearchText] = useState('');
+
   const handleViewChange = (id) => {
     navigate(id);
   }
+
   const navigate = useNavigate();
   const [orderDirection, setOrderDirection] = useState('ASC');
   // ASC DESC
   const [orderBy, setOrderBy] = useState('CREATED_AT');
+  const [debouncedSearchText, setDebouncedSearchText] = useState(searchText);
 
-  const { repositories } = useRepositories({orderBy, orderDirection});
+  const { repositories } = useRepositories({
+    orderBy,
+    orderDirection,
+    searchKeyword: debouncedSearchText
+  });
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 300); 
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchText]);
+
+  const searchTextAdjustment = (query) => {
+    setSearchText(query);
+  };
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
 
-  return (
+    return (
     <PaperProvider>
+      <Searchbar
+      onChangeText={searchTextAdjustment}
+      value={searchText}
+      style={{margin: 15, backgroundColor: theme.colors.primary}}
+      />
       <FlatList
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}

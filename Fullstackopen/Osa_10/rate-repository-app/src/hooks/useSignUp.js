@@ -15,7 +15,7 @@ const useSignUp = () => {
             });
         return data;
         }
-        catch(e) {
+        catch(error) {
             console.log(error);
         }
     }

@@ -6,7 +6,7 @@ export const usePostReview = () => {
     const [mutate, result] = useMutation(REVIEW_POST_MUTATION);
 
     const postReview = async ({repositoryName, review, ownerName, rating}) => {
-        console.log("PROPS IN USEPSOITREV IEWs",repositoryName, review, ownerName, rating)
+
         try {
             const { data } = await mutate({
                 variables: {

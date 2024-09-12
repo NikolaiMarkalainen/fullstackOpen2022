@@ -17,11 +17,9 @@ const useSignIn = () => {
             }
         });
         await authStorage.setAccessToken(data.authenticate.accessToken);
-
-
         apolloClinet.resetStore();
         return true;
-    } catch (e) {
+    } catch (error) {
         console.error(error);
         throw new Error('Login failed')
        }

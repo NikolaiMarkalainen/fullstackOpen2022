@@ -7,7 +7,8 @@ const useRepositories = (props) => {
   fetchPolicy: 'cache-and-network',
   variables: {
     "orderBy": props.orderBy,
-    "orderDirection": props.orderDirection
+    "orderDirection": props.orderDirection,
+    "searchKeyword": props.searchKeyword
   },
 });
   if (loading) {

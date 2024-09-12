@@ -84,15 +84,14 @@ const SignUp = () => {
   }
   
   const onSubmit = async (values) => {
-    console.log(values);
     try {
       const result = await signUp(values);
       if(result) {
         console.log(result);
         navigate('/');
       }
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     };
   }
 
